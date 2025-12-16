@@ -42,11 +42,5 @@ ln -s $PWD/starship.toml ~/.config/starship.toml
 ln -s $PWD/apps ~/.config/apps   # optional
 ```
 
-## Notes / Secrets
-- Do not commit caches, cookies, DBs, or crash data. `.gitignore` excludes common offenders.
-- Waybar VPN and IP modules: avoid committing live IPs; leave commands but not outputs.
-- Wallpaper paths currently reference files under `/home/xacce/Pictures`. Either copy them into `wallpapers/` and update configs, or keep the paths consistent.
-- If scripts or binds reference paths outside this repo, copy them into `scripts/` and update configs accordingly.
-
 ## Restoring
 1) Clone your repo. 2) Run `./install.sh` or use Stow/symlinks as above. 3) Log out/in or restart Hyprland/Waybar to apply.
