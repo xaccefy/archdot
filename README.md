@@ -7,9 +7,12 @@ This folder collects pushable desktop configs so you can sync them to GitHub and
 - `hyprfloat/` — floating rules for terminals.
 - `waybar/` — bar configuration, styles, modules, scripts, launcher.
 - `rofi/` — launchers, powermenu themes, images, scripts.
+- `dunst/` — notification daemon configuration.
+- `wlogout/` — logout menu configuration.
+- `swappy/` — screenshot editing tool configuration.
 - `starship.toml` — prompt configuration.
 - `apps/` — optional tool configs (`cdncheck`, `uncover`).
-- `scripts/` — placeholder for helper scripts referenced by configs (e.g., `cliphist.sh`, `updates.sh`, `random_wallpaper.sh`, `screenshot.sh`, `gtk.sh`, `xdg.sh`).
+- `scripts/` — helper scripts referenced by configs (`cliphist.sh`, `updates.sh`, `random_wallpaper.sh`, `screenshot.sh`, `gtk.sh`, `xdg.sh`).
 - `wallpapers/` — put your wallpaper assets here or adjust paths in configs.
 
 ## Setup
@@ -26,10 +29,9 @@ The script installs packages via pacman (and yay for Cozette if available) and s
 ### Using Stow manually
 From `dotfiles/` parent directory:
 ```bash
-stow -t $HOME/.config hypr hyprfloat waybar rofi
+stow -t $HOME/.config hypr hyprfloat waybar rofi dunst wlogout swappy scripts
 stow -t $HOME/.config starship.toml
 stow -t $HOME/.config/apps apps   # optional
-stow -t $HOME/.config/scripts scripts  # if you add your scripts here
 ```
 Adjust targets if you keep wallpapers elsewhere. For non-`.config` files, point `-t` to the correct root.
 
@@ -38,6 +40,10 @@ Adjust targets if you keep wallpapers elsewhere. For non-`.config` files, point 
 ln -s $PWD/hypr ~/.config/hypr
 ln -s $PWD/waybar ~/.config/waybar
 ln -s $PWD/rofi ~/.config/rofi
+ln -s $PWD/dunst ~/.config/dunst
+ln -s $PWD/wlogout ~/.config/wlogout
+ln -s $PWD/swappy ~/.config/swappy
+ln -s $PWD/scripts ~/.config/scripts
 ln -s $PWD/starship.toml ~/.config/starship.toml
 ln -s $PWD/apps ~/.config/apps   # optional
 ```

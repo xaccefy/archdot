@@ -1,0 +1,18 @@
+[Default]
+save_dir=$HOME/Pictures/screenshots
+save_filename_format=screenshot_%Y-%m-%d_%H-%M-%S.png
+show_indicator=true
+line_size=5
+text_size=20
+text_font=monospace
+paint_mode=brush
+early_exit=false
+fill_shape=false
+
+[Colors]
+background=rgba(30, 33, 39, 1)
+background_border=rgba(40, 43, 49, 1)
+text=rgba(255, 255, 255, 1)
+shape_outline=rgba(97, 175, 239, 1)
+shape_fill=rgba(152, 195, 121, 1)
+brush=rgba(224, 108, 117, 1)

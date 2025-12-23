@@ -38,6 +38,7 @@ PKGS=(
   network-manager-applet blueman brightnessctl playerctl pavucontrol swaybg
   ghostty firefox thunar code spotify-launcher webcord
   ttf-jetbrains-mono ttf-fira-code
+  wlogout swappy grim slurp imagemagick qalculate-gtk xclip
 )
 
 # Optional/AUR packages
@@ -63,8 +64,9 @@ DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
 log "Using dotfiles directory: $DOTFILES_DIR"
 need_cmd stow
 
-log "Stowing Hyprland, Waybar, Rofi"
-stow -d "$DOTFILES_DIR" -t "$HOME/.config" hypr hyprfloat waybar rofi || die "stow failed for core configs"
+log "Stowing core configs"
+# Core Hyprland & UI
+stow -d "$DOTFILES_DIR" -t "$HOME/.config" hypr hyprfloat waybar rofi dunst wlogout swappy scripts || die "stow failed for core configs"
 
 log "Stowing starship.toml"
 stow -d "$DOTFILES_DIR" -t "$HOME/.config" starship.toml || warn "stow starship.toml failed"
@@ -73,10 +75,6 @@ stow -d "$DOTFILES_DIR" -t "$HOME/.config" starship.toml || warn "stow starship.
 if [[ -d "$DOTFILES_DIR/apps" ]]; then
   log "Stowing apps"
   stow -d "$DOTFILES_DIR" -t "$HOME/.config" apps || warn "stow apps failed"
-fi
-if [[ -d "$DOTFILES_DIR/scripts" ]]; then
-  log "Stowing scripts"
-  stow -d "$DOTFILES_DIR" -t "$HOME/.config" scripts || warn "stow scripts failed"
 fi
 
 log "Done. Restart Hyprland/Waybar or relog to apply."
