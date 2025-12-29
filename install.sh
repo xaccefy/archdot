@@ -1,85 +1,134 @@
 #!/usr/bin/env bash
 # Install desktop deps and deploy dotfiles with stow.
-# Target: Arch/Arch-based with pacman + optional yay (for Cozette font)
-# Personal use only (xacce); abort if run by another user.
+# Target: Arch/Arch-based with pacman + yay (auto-installed)
 set -euo pipefail
 
 log() { printf "[install] %s\n" "$*"; }
 warn() { printf "[install][warn] %s\n" "$*" >&2; }
-
 die() { printf "[install][error] %s\n" "$*" >&2; exit 1; }
 
 need_cmd() { command -v "$1" >/dev/null 2>&1 || die "Missing required command: $1"; }
 
-# Personal guard
-target_user="xacce"
-if [[ "$(whoami)" != "$target_user" ]]; then
-  die "This installer is scoped to user '$target_user'."
-fi
-
-# Detect package managers
-PACMAN=$(command -v pacman || true)
-YAY=$(command -v yay || true)
-
-if [[ -z "$PACMAN" ]]; then
-  die "pacman not found; this script targets Arch/Arch-based systems."
-fi
-
+# Check for Arch
 if [[ -r /etc/os-release ]]; then
   . /etc/os-release
   if [[ "${ID:-}" != "arch" && "${ID_LIKE:-}" != *"arch"* ]]; then
-    warn "OS reports ID=${ID:-unknown}; script expects Arch."
+    warn "OS reports ID=${ID:-unknown}; script is optimized for Arch Linux."
   fi
 fi
 
-# Packages (feel free to adjust)
+# Ensure running as non-root (makepkg requirements)
+if [[ $EUID -eq 0 ]]; then
+   die "This script must be run as a normal user (with sudo privileges), not root."
+fi
+
+# Detect/Install yay
+if ! command -v yay >/dev/null 2>&1; then
+    log "yay not found. Installing yay-bin from AUR..."
+    # Ensure git and base-devel are present for building
+    sudo pacman -Sy --needed --noconfirm git base-devel
+    
+    TEMP_DIR=$(mktemp -d)
+    git clone https://aur.archlinux.org/yay-bin.git "$TEMP_DIR/yay-bin"
+    pushd "$TEMP_DIR/yay-bin"
+    makepkg -si --noconfirm
+    popd
+    rm -rf "$TEMP_DIR"
+else
+    log "yay is already installed."
+fi
+
+# Core Packages
 PKGS=(
-  hyprland hyprpaper hypridle hyprlock waybar rofi stow jq wl-clipboard cliphist dunst polkit-gnome
-  network-manager-applet blueman brightnessctl playerctl pavucontrol swaybg
+  # System / Build
+  git base-devel stow jq
+  
+  # Shell & Tools
+  zsh fzf zoxide fastfetch starship
+  go rustup npm rbenv pipx python
+  
+  # Display Manager
+  ly
+  
+  # Wayland / Hyprland Core
+  hyprland hyprpaper hypridle hyprlock waybar rofi wl-clipboard cliphist dunst polkit-gnome
+  xdg-desktop-portal-hyprland xdg-desktop-portal qt5-wayland qt6-wayland swaybg
+  
+  # Audio (Pipewire)
+  pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol playerctl
+  
+  # Connectivity
+  network-manager-applet blueman
+  
+  # Apps
   ghostty firefox thunar code spotify-launcher webcord
-  ttf-jetbrains-mono ttf-fira-code
-  wlogout swappy grim slurp imagemagick qalculate-gtk xclip
+  
+  # Fonts
+  ttf-jetbrains-mono ttf-fira-code ttf-font-awesome noto-fonts-emoji
+  
+  # Utils
+  wlogout swappy grim slurp imagemagick qalculate-gtk xclip brightnessctl
 )
 
-# Optional/AUR packages
+# AUR Packages
 AUR_PKGS=(
   cozette-ttf
 )
 
-log "Updating package databases"
-sudo pacman -Sy --needed || die "pacman -Sy failed"
+log "Updating system and installing repo packages..."
+sudo pacman -Sy --needed --noconfirm "${PKGS[@]}"
 
-log "Installing packages: ${PKGS[*]}"
-sudo pacman -S --needed --noconfirm "${PKGS[@]}" || die "Package install failed"
-
-if [[ -n "$YAY" ]]; then
-  log "Installing AUR packages via yay: ${AUR_PKGS[*]}"
-  yay -S --needed --noconfirm "${AUR_PKGS[@]}" || warn "Some AUR installs failed; install manually if needed"
-else
-  warn "yay not found; install AUR packages manually: ${AUR_PKGS[*]}"
-fi
+log "Installing AUR packages..."
+yay -S --needed --noconfirm "${AUR_PKGS[@]}"
 
 # Stow deployment
 DOTFILES_DIR=$(cd "$(dirname "$0")" && pwd)
 log "Using dotfiles directory: $DOTFILES_DIR"
-need_cmd stow
 
-log "Stowing core configs"
+# Ensure target directories exist
+mkdir -p "$HOME/.config"
+
+log "Stowing core configs..."
 # Core Hyprland & UI
-stow -d "$DOTFILES_DIR" -t "$HOME/.config" hypr hyprfloat waybar rofi dunst wlogout swappy scripts || die "stow failed for core configs"
+# Note: stow will stow the *contents* of these directories into ~/.config
+STOW_PKGS=(hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps)
 
-log "Stowing starship.toml"
-stow -d "$DOTFILES_DIR" -t "$HOME/.config" starship.toml || warn "stow starship.toml failed"
+for pkg in "${STOW_PKGS[@]}"; do
+    if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
+        log "  - $pkg"
+        stow -d "$DOTFILES_DIR" -t "$HOME/.config" "$pkg"
+    else
+        warn "Package directory '$pkg' not found, skipping."
+    fi
+done
 
-# Optional stows
-if [[ -d "$DOTFILES_DIR/apps" ]]; then
-  log "Stowing apps"
-  stow -d "$DOTFILES_DIR" -t "$HOME/.config" apps || warn "stow apps failed"
+# Handle starship.toml separately (it's a file, usually better to symlink directly or move to a stow dir)
+if [[ -f "$DOTFILES_DIR/starship.toml" ]]; then
+    log "Linking starship.toml..."
+    ln -sf "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
 fi
 
-log "Done. Restart Hyprland/Waybar or relog to apply."
+# Enable Services
+log "Enabling system services..."
+SERVICES=(
+  ly.service
+  NetworkManager.service
+  bluetooth.service
+)
 
-# Reminders
-warn "Ensure wallpapers are in place and paths in hyprpaper.conf match."
-warn "Check network interface in waybar (default: wlan0) and adjust if needed."
-warn "VPN module expects tun0/wg0; adjust if different."
+for service in "${SERVICES[@]}"; do
+    if systemctl is-enabled --quiet "$service"; then
+        log "  $service is already enabled."
+    else
+        log "  Enabling $service..."
+        sudo systemctl enable "$service"
+    fi
+done
+
+# Change Shell
+if [[ "$SHELL" != */zsh ]]; then
+    log "Changing default shell to zsh..."
+    chsh -s "$(command -v zsh)"
+fi
+
+log "Done! Please restart your computer to enter the new desktop environment."

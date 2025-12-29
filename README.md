@@ -18,22 +18,27 @@ This folder collects pushable desktop configs so you can sync them to GitHub and
 ## Setup
 You can use the provided installer or run Stow manually.
 
-### Quick install (Arch/Arch-based, user xacce)
+### Quick install (Arch/Arch-based)
 ```bash
 cd ~/dotfiles   # or wherever you cloned
 chmod +x install.sh
 ./install.sh
 ```
-The script installs packages via pacman (and yay for Cozette if available) and stows configs into `~/.config`. It aborts if not run as user `xacce`.
+The script is fully automatic:
+- Installs `yay` (AUR helper) if missing.
+- Installs official packages via `pacman`.
+- Installs AUR packages (e.g., fonts) via `yay`.
+- Stows configurations into `~/.config`.
+
+**Note:** Run as a normal user with `sudo` privileges. Do not run as root.
 
 ### Using Stow manually
 From `dotfiles/` parent directory:
 ```bash
-stow -t $HOME/.config hypr hyprfloat waybar rofi dunst wlogout swappy scripts
-stow -t $HOME/.config starship.toml
-stow -t $HOME/.config/apps apps   # optional
+stow -t $HOME/.config hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps
+ln -sf $PWD/starship.toml $HOME/.config/starship.toml
 ```
-Adjust targets if you keep wallpapers elsewhere. For non-`.config` files, point `-t` to the correct root.
+Adjust targets if you keep wallpapers elsewhere.
 
 ### Manual symlinks (examples)
 ```bash
