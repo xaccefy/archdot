@@ -91,7 +91,7 @@ mkdir -p "$HOME/.config"
 log "Stowing core configs..."
 # Core Hyprland & UI
 # Note: stow will stow the *contents* of these directories into ~/.config
-STOW_PKGS=(hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps)
+STOW_PKGS=(hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps ghostty fastfetch gtk-3.0 gtk-4.0)
 
 for pkg in "${STOW_PKGS[@]}"; do
     if [[ -d "$DOTFILES_DIR/$pkg" ]]; then
@@ -106,6 +106,13 @@ done
 if [[ -f "$DOTFILES_DIR/starship.toml" ]]; then
     log "Linking starship.toml..."
     ln -sf "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
+fi
+
+# Handle zsh configs (these go to $HOME, not ~/.config)
+log "Linking zsh configs..."
+if [[ -d "$DOTFILES_DIR/zsh" ]]; then
+    ln -sf "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
+    [[ -f "$DOTFILES_DIR/zsh/.zshenv" ]] && ln -sf "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
 fi
 
 # Enable Services

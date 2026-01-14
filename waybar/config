@@ -24,7 +24,6 @@
     ],
 
     "modules-center": [
-        "hyprland/window"
     ],
 
     "modules-right": [
@@ -62,7 +61,7 @@
             "default": "o"
         },
         "persistent-workspaces": {
-            "*": 5
+            "*": 10
         }
     },
 

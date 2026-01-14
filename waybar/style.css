@@ -1,12 +1,12 @@
 * {
-    font-family: "JetBrains Mono", "Fira Code", monospace;
+    font-family: "JetBrainsMono Nerd Font Mono", monospace;
     font-size: 14px;
     border: none;
     border-radius: 0px;
 }
 
 window#waybar {
-    background-color: rgba(29, 34, 40, 0.85);
+    background-color: #1D2228;
     border: 1px solid rgba(60, 70, 80, 0.5);
     color: #E0E0E0;
     transition-property: background-color;

@@ -1,0 +1,18 @@
+background = #161718
+foreground = #b7bcb9
+selection-background = #F8F8F8
+selection-foreground = #161718
+cursor-color = #b7bcb9
+
+font-family = "JetBrainsMono Nerd Font Mono"
+font-size = 13
+
+cursor-style = block
+shell-integration-features = no-cursor
+resize-overlay = never
+background-opacity = 0.8
+window-decoration = false
+window-padding-x = 10
+window-padding-y = 10
+
+gtk-single-instance = true

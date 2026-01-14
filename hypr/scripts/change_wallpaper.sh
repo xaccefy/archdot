@@ -1,11 +1,10 @@
 #!/bin/bash
 
-# Wallpaper changing script for Hyprland
+# Wallpaper changing script for Hyprland (swww)
 
 WALLPAPER_DIR="$HOME/Pictures"
-HYPRPAPER_CONFIG="$HOME/.config/hypr/hyprpaper.conf"
+SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
 
-# Function to change wallpaper
 change_wallpaper() {
     local wallpaper_path="$1"
 
@@ -14,19 +13,11 @@ change_wallpaper() {
         exit 1
     fi
 
-    # Update hyprpaper config
-    sed -i "s|^preload =.*|preload = $wallpaper_path|" "$HYPRPAPER_CONFIG"
-    sed -i "s|^wallpaper =.*|wallpaper = ,$wallpaper_path|" "$HYPRPAPER_CONFIG"
+    swww img "$wallpaper_path" "${SWWW_FLAGS[@]}"
 
-    # Update hyprlock background config
     $HOME/.config/hypr/scripts/update_hyprlock_bg.sh "$wallpaper_path"
-
-    # Reload hyprpaper to apply changes
-    pkill hyprpaper
-    hyprpaper &
 }
 
-# If script is called with an argument, use that as the wallpaper
 if [ $# -eq 1 ]; then
     change_wallpaper "$1"
 else
