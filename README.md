@@ -37,20 +37,37 @@ chmod +x install.sh
 ./install.sh
 ```
 
+Safe first pass:
+```bash
+./install.sh --dry-run
+```
+
 The script automatically:
 - Installs `yay` (AUR helper) if missing
 - Installs packages via `pacman` and `yay`
-- Stows configurations into `~/.config`
+- Links configuration directories into `~/.config`
 - Links shell configs to `$HOME`
 - Enables system services (ly, NetworkManager, bluetooth)
 - Sets zsh as default shell
 
 **Note:** Run as a normal user with `sudo` privileges. Do not run as root.
 
-### Using Stow manually
+### Manual linking (no installer)
 ```bash
 cd ~/.config/dotfiles
-stow -t $HOME/.config hypr hyprfloat waybar rofi dunst wlogout swappy scripts apps ghostty astronvim fastfetch gtk-3.0 gtk-4.0
+ln -sfn "$PWD/hypr" "$HOME/.config/hypr"
+ln -sfn "$PWD/hyprfloat" "$HOME/.config/hyprfloat"
+ln -sfn "$PWD/waybar" "$HOME/.config/waybar"
+ln -sfn "$PWD/rofi" "$HOME/.config/rofi"
+ln -sfn "$PWD/dunst" "$HOME/.config/dunst"
+ln -sfn "$PWD/wlogout" "$HOME/.config/wlogout"
+ln -sfn "$PWD/swappy" "$HOME/.config/swappy"
+ln -sfn "$PWD/scripts" "$HOME/.config/scripts"
+ln -sfn "$PWD/apps" "$HOME/.config/apps"
+ln -sfn "$PWD/ghostty" "$HOME/.config/ghostty"
+ln -sfn "$PWD/fastfetch" "$HOME/.config/fastfetch"
+ln -sfn "$PWD/gtk-3.0" "$HOME/.config/gtk-3.0"
+ln -sfn "$PWD/gtk-4.0" "$HOME/.config/gtk-4.0"
 ln -sf $PWD/starship.toml $HOME/.config/starship.toml
 ln -sf $PWD/zsh/.zshrc $HOME/.zshrc
 ln -sf $PWD/zsh/.zshenv $HOME/.zshenv
@@ -62,7 +79,6 @@ ln -s $PWD/hypr ~/.config/hypr
 ln -s $PWD/waybar ~/.config/waybar
 ln -s $PWD/rofi ~/.config/rofi
 ln -s $PWD/ghostty ~/.config/ghostty
-ln -s $PWD/astronvim ~/.config/astronvim
 ln -s $PWD/zsh/.zshrc ~/.zshrc
 # ... etc
 ```
