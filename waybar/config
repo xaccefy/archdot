@@ -72,16 +72,15 @@
 
     "custom/ip-local": {
         "format": "VPN: {}",
-        "exec": "ip -4 addr show tun0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' || echo 'N/A'",
+        "exec": "ip -4 addr show tun0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' || ip -4 addr show wg0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' || echo 'N/A'",
         "interval": 60,
         "tooltip": true,
         "tooltip-format": "VPN IP: {}",
         "escape": true,
-        "on-click": "ip -4 addr show tun0 | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | wl-copy"
+        "on-click": "ip -4 addr show tun0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | wl-copy || ip -4 addr show wg0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | wl-copy"
     },
 
     "network": {
-        "interface": "wlan0",
         "format": "{ifname}",
         "format-wifi": "{ifname}",
         "format-ethernet": "{ifname}",
