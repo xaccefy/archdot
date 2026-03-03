@@ -3,7 +3,11 @@
 # Wallpaper preload script for swww
 # Optionally caches all wallpapers for faster switching
 
-WALLPAPER_DIR="$HOME/Pictures"
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/.config/wallpapers}"
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    WALLPAPER_DIR="$HOME/Pictures"
+fi
 
 preload_wallpapers() {
     local wallpaper_dir="${1:-$WALLPAPER_DIR}"

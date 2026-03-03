@@ -2,8 +2,12 @@
 
 # Interactive wallpaper setting script for Hyprland (swww)
 
-WALLPAPER_DIR="$HOME/Pictures"
+WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/.config/wallpapers}"
 SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
+
+if [ ! -d "$WALLPAPER_DIR" ]; then
+    WALLPAPER_DIR="$HOME/Pictures"
+fi
 
 echo "Current wallpaper directory: $WALLPAPER_DIR"
 echo "Available wallpapers:"
