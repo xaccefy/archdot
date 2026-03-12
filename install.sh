@@ -151,7 +151,7 @@ install_packages() {
     pipewire pipewire-alsa pipewire-pulse pipewire-jack wireplumber pavucontrol playerctl
     network-manager-applet blueman
     ghostty firefox thunar code spotify-launcher
-    ttf-jetbrains-mono ttf-fira-code ttf-font-awesome noto-fonts-emoji
+    ttf-jetbrains-mono ttf-fira-code ttf-font-awesome noto-fonts-emoji papirus-icon-theme
     wlogout swappy grim slurp imagemagick qalculate-gtk xclip brightnessctl
     swww libnotify
   )

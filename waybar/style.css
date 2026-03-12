@@ -1,14 +1,14 @@
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 14px;
+    font-size: 17px;
     border: none;
     border-radius: 0px;
 }
 
 window#waybar {
-    background-color: #1D2228;
+    background-color: #1d2228;
     border: 1px solid rgba(60, 70, 80, 0.5);
-    color: #E0E0E0;
+    color: #e0e0e0;
     transition-property: background-color;
     transition-duration: 0.3s;
 }
@@ -20,28 +20,28 @@ window#waybar.hidden {
 #workspaces button {
     padding: 0 8px;
     background-color: transparent;
-    color: #E0E0E0;
+    color: #e0e0e0;
 }
 
 #workspaces button.active {
-    background-color: #3A434F;
-    color: #5294E2;
-    border-bottom: 1px solid #5294E2;
+    background-color: #3a434f;
+    color: #5294e2;
+    border-bottom: 1px solid #5294e2;
 }
 
 #workspaces button.focused {
-    background-color: #5294E2;
-    color: #1D2228;
+    background-color: #5294e2;
+    color: #1d2228;
 }
 
 #workspaces button.urgent {
-    background-color: #BF616A;
-    color: #E0E0E0;
+    background-color: #bf616a;
+    color: #e0e0e0;
 }
 
 #mode {
-    background-color: #5294E2;
-    color: #1D2228;
+    background-color: #5294e2;
+    color: #1d2228;
 }
 
 #custom-terminal,
@@ -50,42 +50,44 @@ window#waybar.hidden {
 #pulseaudio,
 #cpu,
 #memory,
-#disk,
 #battery,
 #clock,
-#tray,
-#custom-ip-local,
-#custom-firewall {
+#tray {
     padding: 0 8px;
 }
 
 #network.disconnected {
-    color: #BF616A;
+    color: #bf616a;
 }
 
-#battery.charging, #battery.plugged {
-    color: #A3BE8C;
+#battery.charging,
+#battery.plugged {
+    color: #a3be8c;
 }
 
 @keyframes blink {
     to {
-        color: #BF616A;
+        color: #bf616a;
     }
 }
 
 #battery.critical:not(.charging) {
-    color: #BF616A;
+    color: #bf616a;
     animation-name: blink;
     animation-duration: 0.5s;
-    animation-timing-function: linear;
+    animation-timing-function: steps(12);
     animation-iteration-count: infinite;
     animation-direction: alternate;
 }
 
-#custom-firewall.enabled {
-    color: #A3BE8C; /* Green color when firewall is enabled */
+#custom-vpn {
+    padding: 0 8px;
 }
 
-#custom-firewall.disabled {
-    color: #BF616A; /* Red color when firewall is disabled */
+#custom-vpn.connected {
+    color: #a3be8c;
+}
+
+#custom-vpn.disconnected {
+    color: #bf616a;
 }

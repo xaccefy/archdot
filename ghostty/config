@@ -5,14 +5,15 @@ selection-foreground = #161718
 cursor-color = #b7bcb9
 
 font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 13
+font-size = 14
 
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
 background-opacity = 0.8
 window-decoration = false
-window-padding-x = 10
-window-padding-y = 10
+window-padding-x = 5
+window-padding-y = 5
 
 gtk-single-instance = true
+theme = Aura

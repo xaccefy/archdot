@@ -1,19 +1,8 @@
-// __        __          _
-// \ \      / /_ _ _   _| |__   __ _ _ __
-//  \ \ /\ / / _` | | | | '_ \ / _` | '__|
-//   \ V  V / (_| | |_| | |_) | (_| | |
-//    \_/\_/ \__,_|\__, |_.__/ \__,_|_|
-//                 |___/
-//
-// by Stephan Raabe (2023)
-// -----------------------------------------------------
-//
 {
-    // General Settings
     "layer": "top",
     "position": "top",
-    "height": 28,
-    "margin-top": 5,
+    "height": 15,
+    "margin-top": 0,
     "margin-left": 5,
     "margin-right": 5,
     "spacing": 3,
@@ -24,24 +13,24 @@
     ],
 
     "modules-center": [
+        "clock"
     ],
 
     "modules-right": [
         "custom/caffeine",
-        "custom/ip-local",
+        "custom/vpn",
         "network",
         "pulseaudio",
         "cpu",
         "memory",
         "battery",
-        "clock",
         "tray"
     ],
 
     "custom/terminal": {
-        "format": "",
+        "format": " ",
         "tooltip": false,
-        "on-click": "rofi -show drun"
+        "on-click": "rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/style-6.rasi"
     },
 
     "custom/caffeine": {
@@ -61,7 +50,7 @@
             "default": "o"
         },
         "persistent-workspaces": {
-            "*": 10
+            "*": 5
         }
     },
 
@@ -70,23 +59,23 @@
         "format": "{}"
     },
 
-    "custom/ip-local": {
-        "format": "VPN: {}",
-        "exec": "ip -4 addr show tun0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' || ip -4 addr show wg0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' || echo 'N/A'",
-        "interval": 60,
+    "custom/vpn": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/scripts/vpn.sh",
+        "return-type": "json",
+        "interval": 30,
         "tooltip": true,
-        "tooltip-format": "VPN IP: {}",
-        "escape": true,
-        "on-click": "ip -4 addr show tun0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | wl-copy || ip -4 addr show wg0 2>/dev/null | grep -oP '(?<=inet\\s)\\d+(\\.\\d+){3}' | wl-copy"
+        "on-click": "$HOME/.config/waybar/scripts/vpn.sh copy"
     },
 
     "network": {
+        "interface": "wlan0",
         "format": "{ifname}",
         "format-wifi": "{ifname}",
         "format-ethernet": "{ifname}",
         "format-disconnected": "DOWN",
         "tooltip-format": "{ifname} - {ipaddr}/{cidr}",
-        "interval": 5
+        "interval": 15
     },
 
     "pulseaudio": {
@@ -102,12 +91,12 @@
 
     "cpu": {
         "format": "CPU:{}%",
-        "interval": 5
+        "interval": 10
     },
 
     "memory": {
         "format": "RAM:{}%",
-        "interval": 10
+        "interval": 15
     },
 
     "battery": {
