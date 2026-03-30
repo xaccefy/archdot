@@ -1,14 +1,14 @@
-@define-color bg rgba(26, 27, 38, 0.92);
-@define-color border rgba(122, 162, 247, 0.10);
-@define-color text #a9b1d6;
-@define-color muted #565f89;
-@define-color blue #7aa2f7;
-@define-color cyan #7dcfff;
-@define-color purple #bb9af7;
-@define-color green #9ece6a;
-@define-color red #f7768e;
-@define-color yellow #e0af68;
-@define-color orange #ff9e64;
+@define-color bg rgba(36, 39, 48, 0.92);
+@define-color border rgba(76, 86, 106, 0.25);
+@define-color text #d8dee9;
+@define-color muted #4c566a;
+@define-color blue #81a1c1;
+@define-color cyan #88c0d0;
+@define-color purple #b48ead;
+@define-color green #a3be8c;
+@define-color red #bf616a;
+@define-color yellow #ebcb8b;
+@define-color orange #d08770;
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
@@ -53,7 +53,7 @@ window#waybar.hidden {
 #custom-terminal {
     padding-left: 12px;
     padding-right: 14px;
-    color: @blue;
+    color: @cyan;
     font-size: 15px;
 }
 
@@ -79,18 +79,18 @@ window#waybar.hidden {
 
 #workspaces button:hover {
     color: @text;
-    background: rgba(122, 162, 247, 0.04);
+    background: rgba(136, 192, 208, 0.04);
 }
 
 #workspaces button.active {
-    color: @blue;
-    background: rgba(122, 162, 247, 0.06);
-    border-bottom-color: @blue;
+    color: @cyan;
+    background: rgba(136, 192, 208, 0.06);
+    border-bottom-color: @cyan;
 }
 
 #workspaces button.focused {
-    color: @cyan;
-    border-bottom-color: @cyan;
+    color: @blue;
+    border-bottom-color: @blue;
 }
 
 #workspaces button.urgent {
@@ -110,12 +110,12 @@ window#waybar.hidden {
 #battery,
 #clock,
 #tray {
-    border-left: 1px solid rgba(122, 162, 247, 0.08);
+    border-left: 1px solid rgba(76, 86, 106, 0.3);
 }
 
 /* ── clock ── */
 #clock {
-    color: @blue;
+    color: @cyan;
 }
 
 /* ── media ── */
@@ -128,13 +128,17 @@ window#waybar.hidden {
     color: @text;
 }
 
-#custom-updates.has-updates {
+#custom-updates.yellow {
     color: @yellow;
+}
+
+#custom-updates.red {
+    color: @orange;
 }
 
 /* ── keyboard layout ── */
 #language {
-    color: @cyan;
+    color: @blue;
 }
 
 /* ── network ── */
@@ -158,7 +162,7 @@ window#waybar.hidden {
 
 /* ── cpu / mem ── */
 #cpu {
-    color: @cyan;
+    color: @blue;
 }
 
 #memory {
