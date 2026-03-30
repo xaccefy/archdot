@@ -83,14 +83,32 @@ ln -s $PWD/zsh/.zshrc ~/.zshrc
 # ... etc
 ```
 
+## Hyprland Plugins (hyprpm)
+
+After setting up, install the required plugin:
+
+```bash
+hyprpm add https://github.com/gfhdhytghd/hymission
+hyprpm enable hymission
+```
+
+[hymission](https://github.com/gfhdhytghd/hymission) provides a mission control / task switcher view. Keybinds are configured in `hypr/conf/custom.conf`:
+
+| Keybind | Action |
+|---|---|
+| `SUPER + TAB` | Toggle mission control |
+| `SUPER + SHIFT + TAB` | Open mission control |
+| `SUPER + CTRL + TAB` | Close mission control |
+
 ## Key Features
 
-- **Hyprland** with NVIDIA optimizations
-- **Ghostty** terminal with 80% transparency, JetBrainsMono Nerd Font
+- **Hyprland** with NVIDIA optimizations, Oxocarbon theme
+- **Ghostty** terminal with Oxocarbon palette, JetBrainsMono Nerd Font
 - **Zsh** with zinit, syntax highlighting, autosuggestions, fzf-tab
-- **Starship** minimal prompt
-- **Arc-Dark** GTK theme
-- **Waybar** with VPN status, caffeine toggle, system stats
+- **Starship** Oxocarbon-colored prompt
+- **Waybar** with system stats, updates, keyboard layout
+- **Rofi** with Oxocarbon color scheme
+- **hymission** plugin for mission control
 
 ## Restoring
 1. Clone your repo
