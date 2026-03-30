@@ -1,14 +1,14 @@
 @define-color bg rgba(36, 39, 48, 0.92);
 @define-color border rgba(76, 86, 106, 0.25);
-@define-color text #d8dee9;
-@define-color muted #4c566a;
-@define-color blue #81a1c1;
-@define-color cyan #88c0d0;
-@define-color purple #b48ead;
-@define-color green #a3be8c;
-@define-color red #bf616a;
-@define-color yellow #ebcb8b;
-@define-color orange #d08770;
+@define-color text #0a0a0a;
+@define-color muted #3b4252;
+@define-color blue #0a0a0a;
+@define-color cyan #0a0a0a;
+@define-color purple #0a0a0a;
+@define-color green #0a0a0a;
+@define-color red #0a0a0a;
+@define-color yellow #0a0a0a;
+@define-color orange #0a0a0a;
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
@@ -32,7 +32,6 @@ window#waybar.hidden {
 /* ── all modules base ── */
 #custom-terminal,
 #custom-vpn,
-#custom-media,
 #custom-updates,
 #language,
 #network,
@@ -47,13 +46,13 @@ window#waybar.hidden {
     min-height: 24px;
     color: @text;
     background: transparent;
+    text-shadow: -1px -1px 0 #d8dee9, 1px -1px 0 #d8dee9, -1px 1px 0 #d8dee9, 1px 1px 0 #d8dee9;
 }
 
 /* ── left: prompt icon ── */
 #custom-terminal {
     padding-left: 12px;
     padding-right: 14px;
-    color: @cyan;
     font-size: 15px;
 }
 
@@ -71,6 +70,7 @@ window#waybar.hidden {
     color: @muted;
     background: transparent;
     border-bottom: 2px solid transparent;
+    text-shadow: -1px -1px 0 #d8dee9, 1px -1px 0 #d8dee9, -1px 1px 0 #d8dee9, 1px 1px 0 #d8dee9;
     transition:
         color 0.12s ease,
         border-color 0.12s ease,
@@ -79,27 +79,26 @@ window#waybar.hidden {
 
 #workspaces button:hover {
     color: @text;
-    background: rgba(136, 192, 208, 0.04);
+    background: rgba(216, 222, 233, 0.06);
 }
 
 #workspaces button.active {
-    color: @cyan;
-    background: rgba(136, 192, 208, 0.06);
-    border-bottom-color: @cyan;
+    color: @text;
+    background: rgba(216, 222, 233, 0.08);
+    border-bottom-color: #d8dee9;
 }
 
 #workspaces button.focused {
-    color: @blue;
-    border-bottom-color: @blue;
+    color: @text;
+    border-bottom-color: #d8dee9;
 }
 
 #workspaces button.urgent {
-    color: @red;
-    border-bottom-color: @red;
+    color: @text;
+    border-bottom-color: #bf616a;
 }
 
 /* ── right module separators ── */
-#custom-media,
 #custom-updates,
 #custom-vpn,
 #language,
@@ -113,81 +112,41 @@ window#waybar.hidden {
     border-left: 1px solid rgba(76, 86, 106, 0.3);
 }
 
-/* ── clock ── */
-#clock {
-    color: @cyan;
-}
-
-/* ── media ── */
-#custom-media {
-    color: @purple;
-}
-
-/* ── updates ── */
-#custom-updates {
-    color: @text;
-}
-
-#custom-updates.yellow {
-    color: @yellow;
-}
-
-#custom-updates.red {
-    color: @orange;
-}
-
-/* ── keyboard layout ── */
-#language {
-    color: @blue;
-}
-
-/* ── network ── */
-#network.disconnected {
-    color: @red;
-}
-
-/* ── vpn ── */
-#custom-vpn.connected {
-    color: @green;
-}
-
-#custom-vpn.disconnected {
-    color: @muted;
-}
-
-/* ── audio ── */
-#pulseaudio.muted {
-    color: @muted;
-}
-
-/* ── cpu / mem ── */
-#cpu {
-    color: @blue;
-}
-
-#memory {
-    color: @purple;
-}
-
-/* ── battery ── */
+/* ── battery states keep subtle differentiation ── */
 #battery.charging,
 #battery.plugged {
-    color: @green;
+    color: #2e3440;
+    text-shadow: -1px -1px 0 #a3be8c, 1px -1px 0 #a3be8c, -1px 1px 0 #a3be8c, 1px 1px 0 #a3be8c;
 }
 
 #battery.warning {
-    color: @yellow;
+    color: #2e3440;
+    text-shadow: -1px -1px 0 #ebcb8b, 1px -1px 0 #ebcb8b, -1px 1px 0 #ebcb8b, 1px 1px 0 #ebcb8b;
 }
 
 @keyframes blink-critical {
-    0%   { color: @red; }
-    50%  { color: @muted; }
-    100% { color: @red; }
+    0%   { color: #2e3440; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
+    50%  { color: @muted; text-shadow: none; }
+    100% { color: #2e3440; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
 }
 
 #battery.critical:not(.charging) {
-    color: @red;
     animation: blink-critical 1s ease-in-out infinite;
+}
+
+#pulseaudio.muted {
+    color: @muted;
+    text-shadow: -1px -1px 0 #4c566a, 1px -1px 0 #4c566a, -1px 1px 0 #4c566a, 1px 1px 0 #4c566a;
+}
+
+#custom-vpn.connected {
+    color: #2e3440;
+    text-shadow: -1px -1px 0 #a3be8c, 1px -1px 0 #a3be8c, -1px 1px 0 #a3be8c, 1px 1px 0 #a3be8c;
+}
+
+#network.disconnected {
+    color: #2e3440;
+    text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a;
 }
 
 /* ── tray ── */
