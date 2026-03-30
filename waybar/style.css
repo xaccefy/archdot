@@ -140,8 +140,8 @@ window#waybar.hidden {
 }
 
 #pulseaudio.muted {
-    color: @muted;
-    text-shadow: 0 0 2px #4c566a;
+    color: #7b88a1;
+    text-shadow: 0 0 2px #0a0a0a;
 }
 
 #custom-vpn.connected {
