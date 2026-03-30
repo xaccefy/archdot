@@ -66,14 +66,12 @@
     "cpu": {
         "format": "cpu {usage}%",
         "interval": 5,
-        "tooltip-format": "cpu: {usage}%\nfreq: {avg_frequency}GHz\nload: {load}",
-        "on-click": "ghostty -e btop"
+        "tooltip-format": "cpu: {usage}%\nfreq: {avg_frequency}GHz\nload: {load}"
     },
     "memory": {
         "format": "mem {percentage}%",
         "interval": 10,
-        "tooltip-format": "ram: {used:0.1f}/{total:0.1f}GiB\nswap: {swapUsed:0.1f}/{swapTotal:0.1f}GiB",
-        "on-click": "ghostty -e btop"
+        "tooltip-format": "ram: {used:0.1f}/{total:0.1f}GiB\nswap: {swapUsed:0.1f}/{swapTotal:0.1f}GiB"
     },
     "battery": {
         "format": "bat {capacity}%",
