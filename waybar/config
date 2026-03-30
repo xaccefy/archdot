@@ -11,13 +11,13 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
-        "custom/media",
         "clock"
     ],
     "modules-right": [
         "custom/updates",
         "custom/vpn",
         "network",
+        "pulseaudio",
         "cpu",
         "memory",
         "battery",
@@ -35,16 +35,6 @@
         "persistent-workspaces": {
             "*": 5
         }
-    },
-    "custom/media": {
-        "format": "{}",
-        "exec": "$HOME/.config/waybar/scripts/mediaplayer.sh",
-        "return-type": "json",
-        "interval": 3,
-        "tooltip": true,
-        "on-click": "playerctl play-pause",
-        "on-scroll-up": "playerctl next",
-        "on-scroll-down": "playerctl previous"
     },
     "custom/updates": {
         "format": "upd {}",
@@ -113,5 +103,18 @@
     "tray": {
         "icon-size": 16,
         "spacing": 3
+    },
+    "pulseaudio": {
+        "format": "vol {volume}%",
+        "format-muted": "vol mute",
+        "format-icons": {
+            "default": [
+                "",
+                ""
+            ]
+        },
+        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
+        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     }
 }
