@@ -23,7 +23,7 @@
         "tray"
     ],
     "custom/terminal": {
-        "format": " ",
+        "format": ">_",
         "tooltip": false,
         "on-click": "rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/style-6.rasi"
     },
@@ -44,22 +44,22 @@
     },
     "network": {
         "format": "{ifname}",
-        "format-wifi": " {essid}",
-        "format-ethernet": " {ifname}",
-        "format-disconnected": " DOWN",
-        "tooltip-format-wifi": "{ifname} · {essid}\n{signalStrength}% · {ipaddr}/{cidr}",
-        "tooltip-format-ethernet": "{ifname} · {ipaddr}/{cidr}",
-        "tooltip-format-disconnected": "No connection",
+        "format-wifi": " {essid} [{signalStrength}%]",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": " offline",
+        "tooltip-format-wifi": "iface: {ifname}\nssid: {essid}\nsignal: {signalStrength}%\nip: {ipaddr}/{cidr}\nfreq: {frequency}GHz",
+        "tooltip-format-ethernet": "iface: {ifname}\nip: {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "no connection",
         "interval": 15,
         "on-click": "nm-connection-editor"
     },
     "pulseaudio": {
-        "format": "{icon} {volume}%",
-        "format-muted": " mute",
+        "format": "vol {volume}%",
+        "format-muted": "vol mute",
         "format-icons": {
             "default": [
-                "",
-                ""
+                "",
+                ""
             ]
         },
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
@@ -67,39 +67,33 @@
         "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     },
     "cpu": {
-        "format": " {}%",
-        "interval": 10,
-        "tooltip-format": "CPU: {usage}%\n{avg_frequency} GHz",
+        "format": "cpu {usage}%",
+        "interval": 5,
+        "tooltip-format": "cpu: {usage}%\nfreq: {avg_frequency}GHz\nload: {load}",
         "on-click": "ghostty -e btop"
     },
     "memory": {
-        "format": " {}%",
-        "interval": 15,
-        "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} GiB",
+        "format": "mem {percentage}%",
+        "interval": 10,
+        "tooltip-format": "ram: {used:0.1f}/{total:0.1f}GiB\nswap: {swapUsed:0.1f}/{swapTotal:0.1f}GiB",
         "on-click": "ghostty -e btop"
     },
     "battery": {
-        "format": "{icon} {capacity}%",
-        "format-charging": " {capacity}%",
-        "format-plugged": " {capacity}%",
-        "format-alt": "{icon} {time}",
-        "format-icons": [
-            "",
-            "",
-            "",
-            "",
-            ""
-        ],
+        "format": "bat {capacity}%",
+        "format-charging": "bat {capacity}% ↑",
+        "format-plugged": "bat {capacity}% ⚡",
+        "format-alt": "bat {time}",
         "states": {
             "good": 90,
             "warning": 30,
             "critical": 20
         },
-        "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower: {power:.1f}W"
+        "tooltip-format": "battery: {capacity}%\n{timeTo}\npower: {power:.1f}W"
     },
     "clock": {
-        "format": "{:%H:%M}",
-        "format-alt": "{:%a %d/%m %H:%M}",
+        "format": "{:%H:%M:%S}",
+        "format-alt": "{:%Y-%m-%d %H:%M}",
+        "interval": 1,
         "tooltip-format": "<tt>{calendar}</tt>",
         "on-click-right": "mode"
     },

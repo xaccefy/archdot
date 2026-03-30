@@ -1,17 +1,18 @@
-@define-color bg rgba(13, 15, 18, 0.84);
-@define-color border rgba(255, 255, 255, 0.09);
-@define-color text #e4e8ee;
-@define-color muted #919aa7;
-@define-color accent #a9b4c2;
-@define-color accent-soft rgba(169, 180, 194, 0.10);
-@define-color blue #93a2b8;
-@define-color red #f7768e;
-@define-color green #9ece6a;
+@define-color bg rgba(10, 10, 14, 0.92);
+@define-color border rgba(80, 250, 123, 0.12);
+@define-color text #c0c8d4;
+@define-color muted #555e6b;
+@define-color green #50fa7b;
+@define-color green-dim rgba(80, 250, 123, 0.7);
+@define-color cyan #8be9fd;
+@define-color red #ff5555;
+@define-color yellow #f1fa8c;
+@define-color orange #ffb86c;
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 16px;
-    font-weight: 700;
+    font-size: 14px;
+    font-weight: 600;
     border: none;
     border-radius: 0;
     min-height: 0;
@@ -24,9 +25,10 @@ window#waybar {
 }
 
 window#waybar.hidden {
-    opacity: 0.2;
+    opacity: 0.1;
 }
 
+/* ── all modules base ── */
 #custom-terminal,
 #custom-vpn,
 #network,
@@ -37,51 +39,54 @@ window#waybar.hidden {
 #clock,
 #tray {
     margin: 0;
-    padding: 0 13px;
+    padding: 0 12px;
     min-height: 24px;
     color: @text;
     background: transparent;
 }
 
+/* ── left: prompt icon ── */
 #custom-terminal {
-    padding-left: 10px;
-    padding-right: 16px;
-    color: @accent;
+    padding-left: 12px;
+    padding-right: 14px;
+    color: @green;
+    font-size: 15px;
 }
 
+/* ── workspaces ── */
 #workspaces {
-    margin: 0 0 0 4px;
+    margin: 0 0 0 2px;
     padding: 0;
 }
 
 #workspaces button {
-    min-width: 26px;
+    min-width: 24px;
     min-height: 24px;
     margin: 0;
-    padding: 0 11px;
+    padding: 0 10px;
     color: @muted;
     background: transparent;
     border-bottom: 2px solid transparent;
     transition:
-        color 0.15s ease,
-        border-color 0.15s ease,
-        background 0.15s ease;
+        color 0.12s ease,
+        border-color 0.12s ease,
+        background 0.12s ease;
 }
 
 #workspaces button:hover {
     color: @text;
-    background: rgba(255, 255, 255, 0.02);
+    background: rgba(80, 250, 123, 0.04);
 }
 
 #workspaces button.active {
-    color: @text;
-    background: rgba(255, 255, 255, 0.03);
-    border-bottom-color: @accent;
+    color: @green;
+    background: rgba(80, 250, 123, 0.06);
+    border-bottom-color: @green;
 }
 
 #workspaces button.focused {
-    color: @text;
-    border-bottom-color: @blue;
+    color: @cyan;
+    border-bottom-color: @cyan;
 }
 
 #workspaces button.urgent {
@@ -89,6 +94,7 @@ window#waybar.hidden {
     border-bottom-color: @red;
 }
 
+/* ── right module separators ── */
 #custom-vpn,
 #network,
 #pulseaudio,
@@ -97,40 +103,69 @@ window#waybar.hidden {
 #battery,
 #clock,
 #tray {
-    border-left: 1px solid rgba(255, 255, 255, 0.06);
+    border-left: 1px solid rgba(80, 250, 123, 0.08);
 }
 
+/* ── clock ── */
 #clock {
-    color: @accent;
+    color: @green;
 }
 
-#custom-vpn.connected,
+/* ── network ── */
+#network {
+    color: @text;
+}
+
+#network.disconnected {
+    color: @red;
+}
+
+/* ── vpn ── */
+#custom-vpn.connected {
+    color: @green;
+}
+
+#custom-vpn.disconnected {
+    color: @muted;
+}
+
+/* ── audio ── */
+#pulseaudio.muted {
+    color: @muted;
+}
+
+/* ── cpu / mem ── */
+#cpu,
+#memory {
+    color: @cyan;
+}
+
+/* ── battery ── */
 #battery.charging,
 #battery.plugged {
     color: @green;
 }
 
-#pulseaudio.muted,
-#custom-vpn.disconnected,
-#network.disconnected {
-    color: @muted;
-}
-
 #battery.warning {
-    color: @accent;
+    color: @yellow;
 }
 
-@keyframes blink {
-    to {
-        color: @red;
-    }
+@keyframes blink-critical {
+    0%   { color: @red; }
+    50%  { color: @muted; }
+    100% { color: @red; }
 }
 
 #battery.critical:not(.charging) {
     color: @red;
-    animation-name: blink;
-    animation-duration: 0.5s;
-    animation-timing-function: steps(12);
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
+    animation: blink-critical 1s ease-in-out infinite;
+}
+
+/* ── tray ── */
+#tray > .passive {
+    -gtk-icon-effect: dim;
+}
+
+#tray > .needs-attention {
+    -gtk-icon-effect: highlight;
 }
