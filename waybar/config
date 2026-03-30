@@ -18,7 +18,6 @@
         "custom/updates",
         "custom/vpn",
         "network",
-        "pulseaudio",
         "cpu",
         "memory",
         "battery",
@@ -73,19 +72,6 @@
         "tooltip-format-disconnected": "no connection",
         "interval": 15,
         "on-click": "nm-connection-editor"
-    },
-    "pulseaudio": {
-        "format": "vol {volume}%",
-        "format-muted": "vol mute",
-        "format-icons": {
-            "default": [
-                "",
-                ""
-            ]
-        },
-        "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
-        "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
-        "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     },
     "cpu": {
         "format": "cpu {usage}%",
