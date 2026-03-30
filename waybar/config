@@ -11,15 +11,18 @@
         "hyprland/workspaces"
     ],
     "modules-center": [
+        "custom/media",
         "clock"
     ],
     "modules-right": [
+        "custom/updates",
         "custom/vpn",
         "network",
         "pulseaudio",
         "cpu",
         "memory",
         "battery",
+        "hyprland/language",
         "tray"
     ],
     "custom/terminal": {
@@ -33,6 +36,24 @@
         "persistent-workspaces": {
             "*": 5
         }
+    },
+    "custom/media": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/scripts/mediaplayer.sh",
+        "return-type": "json",
+        "interval": 3,
+        "tooltip": true,
+        "on-click": "playerctl play-pause",
+        "on-scroll-up": "playerctl next",
+        "on-scroll-down": "playerctl previous"
+    },
+    "custom/updates": {
+        "format": "upd {}",
+        "exec": "$HOME/.config/scripts/updates.sh",
+        "return-type": "json",
+        "interval": 3600,
+        "tooltip": true,
+        "on-click": "ghostty -e yay -Syu"
     },
     "custom/vpn": {
         "format": "{}",
@@ -89,6 +110,12 @@
             "critical": 20
         },
         "tooltip-format": "battery: {capacity}%\n{timeTo}\npower: {power:.1f}W"
+    },
+    "hyprland/language": {
+        "format": "{}",
+        "format-en": "en",
+        "format-mn": "mn",
+        "tooltip-format": "keyboard: {long}"
     },
     "clock": {
         "format": "{:%H:%M:%S}",
