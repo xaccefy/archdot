@@ -46,7 +46,7 @@ window#waybar.hidden {
     min-height: 24px;
     color: #d8dee9;
     background: transparent;
-    text-shadow: -1px -1px 0 #0a0a0a, 1px -1px 0 #0a0a0a, -1px 1px 0 #0a0a0a, 1px 1px 0 #0a0a0a;
+    text-shadow: 0 0 2px #0a0a0a;
 }
 
 /* ── left: prompt icon ── */
@@ -70,7 +70,7 @@ window#waybar.hidden {
     color: #7b88a1;
     background: transparent;
     border-bottom: 2px solid transparent;
-    text-shadow: -1px -1px 0 #0a0a0a, 1px -1px 0 #0a0a0a, -1px 1px 0 #0a0a0a, 1px 1px 0 #0a0a0a;
+    text-shadow: 0 0 2px #0a0a0a;
     transition:
         color 0.12s ease,
         border-color 0.12s ease,
@@ -115,24 +115,24 @@ window#waybar.hidden {
 /* ── battery ── */
 #battery {
     color: #d8dee9;
-    text-shadow: -1px -1px 0 #0a0a0a, 1px -1px 0 #0a0a0a, -1px 1px 0 #0a0a0a, 1px 1px 0 #0a0a0a;
+    text-shadow: 0 0 2px #0a0a0a;
 }
 
 #battery.charging,
 #battery.plugged {
     color: #d8dee9;
-    text-shadow: -1px -1px 0 #a3be8c, 1px -1px 0 #a3be8c, -1px 1px 0 #a3be8c, 1px 1px 0 #a3be8c;
+    text-shadow: 0 0 2px #a3be8c;
 }
 
 #battery.warning {
     color: #d8dee9;
-    text-shadow: -1px -1px 0 #ebcb8b, 1px -1px 0 #ebcb8b, -1px 1px 0 #ebcb8b, 1px 1px 0 #ebcb8b;
+    text-shadow: 0 0 2px #ebcb8b;
 }
 
 @keyframes blink-critical {
-    0%   { color: #d8dee9; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
+    0%   { color: #d8dee9; text-shadow: 0 0 2px #bf616a; }
     50%  { color: @muted; text-shadow: none; }
-    100% { color: #d8dee9; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
+    100% { color: #d8dee9; text-shadow: 0 0 2px #bf616a; }
 }
 
 #battery.critical:not(.charging) {
@@ -141,17 +141,17 @@ window#waybar.hidden {
 
 #pulseaudio.muted {
     color: @muted;
-    text-shadow: -1px -1px 0 #4c566a, 1px -1px 0 #4c566a, -1px 1px 0 #4c566a, 1px 1px 0 #4c566a;
+    text-shadow: 0 0 2px #4c566a;
 }
 
 #custom-vpn.connected {
     color: #d8dee9;
-    text-shadow: -1px -1px 0 #a3be8c, 1px -1px 0 #a3be8c, -1px 1px 0 #a3be8c, 1px 1px 0 #a3be8c;
+    text-shadow: 0 0 2px #a3be8c;
 }
 
 #network.disconnected {
     color: #d8dee9;
-    text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a;
+    text-shadow: 0 0 2px #bf616a;
 }
 
 /* ── tray ── */
