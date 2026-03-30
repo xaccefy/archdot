@@ -11,9 +11,9 @@ check_caffeine() {
 # Function to get caffeine status for Waybar
 get_status() {
     if check_caffeine; then
-        echo '{"text": " ☕ ", "tooltip": "Caffeine is ON", "class": "enabled"}'
+        echo '{"text": " ☕ ", "tooltip": "Caffeine is ON"}'
     else
-        echo '{"text": " ✓ ", "tooltip": "Caffeine is OFF", "class": "disabled"}'
+        echo '{"text": " ☕ ", "tooltip": "Caffeine is OFF"}'
     fi
 }
 

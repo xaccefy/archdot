@@ -8,8 +8,7 @@ INTERFACES=("tun0" "tun1" "wg0" "wg1" "proton0" "nordlynx")
 get_vpn_ip() {
     for iface in "${INTERFACES[@]}"; do
         if ip link show "$iface" &>/dev/null; then
-            local ip
-            ip=$(ip -4 addr show "$iface" 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+            local ip=$(ip -4 addr show "$iface" 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
             if [[ -n "$ip" ]]; then
                 printf '%s' "$ip"
                 return 0
@@ -21,8 +20,7 @@ get_vpn_ip() {
 get_vpn_status() {
     for iface in "${INTERFACES[@]}"; do
         if ip link show "$iface" &>/dev/null; then
-            local ip
-            ip=$(ip -4 addr show "$iface" 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+            local ip=$(ip -4 addr show "$iface" 2>/dev/null | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
             if [[ -n "$ip" ]]; then
                 echo "{\"text\": \"VPN: $iface $ip\", \"tooltip\": \"Connected via $iface\\nIP: $ip\", \"class\": \"connected\"}"
                 return 0

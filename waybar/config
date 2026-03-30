@@ -1,21 +1,18 @@
 {
     "layer": "top",
     "position": "top",
-    "height": 15,
+    "height": 24,
     "margin-top": 0,
     "margin-left": 5,
     "margin-right": 5,
-    "spacing": 3,
-
+    "spacing": 0,
     "modules-left": [
         "custom/terminal",
         "hyprland/workspaces"
     ],
-
     "modules-center": [
         "clock"
     ],
-
     "modules-right": [
         "custom/caffeine",
         "custom/vpn",
@@ -26,39 +23,27 @@
         "battery",
         "tray"
     ],
-
     "custom/terminal": {
         "format": " ",
         "tooltip": false,
         "on-click": "rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/style-6.rasi"
     },
-
-    "custom/caffeine": {
-        "format": "{}",
-        "exec": "$HOME/.config/waybar/scripts/caffeine.sh status",
-        "return-type": "json",
-        "on-click": "$HOME/.config/waybar/scripts/caffeine.sh toggle",
-        "tooltip": true
-    },
-
-
     "hyprland/workspaces": {
         "on-click": "activate",
-        "format": "{name}",
-        "format-icons": {
-            "active": "*",
-            "default": "o"
-        },
+        "format": "{id}",
         "persistent-workspaces": {
             "*": 5
         }
     },
-
-    "hyprland/window": {
-        "max-length": 40,
-        "format": "{}"
+    "custom/caffeine": {
+        "format": "{}",
+        "exec": "$HOME/.config/waybar/scripts/caffeine.sh status",
+        "return-type": "json",
+        "interval": 5,
+        "tooltip": true,
+        "on-click": "$HOME/.config/waybar/scripts/caffeine.sh toggle",
+        "signal": 8
     },
-
     "custom/vpn": {
         "format": "{}",
         "exec": "$HOME/.config/waybar/scripts/vpn.sh",
@@ -67,59 +52,67 @@
         "tooltip": true,
         "on-click": "$HOME/.config/waybar/scripts/vpn.sh copy"
     },
-
     "network": {
-        "interface": "wlan0",
         "format": "{ifname}",
-        "format-wifi": "{ifname}",
-        "format-ethernet": "{ifname}",
-        "format-disconnected": "DOWN",
-        "tooltip-format": "{ifname} - {ipaddr}/{cidr}",
-        "interval": 15
+        "format-wifi": " {essid}",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": " DOWN",
+        "tooltip-format-wifi": "{ifname} · {essid}\n{signalStrength}% · {ipaddr}/{cidr}",
+        "tooltip-format-ethernet": "{ifname} · {ipaddr}/{cidr}",
+        "tooltip-format-disconnected": "No connection",
+        "interval": 15,
+        "on-click": "nm-connection-editor"
     },
-
     "pulseaudio": {
         "format": "{icon} {volume}%",
         "format-muted": " mute",
         "format-icons": {
-            "default": ["", ""]
+            "default": [
+                "",
+                ""
+            ]
         },
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
         "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
         "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     },
-
     "cpu": {
-        "format": "CPU:{}%",
-        "interval": 10
+        "format": " {}%",
+        "interval": 10,
+        "tooltip-format": "CPU: {usage}%\n{avg_frequency} GHz",
+        "on-click": "ghostty -e btop"
     },
-
     "memory": {
-        "format": "RAM:{}%",
-        "interval": 15
+        "format": " {}%",
+        "interval": 15,
+        "tooltip-format": "RAM: {used:0.1f} / {total:0.1f} GiB",
+        "on-click": "ghostty -e btop"
     },
-
     "battery": {
-        "format": "BAT:{capacity}% {icon}",
-        "format-charging": "BAT:{capacity}% ",
-        "format-plugged": "BAT:{capacity}% ",
-        "format-alt": "BAT:{time} {icon}",
-        "format-icons": ["", "", "", "", "", "", "", "", "", ""],
+        "format": "{icon} {capacity}%",
+        "format-charging": " {capacity}%",
+        "format-plugged": " {capacity}%",
+        "format-alt": "{icon} {time}",
+        "format-icons": [
+            "",
+            "",
+            "",
+            "",
+            ""
+        ],
         "states": {
             "good": 90,
             "warning": 30,
             "critical": 20
         },
-        "tooltip": true
+        "tooltip-format": "Battery: {capacity}%\n{timeTo}\nPower: {power:.1f}W"
     },
-
     "clock": {
         "format": "{:%H:%M}",
-        "format-alt": "{:%d/%m %H:%M}",
+        "format-alt": "{:%a %d/%m %H:%M}",
         "tooltip-format": "<tt>{calendar}</tt>",
         "on-click-right": "mode"
     },
-
     "tray": {
         "icon-size": 16,
         "spacing": 3

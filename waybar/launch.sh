@@ -9,21 +9,19 @@
 # -----------------------------------------------------
 
 # Check if waybar-disabled file exists
-if [ -f $HOME/.cache/waybar-disabled ]; then
-  killall waybar
-  pkill waybar
+if [ -f "$HOME/.cache/waybar-disabled" ]; then
+  pkill -x waybar 2>/dev/null
   exit 1
 fi
 
 # -----------------------------------------------------
 # Quit all running waybar instances
 # -----------------------------------------------------
-killall waybar
-pkill waybar
+pkill -x waybar 2>/dev/null
 # -----------------------------------------------------
 # Loading the configuration
 # -----------------------------------------------------
 config_file="config"
 style_file="style.css"
 
-waybar -c ~/.config/waybar/$config_file -s ~/.config/waybar/$style_file &
+waybar -c "$HOME/.config/waybar/$config_file" -s "$HOME/.config/waybar/$style_file" &
