@@ -1,13 +1,9 @@
 #!/bin/bash
 
-# Interactive wallpaper setting script for Hyprland (swww)
+# Interactive wallpaper setting script for Hyprland (awww)
 
-WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/.config/wallpapers}"
+WALLPAPER_DIR="$HOME/Pictures"
 SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
-
-if [ ! -d "$WALLPAPER_DIR" ]; then
-    WALLPAPER_DIR="$HOME/Pictures"
-fi
 
 echo "Current wallpaper directory: $WALLPAPER_DIR"
 echo "Available wallpapers:"
@@ -45,7 +41,7 @@ fi
 
 echo "Setting wallpaper: $selected_wallpaper"
 
-swww img "$selected_wallpaper" "${SWWW_FLAGS[@]}"
+awww img "$selected_wallpaper" "${SWWW_FLAGS[@]}"
 
 $HOME/.config/hypr/scripts/update_hyprlock_bg.sh "$selected_wallpaper"
 

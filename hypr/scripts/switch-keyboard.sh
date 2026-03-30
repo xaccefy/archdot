@@ -3,3 +3,4 @@
 # Uses the built-in keyboard layout toggle
 
 setxkbmap -layout us,mn -option grp:win_space_toggle
+xdotool key Shift_L

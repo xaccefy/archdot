@@ -1,15 +1,11 @@
 #!/bin/bash
 
-# Sequential wallpaper script for Hyprland (swww)
+# Sequential wallpaper script for Hyprland (awww)
 # Modified to cycle through wallpapers one by one instead of random selection
 
-WALLPAPER_DIR="${WALLPAPER_DIR:-$HOME/.config/wallpapers}"
+WALLPAPER_DIR="$HOME/Pictures"
 CACHE_FILE="$HOME/.cache/current_wallpaper"
 SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
-
-if [ ! -d "$WALLPAPER_DIR" ]; then
-    WALLPAPER_DIR="$HOME/Pictures"
-fi
 
 # Ensure cache directory exists
 mkdir -p "$(dirname "$CACHE_FILE")"
@@ -18,7 +14,11 @@ cycle_wallpaper() {
     local wallpaper_dir="${1:-$WALLPAPER_DIR}"
     
     # Get sorted list of wallpapers to ensure consistent order
-    local wallpapers=($(find "$wallpaper_dir" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f | sort))
+    # Use mapfile to safely handle filenames with spaces
+    local wallpapers=()
+    while IFS=  read -r -d $'\0'; do
+        wallpapers+=("$REPLY")
+    done < <(find "$wallpaper_dir" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f -print0 | sort -z)
     
     if [ ${#wallpapers[@]} -eq 0 ]; then
         echo "No wallpapers found in $wallpaper_dir"
@@ -45,7 +45,10 @@ cycle_wallpaper() {
     
     echo "Selected wallpaper: $selected_wallpaper"
     
-    swww img "$selected_wallpaper" "${SWWW_FLAGS[@]}"
+    awww img "$selected_wallpaper" "${SWWW_FLAGS[@]}"
+    
+    # Optional: Send notification
+    # notify-send "Wallpaper" "Changed to $(basename "$selected_wallpaper")" -i "$selected_wallpaper"
 
     # Save selected wallpaper to cache
     echo "$selected_wallpaper" > "$CACHE_FILE"
