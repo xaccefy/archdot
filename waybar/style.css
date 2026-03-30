@@ -82,9 +82,9 @@ window#waybar.hidden {
 }
 
 #workspaces button.active {
-    color: @blue;
-    background: rgba(120, 169, 255, 0.08);
-    border-bottom-color: @blue;
+    color: @text;
+    background: rgba(242, 244, 248, 0.08);
+    border-bottom-color: @text;
 }
 
 #workspaces button.focused {
@@ -113,7 +113,7 @@ window#waybar.hidden {
 
 /* ── clock ── */
 #clock {
-    color: @blue;
+    color: @text;
 }
 
 /* ── updates ── */
