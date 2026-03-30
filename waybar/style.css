@@ -28,7 +28,6 @@ window#waybar.hidden {
 }
 
 #custom-terminal,
-#custom-caffeine,
 #custom-vpn,
 #network,
 #pulseaudio,
@@ -90,7 +89,6 @@ window#waybar.hidden {
     border-bottom-color: @red;
 }
 
-#custom-caffeine,
 #custom-vpn,
 #network,
 #pulseaudio,

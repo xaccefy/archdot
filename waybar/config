@@ -14,7 +14,6 @@
         "clock"
     ],
     "modules-right": [
-        "custom/caffeine",
         "custom/vpn",
         "network",
         "pulseaudio",
@@ -34,15 +33,6 @@
         "persistent-workspaces": {
             "*": 5
         }
-    },
-    "custom/caffeine": {
-        "format": "{}",
-        "exec": "$HOME/.config/waybar/scripts/caffeine.sh status",
-        "return-type": "json",
-        "interval": 5,
-        "tooltip": true,
-        "on-click": "$HOME/.config/waybar/scripts/caffeine.sh toggle",
-        "signal": 8
     },
     "custom/vpn": {
         "format": "{}",
