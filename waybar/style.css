@@ -12,7 +12,7 @@
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 400;
     border: none;
     border-radius: 0;
@@ -112,7 +112,12 @@ window#waybar.hidden {
     border-left: 1px solid rgba(76, 86, 106, 0.3);
 }
 
-/* ── battery states keep subtle differentiation ── */
+/* ── battery ── */
+#battery {
+    color: #d8dee9;
+    text-shadow: -1px -1px 0 #0a0a0a, 1px -1px 0 #0a0a0a, -1px 1px 0 #0a0a0a, 1px 1px 0 #0a0a0a;
+}
+
 #battery.charging,
 #battery.plugged {
     color: #d8dee9;
