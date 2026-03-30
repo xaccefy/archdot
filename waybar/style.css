@@ -1,6 +1,6 @@
 @define-color bg rgba(36, 39, 48, 0.92);
 @define-color border rgba(76, 86, 106, 0.25);
-@define-color text #0a0a0a;
+@define-color text #d8dee9;
 @define-color muted #3b4252;
 @define-color blue #0a0a0a;
 @define-color cyan #0a0a0a;
@@ -21,7 +21,7 @@
 
 window#waybar {
     background: @bg;
-    color: @text;
+    color: #d8dee9;
     border-bottom: 1px solid @border;
 }
 
@@ -44,9 +44,9 @@ window#waybar.hidden {
     margin: 0;
     padding: 0 12px;
     min-height: 24px;
-    color: @text;
+    color: #d8dee9;
     background: transparent;
-    text-shadow: -1px -1px 0 #d8dee9, 1px -1px 0 #d8dee9, -1px 1px 0 #d8dee9, 1px 1px 0 #d8dee9;
+    text-shadow: -1px -1px 0 #0a0a0a, 1px -1px 0 #0a0a0a, -1px 1px 0 #0a0a0a, 1px 1px 0 #0a0a0a;
 }
 
 /* ── left: prompt icon ── */
@@ -70,7 +70,7 @@ window#waybar.hidden {
     color: @muted;
     background: transparent;
     border-bottom: 2px solid transparent;
-    text-shadow: -1px -1px 0 #d8dee9, 1px -1px 0 #d8dee9, -1px 1px 0 #d8dee9, 1px 1px 0 #d8dee9;
+    text-shadow: -1px -1px 0 #0a0a0a, 1px -1px 0 #0a0a0a, -1px 1px 0 #0a0a0a, 1px 1px 0 #0a0a0a;
     transition:
         color 0.12s ease,
         border-color 0.12s ease,
@@ -78,23 +78,23 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-    color: @text;
+    color: #d8dee9;
     background: rgba(216, 222, 233, 0.06);
 }
 
 #workspaces button.active {
-    color: @text;
+    color: #d8dee9;
     background: rgba(216, 222, 233, 0.08);
     border-bottom-color: #d8dee9;
 }
 
 #workspaces button.focused {
-    color: @text;
+    color: #d8dee9;
     border-bottom-color: #d8dee9;
 }
 
 #workspaces button.urgent {
-    color: @text;
+    color: #d8dee9;
     border-bottom-color: #bf616a;
 }
 
@@ -115,19 +115,19 @@ window#waybar.hidden {
 /* ── battery states keep subtle differentiation ── */
 #battery.charging,
 #battery.plugged {
-    color: #2e3440;
+    color: #d8dee9;
     text-shadow: -1px -1px 0 #a3be8c, 1px -1px 0 #a3be8c, -1px 1px 0 #a3be8c, 1px 1px 0 #a3be8c;
 }
 
 #battery.warning {
-    color: #2e3440;
+    color: #d8dee9;
     text-shadow: -1px -1px 0 #ebcb8b, 1px -1px 0 #ebcb8b, -1px 1px 0 #ebcb8b, 1px 1px 0 #ebcb8b;
 }
 
 @keyframes blink-critical {
-    0%   { color: #2e3440; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
+    0%   { color: #d8dee9; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
     50%  { color: @muted; text-shadow: none; }
-    100% { color: #2e3440; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
+    100% { color: #d8dee9; text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a; }
 }
 
 #battery.critical:not(.charging) {
@@ -140,12 +140,12 @@ window#waybar.hidden {
 }
 
 #custom-vpn.connected {
-    color: #2e3440;
+    color: #d8dee9;
     text-shadow: -1px -1px 0 #a3be8c, 1px -1px 0 #a3be8c, -1px 1px 0 #a3be8c, 1px 1px 0 #a3be8c;
 }
 
 #network.disconnected {
-    color: #2e3440;
+    color: #d8dee9;
     text-shadow: -1px -1px 0 #bf616a, 1px -1px 0 #bf616a, -1px 1px 0 #bf616a, 1px 1px 0 #bf616a;
 }
 
