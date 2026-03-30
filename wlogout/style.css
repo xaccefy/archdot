@@ -1,55 +1,58 @@
-/* ----------- 💫 https://github.com/JaKooLit 💫 -------- */
-/* Importing pywal colors */
-
-@import "../waybar/style.css";
+/* wlogout — Oxocarbon theme */
 
 window {
-  font-family: Fira Code Medium;
-  font-size: 16pt;
-  color: #cdd6f4; /* text */
-  background-color: rgba(30, 30, 46, 0.6);
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 16pt;
+    color: #f2f4f8;
+    background-color: rgba(22, 22, 22, 0.7);
 }
 
 button {
-  background-repeat: no-repeat;
-  background-position: center;
-  background-size: 20%;
-  background-color: rgba(200, 220, 255, 0);
-  animation: gradient_f 20s ease-in infinite;
-  border-radius: 50px; /* Increased border radius for a more rounded look */
-  outline: none;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: 20%;
+    background-color: transparent;
+    border-radius: 16px;
+    outline: none;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+button:hover {
+    background-color: rgba(120, 169, 255, 0.08);
+    border-color: rgba(120, 169, 255, 0.3);
 }
 
 button:active,
 button:focus {
-  box-shadow: 0 0 10px #ebe1f0;
+    box-shadow: 0 0 8px rgba(120, 169, 255, 0.3);
+    border-color: #78a9ff;
 }
 
-/* Adjust the size of the icon or content inside the button */
 button span {
-  font-size: 1.2em; /* Increase the font size */
+    font-size: 1.2em;
 }
 
 #lock {
-  background-image: image(url("./icons/lock.png"));
+    background-image: image(url("./icons/lock.png"));
 }
 
 #logout {
-  background-image: image(url("./icons/logout.png"));
+    background-image: image(url("./icons/logout.png"));
 }
 
 #suspend {
-  background-image: image(url("./icons/sleep.png"));
+    background-image: image(url("./icons/sleep.png"));
 }
 
 #shutdown {
-  background-image: image(url("./icons/power.png"));
+    background-image: image(url("./icons/power.png"));
 }
 
 #reboot {
-  background-image: image(url("./icons/restart.png"));
+    background-image: image(url("./icons/restart.png"));
 }
 
 #hibernate {
-  background-image: image(url("./icons/hibernate.png"));
+    background-image: image(url("./icons/hibernate.png"));
 }

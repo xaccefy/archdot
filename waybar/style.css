@@ -1,14 +1,14 @@
-@define-color bg rgba(36, 39, 48, 0.92);
-@define-color border rgba(76, 86, 106, 0.25);
-@define-color text #d8dee9;
-@define-color muted #3b4252;
-@define-color blue #0a0a0a;
-@define-color cyan #0a0a0a;
-@define-color purple #0a0a0a;
-@define-color green #0a0a0a;
-@define-color red #0a0a0a;
-@define-color yellow #0a0a0a;
-@define-color orange #0a0a0a;
+@define-color bg rgba(22, 22, 22, 0.92);
+@define-color border rgba(57, 57, 57, 0.4);
+@define-color text #f2f4f8;
+@define-color muted #525252;
+@define-color blue #78a9ff;
+@define-color cyan #33b1ff;
+@define-color purple #be95ff;
+@define-color green #42be65;
+@define-color red #ee5396;
+@define-color yellow #f1c21b;
+@define-color orange #ff6f00;
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
@@ -21,7 +21,7 @@
 
 window#waybar {
     background: @bg;
-    color: #d8dee9;
+    color: @text;
     border-bottom: 1px solid @border;
 }
 
@@ -44,15 +44,15 @@ window#waybar.hidden {
     margin: 0;
     padding: 0 12px;
     min-height: 24px;
-    color: #d8dee9;
+    color: @text;
     background: transparent;
-    text-shadow: 0 0 2px #0a0a0a;
 }
 
 /* ── left: prompt icon ── */
 #custom-terminal {
     padding-left: 12px;
     padding-right: 14px;
+    color: @blue;
     font-size: 15px;
 }
 
@@ -67,10 +67,9 @@ window#waybar.hidden {
     min-height: 24px;
     margin: 0;
     padding: 0 10px;
-    color: #7b88a1;
+    color: @muted;
     background: transparent;
     border-bottom: 2px solid transparent;
-    text-shadow: 0 0 2px #0a0a0a;
     transition:
         color 0.12s ease,
         border-color 0.12s ease,
@@ -78,24 +77,24 @@ window#waybar.hidden {
 }
 
 #workspaces button:hover {
-    color: #d8dee9;
-    background: rgba(216, 222, 233, 0.06);
+    color: @text;
+    background: rgba(120, 169, 255, 0.04);
 }
 
 #workspaces button.active {
-    color: #d8dee9;
-    background: rgba(216, 222, 233, 0.08);
-    border-bottom-color: #d8dee9;
+    color: @blue;
+    background: rgba(120, 169, 255, 0.08);
+    border-bottom-color: @blue;
 }
 
 #workspaces button.focused {
-    color: #d8dee9;
-    border-bottom-color: #d8dee9;
+    color: @cyan;
+    border-bottom-color: @cyan;
 }
 
 #workspaces button.urgent {
-    color: #d8dee9;
-    border-bottom-color: #bf616a;
+    color: @red;
+    border-bottom-color: @red;
 }
 
 /* ── right module separators ── */
@@ -109,49 +108,75 @@ window#waybar.hidden {
 #battery,
 #clock,
 #tray {
-    border-left: 1px solid rgba(76, 86, 106, 0.3);
+    border-left: 1px solid rgba(57, 57, 57, 0.5);
+}
+
+/* ── clock ── */
+#clock {
+    color: @blue;
+}
+
+/* ── updates ── */
+#custom-updates.yellow {
+    color: @yellow;
+}
+
+#custom-updates.red {
+    color: @orange;
+}
+
+/* ── keyboard layout ── */
+#language {
+    color: @purple;
+}
+
+/* ── network ── */
+#network.disconnected {
+    color: @red;
+}
+
+/* ── vpn ── */
+#custom-vpn.connected {
+    color: @green;
+}
+
+#custom-vpn.disconnected {
+    color: @muted;
+}
+
+/* ── audio ── */
+#pulseaudio.muted {
+    color: @muted;
+}
+
+/* ── cpu / mem ── */
+#cpu {
+    color: @cyan;
+}
+
+#memory {
+    color: @purple;
 }
 
 /* ── battery ── */
-#battery {
-    color: #d8dee9;
-    text-shadow: 0 0 2px #0a0a0a;
-}
-
 #battery.charging,
 #battery.plugged {
-    color: #d8dee9;
-    text-shadow: 0 0 2px #a3be8c;
+    color: @green;
 }
 
 #battery.warning {
-    color: #d8dee9;
-    text-shadow: 0 0 2px #ebcb8b;
+    color: @yellow;
 }
 
 @keyframes blink-critical {
-    0%   { color: #d8dee9; text-shadow: 0 0 2px #bf616a; }
-    50%  { color: @muted; text-shadow: none; }
-    100% { color: #d8dee9; text-shadow: 0 0 2px #bf616a; }
+    0%   { color: @red; }
+    50%  { color: @muted; }
+    100% { color: @red; }
 }
 
 #battery.critical:not(.charging) {
+    color: @red;
     animation: blink-critical 1s ease-in-out infinite;
-}
-
-#pulseaudio.muted {
-    color: #7b88a1;
-    text-shadow: 0 0 2px #0a0a0a;
-}
-
-#custom-vpn.connected {
-    color: #d8dee9;
-    text-shadow: 0 0 2px #a3be8c;
-}
-
-#network.disconnected {
-    color: #d8dee9;
-    text-shadow: 0 0 2px #bf616a;
 }
 
 /* ── tray ── */

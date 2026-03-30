@@ -1,8 +1,27 @@
-background = #161718
-foreground = #b7bcb9
-selection-background = #F8F8F8
-selection-foreground = #161718
-cursor-color = #b7bcb9
+# Oxocarbon theme
+background = #161616
+foreground = #f2f4f8
+cursor-color = #f2f4f8
+selection-background = #353535
+selection-foreground = #f2f4f8
+
+# 16 colors — Oxocarbon
+palette = 0=#161616
+palette = 1=#ee5396
+palette = 2=#42be65
+palette = 3=#f1c21b
+palette = 4=#78a9ff
+palette = 5=#be95ff
+palette = 6=#33b1ff
+palette = 7=#dde1e6
+palette = 8=#525252
+palette = 9=#ee5396
+palette = 10=#42be65
+palette = 11=#f1c21b
+palette = 12=#78a9ff
+palette = 13=#be95ff
+palette = 14=#33b1ff
+palette = 15=#f2f4f8
 
 font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 14
@@ -10,10 +29,10 @@ font-size = 14
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
-background-opacity = 0.8
+background-opacity = 0.92
 window-decoration = false
 window-padding-x = 5
 window-padding-y = 5
 
 gtk-single-instance = true
-theme = Aura
+window-theme = ghostty

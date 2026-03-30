@@ -1,0 +1,13 @@
+/**
+ * Oxocarbon Color Scheme
+ * IBM Carbon Design inspired
+ **/
+
+* {
+    background:     #161616FF;
+    background-alt: #262626FF;
+    foreground:     #f2f4f8FF;
+    selected:       #78a9ffFF;
+    active:         #42be65FF;
+    urgent:         #ee5396FF;
+}

@@ -1,7 +1,34 @@
 add_newline = false
 
 [character]
-success_symbol = '[\$](bold green)'
+success_symbol = '[\$](bold #42be65)'
+error_symbol = '[\$](bold #ee5396)'
+
+[directory]
+style = 'bold #78a9ff'
+truncation_length = 3
+
+[git_branch]
+style = 'bold #be95ff'
+
+[git_status]
+style = '#f1c21b'
+
+[cmd_duration]
+style = '#525252'
+min_time = 2_000
 
 [package]
 disabled = true
+
+[nodejs]
+style = '#42be65'
+
+[python]
+style = '#f1c21b'
+
+[rust]
+style = '#ee5396'
+
+[golang]
+style = '#33b1ff'
