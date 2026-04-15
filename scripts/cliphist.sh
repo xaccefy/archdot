@@ -1,3 +1,1 @@
-#!/usr/bin/env bash
-
 cliphist list | rofi -dmenu -replace -theme ~/.config/rofi/launchers/type-1/style-11.rasi | cliphist decode | wl-copy

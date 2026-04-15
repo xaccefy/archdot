@@ -39,6 +39,7 @@
     "custom/updates": {
         "format": "upd {}",
         "exec": "$HOME/.config/scripts/updates.sh",
+        "exec-if": "ping -c1 -W2 archlinux.org >/dev/null 2>&1",
         "return-type": "json",
         "interval": 3600,
         "tooltip": true,
@@ -54,9 +55,9 @@
     },
     "network": {
         "format": "{ifname}",
-        "format-wifi": " {essid} [{signalStrength}%]",
-        "format-ethernet": " {ifname}",
-        "format-disconnected": " offline",
+        "format-wifi": " {essid} [{signalStrength}%]",
+        "format-ethernet": " {ifname}",
+        "format-disconnected": " offline",
         "tooltip-format-wifi": "iface: {ifname}\nssid: {essid}\nsignal: {signalStrength}%\nip: {ipaddr}/{cidr}\nfreq: {frequency}GHz",
         "tooltip-format-ethernet": "iface: {ifname}\nip: {ipaddr}/{cidr}",
         "tooltip-format-disconnected": "no connection",
@@ -65,12 +66,16 @@
     },
     "cpu": {
         "format": "cpu {usage}%",
+        "format-alt": "cpu {load}",
         "interval": 5,
+        "on-click-right": "ghostty -e btop",
         "tooltip-format": "cpu: {usage}%\nfreq: {avg_frequency}GHz\nload: {load}"
     },
     "memory": {
         "format": "mem {percentage}%",
+        "format-alt": "mem {used:0.1f}G",
         "interval": 10,
+        "on-click-right": "ghostty -e btop",
         "tooltip-format": "ram: {used:0.1f}/{total:0.1f}GiB\nswap: {swapUsed:0.1f}/{swapTotal:0.1f}GiB"
     },
     "battery": {
@@ -95,8 +100,7 @@
         "format": "{:%H:%M}",
         "format-alt": "{:%Y-%m-%d %H:%M}",
         "interval": 60,
-        "tooltip-format": "<tt>{calendar}</tt>",
-        "on-click-right": "mode"
+        "tooltip-format": "<tt>{calendar}</tt>"
     },
     "tray": {
         "icon-size": 16,
@@ -111,7 +115,9 @@
                 ""
             ]
         },
+        "max-volume": 100,
         "on-click": "pactl set-sink-mute @DEFAULT_SINK@ toggle",
+        "on-click-right": "pavucontrol",
         "on-scroll-up": "pactl set-sink-volume @DEFAULT_SINK@ +5%",
         "on-scroll-down": "pactl set-sink-volume @DEFAULT_SINK@ -5%"
     }
