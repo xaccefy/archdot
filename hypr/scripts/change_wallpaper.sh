@@ -3,7 +3,7 @@
 # Wallpaper changing script for Hyprland (awww)
 
 WALLPAPER_DIR="$HOME/Pictures"
-SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
+AWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
 
 change_wallpaper() {
     local wallpaper_path="$1"
@@ -13,7 +13,8 @@ change_wallpaper() {
         exit 1
     fi
 
-    awww img "$wallpaper_path" "${SWWW_FLAGS[@]}"
+    awww img "$wallpaper_path" "${AWWW_FLAGS[@]}"
+    echo "$wallpaper_path" > "$HOME/.cache/current_wallpaper"
 
     $HOME/.config/hypr/scripts/update_hyprlock_bg.sh "$wallpaper_path"
 }

@@ -5,7 +5,7 @@
 
 WALLPAPER_DIR="$HOME/Pictures"
 CACHE_FILE="$HOME/.cache/current_wallpaper"
-SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
+AWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
 
 # Ensure cache directory exists
 mkdir -p "$(dirname "$CACHE_FILE")"
@@ -45,7 +45,7 @@ cycle_wallpaper() {
     
     echo "Selected wallpaper: $selected_wallpaper"
     
-    awww img "$selected_wallpaper" "${SWWW_FLAGS[@]}"
+    awww img "$selected_wallpaper" "${AWWW_FLAGS[@]}"
     
     # Optional: Send notification
     # notify-send "Wallpaper" "Changed to $(basename "$selected_wallpaper")" -i "$selected_wallpaper"

@@ -1,8 +1,5 @@
 #!/bin/bash
 
-# Script to update hyprlock background configuration
-# For TUI mode, we keep the solid color background
-
 WALLPAPER_PATH="$1"
 HYPRLOCK_CONFIG="$HOME/.config/hypr/hyprlock.conf"
 
@@ -11,6 +8,37 @@ if [ ! -f "$WALLPAPER_PATH" ]; then
     exit 1
 fi
 
-# For TUI mode, we keep the solid color background
-# We'll comment out the automatic background change and just notify user
-echo "Note: TUI mode uses a solid color background. To change background, manually edit $HYPRLOCK_CONFIG"
+if [ ! -f "$HYPRLOCK_CONFIG" ]; then
+    echo "Hyprlock config does not exist: $HYPRLOCK_CONFIG"
+    exit 1
+fi
+
+python - "$HYPRLOCK_CONFIG" "$WALLPAPER_PATH" <<'PY'
+from pathlib import Path
+import sys
+
+config = Path(sys.argv[1])
+wallpaper = sys.argv[2]
+lines = config.read_text().splitlines()
+in_background = False
+updated = False
+
+for index, line in enumerate(lines):
+    stripped = line.strip()
+    if stripped == "background {":
+        in_background = True
+        continue
+    if in_background and stripped == "}":
+        in_background = False
+        continue
+    if in_background and stripped.startswith("path ="):
+        indent = line[:len(line) - len(line.lstrip())]
+        lines[index] = f"{indent}path = {wallpaper}"
+        updated = True
+        break
+
+if not updated:
+    raise SystemExit("No background path found in hyprlock config")
+
+config.write_text("\n".join(lines) + "\n")
+PY

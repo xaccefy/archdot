@@ -16,7 +16,11 @@ if awww restore >/dev/null 2>&1; then
     exit 0
 fi
 
-first_wallpaper=$(find "$DEFAULT_WALLPAPER_DIR" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f | sort | head -n 1)
+first_wallpaper=""
+while IFS= read -r -d $'\0' wallpaper; do
+    first_wallpaper="$wallpaper"
+    break
+done < <(find "$DEFAULT_WALLPAPER_DIR" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f -print0 | sort -z)
 
 if [ -n "$first_wallpaper" ]; then
     exec awww img "$first_wallpaper" --transition-type none --transition-duration 0 --resize crop

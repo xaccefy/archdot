@@ -3,12 +3,15 @@
 # Interactive wallpaper setting script for Hyprland (awww)
 
 WALLPAPER_DIR="$HOME/Pictures"
-SWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
+AWWW_FLAGS=("--transition-type" "none" "--transition-duration" "0" "--resize" "crop")
 
 echo "Current wallpaper directory: $WALLPAPER_DIR"
 echo "Available wallpapers:"
 
-wallpapers=($(find "$WALLPAPER_DIR" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f))
+wallpapers=()
+while IFS= read -r -d $'\0'; do
+    wallpapers+=("$REPLY")
+done < <(find "$WALLPAPER_DIR" -maxdepth 1 \( -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" -o -name "*.webp" \) -type f -print0 | sort -z)
 
 if [ ${#wallpapers[@]} -eq 0 ]; then
     echo "No wallpapers found in $WALLPAPER_DIR"
@@ -41,7 +44,8 @@ fi
 
 echo "Setting wallpaper: $selected_wallpaper"
 
-awww img "$selected_wallpaper" "${SWWW_FLAGS[@]}"
+awww img "$selected_wallpaper" "${AWWW_FLAGS[@]}"
+echo "$selected_wallpaper" > "$HOME/.cache/current_wallpaper"
 
 $HOME/.config/hypr/scripts/update_hyprlock_bg.sh "$selected_wallpaper"
 

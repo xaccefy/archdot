@@ -9,28 +9,31 @@
 # by Stephan Raabe (2023)
 # -----------------------------------------------------
 
-DIR="$HOME/Pictures/screenshots/"
-NAME="screenshot_$(date +%d%m%Y_%H%M%S).png"
+DIR="$HOME/Pictures/Screenshots/"
+NAME="screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"
+FILE="$DIR$NAME"
+
+mkdir -p "$DIR"
 
 option2="Selected area"
 option3="Fullscreen (delay 3 sec)"
 
 options="$option2\n$option3"
 
-choice=$(echo -e "$options" | rofi -dmenu -replace -theme ~/.config/rofi/launchers/type-2/style-1.rasi -config ~/.config/rofi/config-screenshot.rasi -i -no-show-icons -l 2 -width 30 -p "Take Screenshot")
+choice=$(echo -e "$options" | rofi -dmenu -replace -theme ~/.config/rofi/launchers/type-2/style-1.rasi -i -no-show-icons -l 2 -width 30 -p "Take Screenshot")
 
 case $choice in
     $option2)
-        grim -g "$(slurp)" "$DIR$NAME"
-        xclip -selection clipboard -t image/png -i "$DIR$NAME"
+        grim -g "$(slurp)" "$FILE"
+        wl-copy --type image/png < "$FILE"
         notify-send "Screenshot created and copied to clipboard" "Mode: Selected area"
-        swappy -f "$DIR$NAME"
+        swappy -f "$FILE"
     ;;
     $option3)
         sleep 3
-        grim "$DIR$NAME"
-        xclip -selection clipboard -t image/png -i "$DIR$NAME"
+        grim "$FILE"
+        wl-copy --type image/png < "$FILE"
         notify-send "Screenshot created and copied to clipboard" "Mode: Fullscreen"
-        swappy -f "$DIR$NAME"
+        swappy -f "$FILE"
     ;;
 esac
