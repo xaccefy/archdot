@@ -1,10 +1,11 @@
-@define-color bg rgba(22, 22, 22, 0.92);
-@define-color border rgba(57, 57, 57, 0.4);
+@define-color bg rgba(18, 18, 18, 0.94);
+@define-color border rgba(255, 255, 255, 0.06);
 @define-color text #f2f4f8;
-@define-color muted #525252;
-@define-color blue #78a9ff;
+@define-color muted #6e6e6e;
+@define-color blue #82aaff;
 @define-color cyan #33b1ff;
 @define-color purple #be95ff;
+@define-color teal #3ddbd9;
 @define-color green #42be65;
 @define-color red #ee5396;
 @define-color yellow #f1c21b;
@@ -66,36 +67,52 @@ window#waybar.hidden {
 #workspaces button {
     min-width: 24px;
     min-height: 24px;
-    margin: 0;
+    margin: 2px 1px;
     padding: 0 8px;
-    color: @muted;
+    color: rgba(255, 255, 255, 0.50);
     background: transparent;
-    border-bottom: 2px solid transparent;
+    border: none;
+    border-radius: 4px;
     transition:
         color 0.12s ease,
-        border-color 0.12s ease,
         background 0.12s ease;
 }
 
 #workspaces button:hover {
     color: @text;
-    background: rgba(120, 169, 255, 0.04);
+    background: rgba(255, 255, 255, 0.06);
 }
 
 #workspaces button.active {
     color: @text;
-    background: rgba(242, 244, 248, 0.08);
-    border-bottom-color: @text;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+#workspaces button.empty {
+    color: rgba(255, 255, 255, 0.25);
 }
 
 #workspaces button.focused {
     color: @cyan;
-    border-bottom-color: @cyan;
+    background: rgba(51, 177, 255, 0.1);
 }
 
 #workspaces button.urgent {
     color: @red;
-    border-bottom-color: @red;
+    background: rgba(238, 83, 150, 0.15);
+    animation: blink-urgent 1s ease-in-out infinite;
+}
+
+@keyframes blink-urgent {
+    0% {
+        background: rgba(238, 83, 150, 0.15);
+    }
+    50% {
+        background: rgba(238, 83, 150, 0.05);
+    }
+    100% {
+        background: rgba(238, 83, 150, 0.15);
+    }
 }
 
 /* ── right module separators ── */
@@ -109,7 +126,7 @@ window#waybar.hidden {
 #battery,
 #clock,
 #tray {
-    border-left: 1px solid rgba(57, 57, 57, 0.5);
+    border-left: 1px solid rgba(255, 255, 255, 0.07);
 }
 
 /* ── active window ── */
@@ -138,7 +155,7 @@ window#waybar.empty #window {
 
 /* ── keyboard layout ── */
 #language {
-    color: @purple;
+    color: @teal;
 }
 
 /* ── network ── */
@@ -161,6 +178,26 @@ window#waybar.empty #window {
 }
 
 /* ── cpu / mem ── */
+#cpu,
+#memory,
+#network,
+#pulseaudio,
+#custom-updates,
+#custom-vpn,
+#language {
+    transition: background 0.12s ease;
+}
+
+#cpu:hover,
+#memory:hover,
+#network:hover,
+#pulseaudio:hover,
+#custom-updates:hover,
+#custom-vpn:hover,
+#language:hover {
+    background: rgba(255, 255, 255, 0.04);
+}
+
 #cpu {
     color: @cyan;
 }
@@ -190,9 +227,15 @@ window#waybar.empty #window {
 }
 
 @keyframes blink-critical {
-    0%   { color: @red; }
-    50%  { color: @muted; }
-    100% { color: @red; }
+    0% {
+        color: @red;
+    }
+    50% {
+        color: @muted;
+    }
+    100% {
+        color: @red;
+    }
 }
 
 #battery.critical:not(.charging) {

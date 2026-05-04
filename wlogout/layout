@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "hyprlock -q --immediate",
+    "action" : "hyprlock --quiet --grace 0 --immediate-render",
     "text" : "Lock",
     "keybind" : "l"
 }
@@ -19,8 +19,7 @@
 {
     "label" : "logout",
     "action" : "loginctl kill-session $XDG_SESSION_ID",
-    "text" : "Logout",
-    "keybind" : "e"
+    "text" : "Logout"
 }
 {
     "label" : "suspend",

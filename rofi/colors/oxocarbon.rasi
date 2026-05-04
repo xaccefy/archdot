@@ -4,10 +4,10 @@
  **/
 
 * {
-    background:     #161616FF;
-    background-alt: #262626FF;
+    background:     #121212FF;
+    background-alt: #1e1e1eFF;
     foreground:     #f2f4f8FF;
-    selected:       #78a9ffFF;
+    selected:       #82aaffFF;
     active:         #42be65FF;
     urgent:         #ee5396FF;
 }

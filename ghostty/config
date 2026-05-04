@@ -1,24 +1,24 @@
 # Oxocarbon theme
-background = #161616
+background = #121212
 foreground = #f2f4f8
 cursor-color = #f2f4f8
-selection-background = #353535
+selection-background = #2a2a2a
 selection-foreground = #f2f4f8
 
 # 16 colors — Oxocarbon
-palette = 0=#161616
+palette = 0=#121212
 palette = 1=#ee5396
 palette = 2=#42be65
 palette = 3=#f1c21b
-palette = 4=#78a9ff
+palette = 4=#82aaff
 palette = 5=#be95ff
 palette = 6=#33b1ff
 palette = 7=#dde1e6
-palette = 8=#525252
+palette = 8=#6e6e6e
 palette = 9=#ee5396
 palette = 10=#42be65
 palette = 11=#f1c21b
-palette = 12=#78a9ff
+palette = 12=#82aaff
 palette = 13=#be95ff
 palette = 14=#33b1ff
 palette = 15=#f2f4f8
@@ -29,7 +29,7 @@ font-size = 14
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
-background-opacity = 0.92
+background-opacity = 0.94
 window-decoration = false
 window-padding-x = 5
 window-padding-y = 5

@@ -4,7 +4,7 @@ window {
     font-family: "JetBrainsMono Nerd Font", monospace;
     font-size: 16pt;
     color: #f2f4f8;
-    background-color: rgba(22, 22, 22, 0.7);
+    background-color: rgba(18, 18, 18, 0.7);
 }
 
 button {
@@ -19,14 +19,14 @@ button {
 }
 
 button:hover {
-    background-color: rgba(120, 169, 255, 0.08);
-    border-color: rgba(120, 169, 255, 0.3);
+    background-color: rgba(130, 170, 255, 0.08);
+    border-color: rgba(130, 170, 255, 0.3);
 }
 
 button:active,
 button:focus {
-    box-shadow: 0 0 8px rgba(120, 169, 255, 0.3);
-    border-color: #78a9ff;
+    box-shadow: 0 0 8px rgba(130, 170, 255, 0.3);
+    border-color: #82aaff;
 }
 
 button span {
