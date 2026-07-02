@@ -1,64 +1,36 @@
-#!/usr/bin/env bash
-#  ____                               _           _
-# / ___|  ___ _ __ ___  ___ _ __  ___| |__   ___ | |_
-# \___ \ / __| '__/ _ \/_ \ '_ \ / __| '_ \ / _ \| __|
-#  ___) | (__| | |  __/  __/ | | \__ \ | | | (_) | |_
-# |____/ \___|_|  \___|\___|_| |_|___/_| |_|\___/ \__|
-#
-#
-# by Stephan Raabe (2023)
-# -----------------------------------------------------
+#!/bin/bash
+# ponytail: grimblast menu with window detection
+options="Area\nScreen\nActive Window\nArea (edit)\nScreen (delay)\nScreen (edit)"
+choice=$(echo -e "$options" | rofi -dmenu -i -p "screenshot" -theme ~/.config/rofi/launchers/type-1/glass-screenshot.rasi -l 6)
 
-DIR="$HOME/Pictures/Screenshots/"
-NAME="screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"
-FILE="$DIR$NAME"
-
-mkdir -p "$DIR"
-
-option1="Area"
-option2="Area + edit"
-option3="Fullscreen"
-option4="Fullscreen (delay 3 sec)"
-option5="Fullscreen + edit"
-
-options="$option1\n$option2\n$option3\n$option4\n$option5"
-
-choice=$(echo -e "$options" | rofi -dmenu -replace -theme ~/.config/rofi/launchers/type-1/glass-screenshot.rasi -i -no-show-icons -l 5 -p "screenshot")
-
-# Wait for rofi to fully disappear before capturing
-sleep 0.25
-
-finish_copy() {
-    wl-copy --type image/png < "$FILE"
-    notify-send "Screenshot saved" "$NAME copied to clipboard"
-}
+[[ -z "$choice" ]] && exit 0
+sleep 0.2 # Wait for rofi to fade
 
 case $choice in
-    $option1)
-        geometry=$(slurp) || exit 0
-        sleep 0.12
-        grim -g "$geometry" "$FILE" || exit 1
-        finish_copy
-    ;;
-    $option2)
-        geometry=$(slurp) || exit 0
-        sleep 0.12
-        grim -g "$geometry" "$FILE" || exit 1
-        finish_copy
-        swappy -f "$FILE"
-    ;;
-    $option3)
-        grim "$FILE" || exit 1
-        finish_copy
-    ;;
-    $option4)
-        sleep 3
-        grim "$FILE" || exit 1
-        finish_copy
-    ;;
-    $option5)
-        grim "$FILE" || exit 1
-        finish_copy
-        swappy -f "$FILE"
-    ;;
+    "Area")           
+        grimblast copy area && notify-send "Screenshot" "Area copied to clipboard" ;;
+    
+    "Screen")         
+        grimblast copy output && notify-send "Screenshot" "Fullscreen copied to clipboard" ;;
+
+    "Active Window")
+        read -r x y < <(hyprctl cursorpos | tr -d ',')
+        ws=$(hyprctl activeworkspace -j | jq -r .id)
+        geom=$(hyprctl clients -j | jq -r "[.[] | select(.workspace.id == $ws and .at[0] <= $x and .at[0] + .size[0] >= $x and .at[1] <= $y and .at[1] + .size[1] >= $y)] | last | \"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])\"")
+        
+        if [[ "$geom" != "null" ]]; then
+            grimblast copy area "$geom" && notify-send "Screenshot" "Active window copied"
+        else
+            notify-send "Screenshot" "No window found under cursor"
+        fi
+        ;;
+    
+    "Area (edit)")    
+        grimblast edit area ;;
+    
+    "Screen (delay)") 
+        sleep 3 && grimblast copy output && notify-send "Screenshot" "Fullscreen copied to clipboard" ;;
+    
+    "Screen (edit)")  
+        grimblast edit output ;;
 esac

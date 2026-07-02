@@ -3,8 +3,8 @@
 ----------------
 hl.config({
     general = {
-        gaps_in = 3,
-        gaps_out = 5,
+        gaps_in = 5,
+        gaps_out = { top = 2, right = 7, bottom = 3, left = 7 },
         border_size = 1,
         col = {
             active_border = "rgba(f2f4f8cc)",

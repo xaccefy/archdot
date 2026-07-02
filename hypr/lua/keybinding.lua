@@ -8,7 +8,7 @@ hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("ghostty"), { desc = "Terminal (
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("zen-browser"), { desc = "Browser" })
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"), { desc = "File Explorer (Thunar)" })
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("code"), { desc = "VSCode" })
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("webcord"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("electron37 /usr/lib/webcord --no-sandbox"))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("spotify"))
 
 -- Windows
@@ -33,14 +33,13 @@ hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }), 
 
 -- Actions
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh"), { desc = "Screenshot menu" })
-hl.bind("Print", hl.dsp.exec_cmd([[grim -g "$(slurp)" - | wl-copy --type image/png && notify-send "Screenshot copied" "Area copied to clipboard"]]), { desc = "Screenshot area to clipboard" })
-hl.bind("SHIFT + Print", hl.dsp.exec_cmd([[mkdir -p ~/Pictures/Screenshots && grim -g "$(slurp)" ~/Pictures/Screenshots/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png && notify-send "Screenshot saved" "Area saved to ~/Pictures/Screenshots"]]), { desc = "Screenshot selected area" })
-hl.bind("CTRL + Print", hl.dsp.exec_cmd([[sh -c 'mkdir -p "$HOME/Pictures/Screenshots"; file="$HOME/Pictures/Screenshots/screenshot_$(date +%Y-%m-%d_%H-%M-%S).png"; grim "$file" && wl-copy --type image/png < "$file" && notify-send "Screenshot copied" "Fullscreen copied to clipboard"']]), { desc = "Screenshot fullscreen to clipboard" })
+hl.bind("Print", hl.dsp.exec_cmd("grimblast copy area"), { desc = "Screenshot area to clipboard" })
+hl.bind("CTRL + Print", hl.dsp.exec_cmd("grimblast copy output"), { desc = "Screenshot fullscreen to clipboard" })
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("sleep 0.1 && wlogout -b 2 -c 70 -r 50 -L 690 -R 690 -T 300 -B 300 -n"), { desc = "Start wlogout" })
 hl.bind(mainMod .. " + SPACE", hl.dsp.exec_cmd("rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/glass-compact.rasi"), { desc = "Open application launcher" })
 hl.bind(mainMod .. " + CTRL + H", hl.dsp.exec_cmd("~/.config/hypr/scripts/keybindings.sh"), { desc = "Show keybindings" })
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("~/.config/waybar/launch.sh"), { desc = "Reload waybar" })
-hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("~/.config/hypr/scripts/loadconfig.sh"), { desc = "Reload hyprland config" })
+hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { desc = "Reload hyprland config" })
 hl.bind(mainMod .. " + CTRL + C", hl.dsp.exec_cmd("~/.config/scripts/cliphist.sh"), { desc = "Open clipboard manager" })
 
 
@@ -69,4 +68,4 @@ hl.bind("XF86Calculator", hl.dsp.exec_cmd("qalculate-gtk"), { locked = true, des
 hl.bind("XF86ScreenSaver", hl.dsp.exec_cmd("hyprlock"), { locked = true, desc = "Open screenlock" })
 
 -- Wallpaper management
-hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/random_wallpaper.sh"), { desc = "Cycle to next wallpaper" })
+hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/random_wallpaper.sh"), { desc = "Cycle to next wallpaper (sequential)" })

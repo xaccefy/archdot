@@ -3,9 +3,9 @@
     "position": "top",
     "height": 28,
     "margin-top": 0,
-    "margin-bottom": 5,
-    "margin-left": 5,
-    "margin-right": 5,
+    "margin-bottom": 3,
+    "margin-left": 7,
+    "margin-right": 7,
     "spacing": 4,
     "modules-left": [
         "hyprland/workspaces",
@@ -18,12 +18,31 @@
         "custom/vpn",
         "network",
         "pulseaudio",
+        "power-profiles-daemon",
         "cpu",
         "memory",
+        "disk",
         "battery",
-        "hyprland/language",
         "tray"
     ],
+
+    "power-profiles-daemon": {
+        "format": "{icon}",
+        "tooltip-format": "Power profile: {profile}\nDriver: {driver}",
+        "tooltip": true,
+        "format-icons": {
+          "default": "",
+          "performance": "",
+          "balanced": "",
+          "power-saver": ""
+        }
+    },
+
+    "disk": {
+        "interval": 30,
+        "format": "dsk {percentage_used}%",
+        "path": "/"
+    },
 
     "hyprland/workspaces": {
         "on-click": "activate",
@@ -49,7 +68,7 @@
         }
     },
     "custom/vpn": {
-        "format": "[{}]",
+        "format": "{}",
         "exec": "$HOME/.config/waybar/scripts/vpn.sh",
         "return-type": "json",
         "interval": 30,
@@ -58,9 +77,13 @@
     },
     "network": {
         "format": "[{ifname}]",
-        "format-wifi": "[{essid} {signalStrength}%]",
+        "format-wifi": " {essid}",
         "format-ethernet": "",
-        "format-disconnected": "[offline]",
+        "format-disconnected": " offline",
+        "format-icons": {
+            "wifi": ["", "", "", ""],
+            "default": [""]
+        },
         "tooltip-format-wifi": "iface: {ifname}\nssid: {essid}\nsignal: {signalStrength}%\nip: {ipaddr}/{cidr}\nfreq: {frequency}GHz",
         "tooltip-format-ethernet": "iface: {ifname}\nip: {ipaddr}/{cidr}",
         "tooltip-format-disconnected": "no connection",
@@ -101,16 +124,9 @@
         },
         "tooltip-format": "battery: {capacity}%\n{timeTo}\npower: {power:.1f}W"
     },
-    "hyprland/language": {
-        "keyboard-name": "at-translated-set-2-keyboard",
-        "format": "[{}]",
-        "format-en": "en",
-        "format-mn": "mn",
-        "tooltip-format": "keyboard: {long}"
-    },
     "clock": {
-        "format": "[{:%H:%M}]",
-        "format-alt": "[{:%Y-%m-%d %H:%M}]",
+        "format": "{:%H:%M}",
+        "format-alt": "{:%Y-%m-%d %H:%M}",
         "interval": 1,
         "tooltip-format": "<tt>{calendar}</tt>"
     },
@@ -124,9 +140,9 @@
         "format-muted": "vol mute",
         "format-icons": {
             "default": [
-                "󰕿",
-                "󰖀",
-                "󰕾"
+                "",
+                "",
+                ""
             ]
         },
         "max-volume": 100,

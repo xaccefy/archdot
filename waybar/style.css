@@ -1,7 +1,6 @@
 @define-color bg rgba(20, 20, 20, 0.65);
 @define-color bg-soft rgba(22, 23, 27, 0.65);
 @define-color border rgba(255, 255, 255, 0.2);
-@define-color border-strong rgba(255, 255, 255, 0.2);
 @define-color glass-surface rgba(255, 255, 255, 0.03);
 @define-color text #f2f4f8;
 @define-color muted #a8b0c0;
@@ -16,7 +15,7 @@
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 15px;
+    font-size: 15.5px;
     font-weight: 400;
     border: none;
     min-height: 0;
@@ -26,209 +25,53 @@ window#waybar {
     background: @bg;
     color: @text;
     border: 1px solid @border;
-    box-shadow:
-        0 8px 24px rgba(0, 0, 0, 0.32);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
     border-radius: 0px;
-    margin: 0 12px 8px 12px;
-}
-
-window#waybar > * {
-    -gtk-icon-effect: none;
-}
-
-window#waybar.hidden {
-    opacity: 0.16;
+    margin: 0 14px 4px 14px;
 }
 
 /* ── all modules base ── */
-#window,
-#custom-updates,
-#custom-vpn,
-#network,
-#pulseaudio,
-#cpu,
-#memory,
-#battery,
-#clock,
-#tray,
-#language {
-    margin: 0;
-    padding: 0 4px; /* Balanced: Wide enough to breathe, tight enough to feel cohesive */
+#window, #custom-vpn, #network, #pulseaudio, #power-profiles-daemon, #cpu, #memory, #disk, #battery, #clock, #tray {
+    margin: 0 3px;
+    padding: 0 4px;
     min-height: 25px;
     color: @text;
     background: transparent;
-    border-radius: 0;
-    border: 1px solid transparent;
-    transition:
-        all 120ms ease-in-out,
-        border-color 120ms ease-in-out;
+    transition: all 120ms ease-in-out;
 }
+
+#cpu:hover, #memory:hover, #disk:hover, #network:hover, #pulseaudio:hover, #power-profiles-daemon:hover, #custom-vpn:hover {
+    background: @glass-surface;
+}
+
+/* ── colors ── */
+#cpu, #memory, #disk { color: @blue; }
+#network.disconnected { color: @red; }
+#custom-vpn.connected { color: @green; }
+#custom-vpn.disconnected, #pulseaudio.muted, #battery { color: @muted; }
+#battery.charging, #battery.plugged { color: @green; }
+#battery.warning { color: @yellow; }
+#battery.critical:not(.charging) { color: @red; }
+#cpu.warning, #memory.warning { color: @yellow; }
+#cpu.critical, #memory.critical { color: @orange; }
+
+#power-profiles-daemon { color: @yellow; }
+#power-profiles-daemon.performance { color: @red; }
+#power-profiles-daemon.power-saver { color: @green; }
 
 /* ── workspaces ── */
-#workspaces {
-    margin: 0 0 0 6px;
-    padding: 2px;
-}
-
 #workspaces button {
-    min-width: 20px;
-    min-height: 22px;
-    margin: 0 1px 0 0;
     padding: 0 4px;
     color: @muted;
     background: transparent;
     border-radius: 4px;
-    transition:
-        all 120ms cubic-bezier(0.22, 1, 0.36, 1);
+    transition: all 120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-#workspaces button:hover {
-    color: @text;
-    background: @glass-surface;
-}
-
-#workspaces button.active {
-    color: @blue;
-    background: alpha(@blue, 0.12);
-}
-
-#workspaces button.focused {
-    color: @text;
-}
-
-#workspaces button.urgent {
-    color: @red;
-    background: alpha(@red, 0.12);
-}
-
-/* ── active window ── */
-#window {
-    margin-left: 4px;
-    padding-right: 8px;
-    color: @text;
-}
-
-window#waybar.empty #window {
-    padding: 0;
-}
-
-/* ── clock ── */
-#clock {
-    color: @text;
-    font-weight: 600;
-}
-
-/* ── updates ── */
-#custom-updates.green {
-    color: @green;
-}
-
-#custom-updates.yellow {
-    color: @yellow;
-}
-
-#custom-updates.red {
-    color: @orange;
-}
-
-/* ── keyboard layout ── */
-#language {
-    color: @muted;
-}
-
-/* ── network ── */
-#network.disconnected {
-    color: @red;
-}
-
-/* ── vpn ── */
-#custom-vpn.connected {
-    color: @green;
-}
-
-#custom-vpn.disconnected {
-    color: @muted;
-}
-
-/* ── audio ── */
-#pulseaudio.muted {
-    color: @muted;
-}
-
-/* ── cpu / mem ── */
-#cpu,
-#memory,
-#network,
-#pulseaudio,
-#custom-updates,
-#custom-vpn,
-#language {
-    transition: all 120ms ease-in-out;
-}
-
-#cpu:hover,
-#memory:hover,
-#network:hover,
-#pulseaudio:hover,
-#custom-updates:hover,
-#custom-vpn:hover,
-#language:hover {
-    background: @glass-surface;
-}
-
-#cpu {
-    color: @blue;
-}
-
-#memory {
-    color: @blue;
-}
-
-#cpu.warning,
-#memory.warning {
-    color: @yellow;
-}
-
-#cpu.critical,
-#memory.critical {
-    color: @orange;
-}
-
-/* ── battery ── */
-#battery.charging,
-#battery.plugged {
-    color: @green;
-}
-
-#battery.warning {
-    color: @yellow;
-}
-
-#battery.critical:not(.charging) {
-    color: @red;
-}
-
-/* ── tray ── */
-#tray {
-    padding: 0 8px;
-}
-
-#tray > .passive {
-    -gtk-icon-effect: dim;
-}
-
-#tray > .needs-attention {
-    -gtk-icon-effect: highlight;
-}
+#workspaces button:hover { color: @text; background: @glass-surface; }
+#workspaces button.active { color: @blue; background: alpha(@blue, 0.12); }
+#workspaces button.urgent { color: @red; background: alpha(@red, 0.12); }
 
 /* ── tooltip ── */
-tooltip {
-    background: @bg;
-    border: 1px solid @border-strong;
-    border-radius: 5px;
-}
-
-tooltip label {
-    color: @text;
-    font-size: 13px;
-}
+tooltip { background: @bg; border: 1px solid @border; border-radius: 5px; }
+tooltip label { color: @text; font-size: 13px; }
