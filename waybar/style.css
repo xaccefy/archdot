@@ -26,7 +26,7 @@ window#waybar {
     border: 1px solid @border;
     box-shadow: none;
     border-radius: 6px;
-    padding: 0;
+    padding: 5px 0;
 }
 
 /* ── all modules base ── */
