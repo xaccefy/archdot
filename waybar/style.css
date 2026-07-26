@@ -1,20 +1,19 @@
-@define-color bg rgba(20, 20, 20, 0.65);
-@define-color bg-soft rgba(22, 23, 27, 0.65);
+@define-color bg #1c1c1e;
 @define-color border rgba(255, 255, 255, 0.2);
 @define-color glass-surface rgba(255, 255, 255, 0.03);
 @define-color text #f2f4f8;
 @define-color muted #a8b0c0;
-@define-color accent #3ddbd9;
 
 @define-color blue #78a9ff;
-@define-color purple #be95ff;
 @define-color red #ee5396;
 @define-color green #42be65;
 @define-color yellow #f1c21b;
 @define-color orange #ff6f00;
 
 * {
-    font-family: "JetBrainsMono Nerd Font Mono", monospace;
+    font-family:
+        "JetBrainsMono Nerd Font Propo", "JetBrainsMono Nerd Font Mono",
+        "Noto Color Emoji", monospace;
     font-size: 15.5px;
     font-weight: 400;
     border: none;
@@ -25,53 +24,133 @@ window#waybar {
     background: @bg;
     color: @text;
     border: 1px solid @border;
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.32);
-    border-radius: 0px;
-    margin: 0 14px 4px 14px;
+    box-shadow: none;
+    border-radius: 6px;
+    padding: 5px 0;
 }
 
 /* ── all modules base ── */
-#window, #custom-vpn, #network, #pulseaudio, #power-profiles-daemon, #cpu, #memory, #disk, #battery, #clock, #tray {
-    margin: 0 3px;
-    padding: 0 4px;
-    min-height: 25px;
+#pulseaudio,
+#power-profiles-daemon,
+#custom-sysgroup,
+#battery,
+#clock,
+#tray,
+#custom-vpn {
+    margin: 0 5px;
+    padding: 0 6px;
+    min-height: 24px;
     color: @text;
     background: transparent;
-    transition: all 120ms ease-in-out;
+    transition: background 120ms ease-in-out;
 }
 
-#cpu:hover, #memory:hover, #disk:hover, #network:hover, #pulseaudio:hover, #power-profiles-daemon:hover, #custom-vpn:hover {
+#pulseaudio:hover,
+#power-profiles-daemon:hover,
+#custom-sysgroup:hover,
+#battery:hover,
+#clock:hover,
+#tray:hover,
+#custom-vpn:hover {
     background: @glass-surface;
 }
 
-/* ── colors ── */
-#cpu, #memory, #disk { color: @blue; }
-#network.disconnected { color: @red; }
-#custom-vpn.connected { color: @green; }
-#custom-vpn.disconnected, #pulseaudio.muted, #battery { color: @muted; }
-#battery.charging, #battery.plugged { color: @green; }
-#battery.warning { color: @yellow; }
-#battery.critical:not(.charging) { color: @red; }
-#cpu.warning, #memory.warning { color: @yellow; }
-#cpu.critical, #memory.critical { color: @orange; }
+#custom-sysgroup,
+#battery,
+#pulseaudio {
+    min-width: 36px;
+}
 
-#power-profiles-daemon { color: @yellow; }
-#power-profiles-daemon.performance { color: @red; }
-#power-profiles-daemon.power-saver { color: @green; }
+/* ── colors ── */
+
+
+#custom-sysgroup {
+    color: @blue;
+}
+
+#pulseaudio.muted {
+    color: @muted;
+}
+#battery {
+    color: @text;
+}
+#battery.charging,
+#battery.plugged {
+    color: @green;
+}
+#battery.warning {
+    color: @yellow;
+}
+#custom-sysgroup.warning {
+    color: @yellow;
+}
+#custom-sysgroup.critical {
+    color: @orange;
+}
+
+#power-profiles-daemon {
+    color: @yellow;
+}
+#power-profiles-daemon.performance {
+    color: @red;
+}
+#power-profiles-daemon.power-saver {
+    color: @green;
+}
+
+#custom-vpn {
+    color: @muted;
+}
+#custom-vpn.connected {
+    color: @green;
+}
+
+/* ── clock ── */
+#clock {
+    font-weight: 500;
+}
+
+/* ── critical battery blink ── */
+@keyframes blink {
+    to {
+        color: rgba(238, 83, 150, 0.35);
+    }
+}
+#battery.critical:not(.charging) {
+    color: @red;
+    animation: blink 1s ease-in-out infinite alternate;
+}
 
 /* ── workspaces ── */
 #workspaces button {
     padding: 0 4px;
     color: @muted;
     background: transparent;
-    border-radius: 4px;
+    border-radius: 6px;
     transition: all 120ms cubic-bezier(0.22, 1, 0.36, 1);
 }
-
-#workspaces button:hover { color: @text; background: @glass-surface; }
-#workspaces button.active { color: @blue; background: alpha(@blue, 0.12); }
-#workspaces button.urgent { color: @red; background: alpha(@red, 0.12); }
+#workspaces button:hover {
+    color: @text;
+    background: @glass-surface;
+}
+#workspaces button.active {
+    color: @blue;
+    background: alpha(@blue, 0.12);
+    font-weight: 600;
+}
+#workspaces button.urgent {
+    color: @red;
+    background: alpha(@red, 0.12);
+}
 
 /* ── tooltip ── */
-tooltip { background: @bg; border: 1px solid @border; border-radius: 5px; }
-tooltip label { color: @text; font-size: 13px; }
+tooltip {
+    background: @bg;
+    border: 1px solid @border;
+    border-radius: 6px;
+    padding: 6px 10px;
+}
+tooltip label {
+    color: @text;
+    font-size: 13px;
+}
