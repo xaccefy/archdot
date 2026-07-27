@@ -4,6 +4,11 @@
 
 Personal Hyprland setup for Arch Linux.
 
+## Screenshots
+
+![Screenshot 1](screenshots/screenshot-1.png)
+![Screenshot 2](screenshots/screenshot-2.png)
+
 ## Install (quick)
 
 ```bash
