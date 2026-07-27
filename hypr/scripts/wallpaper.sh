@@ -1,7 +1,7 @@
-#!/bin/bash
+#!/usr/bin/env bash
 # ponytail: instant wallpaper switch
 DIR="$HOME/.config/hypr/wallpapers"
-WP=$(find "$DIR" -type f | shuf -n 1)
+WP=$(find "$DIR" -type f \( -name '*.jpg' -o -name '*.jpeg' -o -name '*.png' -o -name '*.webp' \) | shuf -n 1)
 
 # Clear cache occasionally to prevent lag
 (( RANDOM % 10 == 0 )) && awww clear-cache

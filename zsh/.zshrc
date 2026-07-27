@@ -86,6 +86,17 @@ source ~/.zsh_cache/zoxide.zsh
 [[ ! -f ~/.zsh_cache/starship.zsh ]] && starship init zsh > ~/.zsh_cache/starship.zsh
 source ~/.zsh_cache/starship.zsh
 
+# blank line between prompts, but not before the first one (or after clear)
+_newline_before_prompt() {
+  if [[ -z "$_FIRST_PROMPT" ]]; then
+    _FIRST_PROMPT=1
+  else
+    print
+  fi
+}
+precmd_functions+=(_newline_before_prompt)
+alias clear='unset _FIRST_PROMPT; command clear'
+
 
 rbenv() {
   eval "$(command rbenv init - zsh)"
@@ -93,3 +104,10 @@ rbenv() {
 }
 
 # Added by codebase-memory-mcp install
+
+# bun completions
+[ -s "/home/xaccefy/.bun/_bun" ] && source "/home/xaccefy/.bun/_bun"
+export BROWSER=helium-browser
+
+# Novita API key (used by omp novita provider; macaron-v1-venti lives here)
+export NOVITA_API_KEY="${NOVITA_API_KEY:-}"

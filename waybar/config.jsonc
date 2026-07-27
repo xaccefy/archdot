@@ -1,0 +1,152 @@
+{
+  "exclusive": true,
+  "reload_style_on_change": true,
+  "position": "top",
+  "spacing": 0,
+  "height": 24,
+  "margin-top": 1,
+  "margin-left": 7,
+  "margin-right": 7,
+
+  "modules-left": [
+    "clock",
+    "tray",
+    "mpris"
+  ],
+  "modules-center": [
+    "hyprland/workspaces"
+  ],
+  "modules-right": [
+    "backlight",
+    "network",
+    "pulseaudio",
+    "power-profiles-daemon",
+    "memory",
+    "cpu",
+    "battery",
+    "custom/timer"
+  ],
+
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "cursor": true,
+    "format": "{icon}",
+    "format-icons": {
+      "active": "●",
+      "default": "○",
+      "urgent": "●"
+    },
+    "persistent-workspaces": {
+      "*": [1, 2, 3, 4, 5]
+    }
+  },
+
+  "clock": {
+    "format": "{:%I:%M %p}",
+    "format-alt": "{:%A %d/%m/%Y}",
+    "tooltip-format": "<span>{calendar}</span>"
+  },
+
+  "network": {
+    "format-icons": ["󰤯", "󰤟", "󰤢", "󰤥", "󰤨"],
+    "format": "{icon} {essid}",
+    "format-wifi": "{icon} {essid}",
+    "format-ethernet": "󰀂",
+    "format-disconnected": "󰤮",
+    "tooltip-format-wifi": "{essid} ({frequency} GHz)\n⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-ethernet": "⇣{bandwidthDownBytes}  ⇡{bandwidthUpBytes}",
+    "tooltip-format-disconnected": "Disconnected",
+    "interval": 3
+  },
+
+  "pulseaudio": {
+    "format": "{icon}",
+    "tooltip-format": "Playing at {volume}%",
+    "tooltip-format-muted": "Muted",
+    "scroll-step": 5,
+    "format-muted": "󰖀",
+    "format-icons": {
+      "headphone": "",
+      "headset": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle"
+  },
+
+  "battery": {
+    "format": "{capacity}% {icon}",
+    "format-charging": "{capacity}% {icon}",
+    "format-plugged": " {capacity}%",
+    "format-icons": {
+      "default": ["󰁺", "󰁻", "󰁼", "󰁽", "󰁾", "󰂀", "󰂁", "󰂂"],
+      "charging": ["󰢜", "󰂆", "󰂇", "󰂈", "󰢝", "󰂉", "󰢞", "󰂊", "󰂋", "󰂅"]
+    },
+    "interval": 5,
+    "states": {
+      "warning": 20,
+      "critical": 10
+    },
+    "tooltip-format": "{power:>1.0f}W {capacity}%"
+  },
+
+  "cpu": {
+    "interval": 5,
+    "format": "{usage}%",
+    "tooltip": true,
+    "tooltip-format": "CPU: {usage}%"
+  },
+
+  "memory": {
+    "format": "{used:0.0f}/{total:0.0f}GB",
+    "interval": 5,
+    "tooltip": true,
+    "tooltip-format": "Memory: {used:0.1f}GB / {total:0.1f}GB ({percentage:0.1f}%)"
+  },
+
+  "backlight": {
+    "format": "{percent}%",
+    "on-scroll-up": "brightnessctl set 5%+",
+    "on-scroll-down": "brightnessctl set 5%-",
+    "interval": 2
+  },
+
+  "power-profiles-daemon": {
+    "format": "{icon}",
+    "tooltip-format": "Power profile: {profile}",
+    "tooltip": true,
+    "format-icons": {
+      "default": "",
+      "performance": "",
+      "balanced": "",
+      "power-saver": ""
+    }
+  },
+
+  "mpris": {
+    "format": "{player_icon} {title}",
+    "format-paused": "{status_icon} <i>{title}</i>",
+    "player-icons": {
+      "default": "▶"
+    },
+    "status-icons": {
+      "paused": "⏸"
+    },
+    "max-length": 35
+  },
+
+  "tray": {
+    "icon-size": 14,
+    "spacing": 6
+  },
+
+  "custom/timer": {
+    "exec": "$HOME/.config/waybar/scripts/timer.sh",
+    "on-scroll-up": "$HOME/.config/waybar/scripts/timer.sh +60",
+    "on-scroll-down": "$HOME/.config/waybar/scripts/timer.sh -60",
+    "on-click": "$HOME/.config/waybar/scripts/timer.sh toggle",
+    "on-click-right": "$HOME/.config/waybar/scripts/timer.sh reset",
+    "interval": 1,
+    "return-type": "json"
+  }
+}

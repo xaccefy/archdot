@@ -4,10 +4,10 @@
 hl.config({
     general = {
         gaps_in = 5,
-        gaps_out = { top = 2, right = 7, bottom = 3, left = 7 },
-        border_size = 1,
+        gaps_out = { top = 10, right = 7, bottom = 10, left = 7 },
+        border_size = false,
         col = {
-            active_border = "rgba(f2f4f8cc)",
+            active_border = "rgba(120, 169, 255, 0.55)",
             inactive_border = "rgba(4a4a4a99)",
         },
         layout = "dwindle",
@@ -17,6 +17,8 @@ hl.config({
 local function window_rule(spec)
     hl.window_rule(spec)
 end
+
+window_rule({ match = { fullscreen = 1 }, idle_inhibit = "fullscreen" })
 
 window_rule({ match = { title = "^(Picture-in-Picture)$" }, float = true })
 window_rule({ match = { title = "^(Picture-in-Picture)$" }, pin = true })

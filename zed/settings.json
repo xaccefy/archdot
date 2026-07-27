@@ -1,60 +1,118 @@
 {
-    "base_keymap": "VSCode",
-    "theme": {
-        "mode": "system",
-        "light": "Ayu Light",
-        "dark": "Oxocarbon Dark (IBM Carbon)"
+  "vim_mode": false,
+  "collaboration_panel": {
+    "button": false
+  },
+  "vim": {
+    "default_mode": "normal",
+    "toggle_relative_line_numbers": false
+  },
+  "disable_ai": true,
+  "tab_bar": {
+    "show": true
+  },
+  "terminal": {
+    "option_as_meta": false,
+    "toolbar": {
+      "breadcrumbs": false
     },
-    "ui_font_size": 20,
-    "buffer_font_size": 19,
-    "buffer_font_family": "JetBrainsMono Nerd Font Mono",
-    "minimap": {
-        "show": "never"
+    "button": true,
+    "dock": "bottom"
+  },
+  "proxy": "",
+  "edit_predictions": {
+    "mode": "subtle"
+  },
+  "cli_default_open_behavior": "new_window",
+  "icon_theme": {
+    "mode": "light",
+    "light": "Icons modern material (Dark)",
+    "dark": "Icons modern material (Dark)"
+  },
+  "show_signature_help_after_edits": false,
+  "auto_signature_help": false,
+  "show_completions_on_input": true,
+  "show_edit_predictions": false,
+  "format_on_save": "on",
+  "features": {
+    "edit_predictions": {
+      "provider": "none"}},
+  "base_keymap": "VSCode",
+  "theme": {
+    "mode": "dark",
+    "light": "Night Owl Light No Italics",
+    "dark": "Carbonfox - blurred"},
+  "ui_font_size": 21.0,
+  "buffer_font_size": 20.0,
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "minimap": {
+    "show": "never"},
+  "gutter": {
+    "line_numbers": true,
+    "min_line_number_digits": 4,
+    "breakpoints": true,
+    "runnables": false,
+    "folds": false
+  },
+  "project_panel": {
+    "git_status": true,
+    "folder_icons": true,
+    "file_icons": true,
+    "entry_spacing": "standard",
+    "default_width": 200.0,
+    "dock": "left"},
+  "session": {
+    "trust_all_worktrees": true},
+  "git": {
+    "inline_blame": {
+      "enabled": false}},
+  "title_bar": {
+    "show_menus": false},
+  "toolbar": {
+    "breadcrumbs": true,
+    "quick_actions": false,
+    "selections_menu": false,
+    "agent_review": false,
+    "code_actions": false},
+  "agent": {
+    "default_model": {
+      "effort": "medium",
+      "provider": "openai-subscribed",
+      "model": "gpt-5.5",
+      "enable_thinking": true},
+    "dock": "right",
+    "favorite_models": [],
+    "model_parameters": [],
+    "agent_ui_font_size": 20,
+    "agent_buffer_font_size": 19},
+  "agent_servers": {
+    "pi-acp": {
+      "default_config_options": {
+        "model": "clinepass/cline-pass/qwen3.7-plus"},
+      "type": "registry"}},
+  "languages": {
+    "Markdown": {
+      "show_edit_predictions": true
     },
-    "project_panel": {
-        "dock": "left"
-    },
-    "session": {
-        "trust_all_worktrees": true
-    },
-    "agent": {
-        "default_model": {
-            "effort": "medium",
-            "provider": "openai-subscribed",
-            "model": "gpt-5.5",
-            "enable_thinking": true
-        },
-        "dock": "right",
-        "sidebar_side": "right",
-        "favorite_models": [],
-        "model_parameters": [],
-        "agent_ui_font_size": 20,
-        "agent_buffer_font_size": 19
-    },
-    "agent_servers": {
-        "pi-acp": {
-            "type": "registry"
-        },
-        "codex-acp": {
-            "type": "registry"
-        }
-    },
-    "lsp": {
-        "ruff": {
-            "binary": {
-                "path": "/home/xaccefy/.local/bin/ruff",
-                "arguments": [
-                    "server"
-                ]
-            }
-        }
-    },
-    "context_servers": {
-        "codebase-memory-mcp": {
-            "command": "/home/xaccefy/.local/bin/codebase-memory-mcp",
-            "args": [
-                ""
-            ]
-        }
+    "Python": {
+      "language_servers": ["pyright", "ruff", "!clangd"]
     }
-}
+  },
+  "lsp": {
+    "pyright": {
+      "settings": {
+        "python.analysis.extraPaths": ["/home/xaccefy/.local/lib/python3.14/site-packages"]
+      }
+    },
+    "ruff": {
+      "binary": {
+        "path": "/home/xaccefy/.local/bin/ruff",
+        "arguments": ["server"]}}},
+  "context_servers": {
+    "codebase-memory-mcp": {
+      "command": "/home/xaccefy/.local/bin/codebase-memory-mcp",
+      "args": [""]}},
+  "theme_overrides": {
+    "Carbonfox - blurred": {
+      "editor.line_number": "#888888",
+      "editor.active_line_number": "#ffffff"}}}

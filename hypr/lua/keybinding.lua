@@ -5,10 +5,10 @@ local mainMod = "SUPER"
 
 -- Applications
 hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("ghostty"), { desc = "Terminal (ghostty)" })
-hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("zen-browser"), { desc = "Browser" })
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("/home/xaccefy/.local/share/helium/opt/helium/helium --force-device-scale-factor=1.3 --default-zoom-level=1.05 --disable-background-networking --disable-component-update --no-first-run --disable-search-engine-choice-screen --disable-features=ChromeWhatsNewUI,TranslateUI,MediaRouter,OptimizationGuideModelDownloading"), { desc = "Browser" })
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"), { desc = "File Explorer (Thunar)" })
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("code"), { desc = "VSCode" })
-hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("electron37 /usr/lib/webcord --no-sandbox"))
+hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("webcord"))
 hl.bind(mainMod .. " + A", hl.dsp.exec_cmd("spotify"))
 
 -- Windows
@@ -18,6 +18,11 @@ hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }), { desc = 
 hl.bind(mainMod .. " + S", hl.dsp.layout("togglesplit"), { desc = "Toggle splitting" })
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, desc = "Move window with the mouse" })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, desc = "Resize window with the mouse" })
+
+-- Groups (tabbed containers)
+hl.bind(mainMod .. " + G", hl.dsp.group.toggle(), { desc = "Toggle window group" })
+hl.bind(mainMod .. " + Tab", hl.dsp.group.next(), { desc = "Next group tab" })
+hl.bind(mainMod .. " + SHIFT + Tab", hl.dsp.group.prev(), { desc = "Prev group tab" })
 
 -- Vim-style focus movement
 hl.bind(mainMod .. " + H", hl.dsp.focus({ direction = "left" }), { desc = "Focus window left" })

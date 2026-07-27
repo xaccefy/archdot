@@ -8,6 +8,15 @@ shopt -s nullglob
 FILES=("$DIR"/*.{jpg,jpeg,png,webp})
 [[ ${#FILES[@]} -eq 0 ]] && exit 1
 
+# Only consider actual image files — skip symlinks to non-images or
+# non-image files accidentally placed in the wallpaper directory.
+IMAGES=()
+for f in "${FILES[@]}"; do
+    [[ -f "$f" ]] && IMAGES+=("$f")
+done
+[[ ${#IMAGES[@]} -eq 0 ]] && exit 1
+FILES=("${IMAGES[@]}")
+
 CURRENT=$(readlink -f "$LINK" 2>/dev/null)
 
 if [[ "$1" == "restore" ]]; then
