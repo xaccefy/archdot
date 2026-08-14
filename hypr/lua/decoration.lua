@@ -3,7 +3,7 @@
 ----------------
 hl.config({
     decoration = {
-        rounding = 6,
+        rounding = 13,
         blur = {
             enabled = false,
             size = 8,
@@ -13,12 +13,18 @@ hl.config({
             xray = false,
         },
         active_opacity = 1.0,
-        inactive_opacity = 1.0,
+        inactive_opacity = 0.9,
         fullscreen_opacity = 1.0,
     },
     layerrule = {
     },
 })
+
+-- slurp's overlay (namespace "selection") must vanish instantly, not slide out.
+-- grimblast tries to set this itself at runtime, but `hyprctl keyword layerrule`
+-- is rejected by 0.55+'s non-legacy parser, so grim fires mid-animation and bakes
+-- slurp's translucent background into the top of every area screenshot.
+hl.layer_rule({ match = { namespace = "^selection$" }, no_anim = true })
 
 ----------------
 -- Group (tabbed containers) settings
@@ -26,17 +32,13 @@ hl.config({
 hl.config({
     group = {
         groupbar = {
-            enabled = true,
-            render_titles = true,
-            height = 24,
-            font_size = 16,
-            gradients = true,
-            col = {
-                active = "0xcc3a3a3a",
-                inactive = "0xcc000000",
-                locked_active = "0xcc4a3030",
-                locked_inactive = "0xcc000000",
-            },
+            enabled = false,
+        },
+        col = {
+            border_active = "rgba(120, 169, 255, 0.75)",
+            border_inactive = "rgba(69, 71, 90, 0.8)",
+            border_locked_active = "rgba(120, 169, 255, 0.75)",
+            border_locked_inactive = "rgba(69, 71, 90, 0.8)",
         },
         insert_after_current = true,
     },

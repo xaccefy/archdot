@@ -7,11 +7,13 @@ format = """
 $directory\
 $git_branch\
 $git_status\
+$git_state\
 $nodejs\
 $python\
 $rust\
 $golang\
 $lua\
+$fill\
 $cmd_duration\
 $line_break\
 $character"""
@@ -34,6 +36,13 @@ format = "[$symbol$branch]($style) "
 style = "fg:#ff832b"
 format = "[$all_status$ahead_behind]($style) "
 
+[git_state]
+style = "fg:#be95ff"
+format = "[$state( $progress_current/$progress_total)]($style) "
+
+[fill]
+symbol = " "
+
 [nodejs]
 symbol = " "
 style = "fg:#42be65"
@@ -45,6 +54,8 @@ detect_folders = ["node_modules"]
 symbol = " "
 style = "fg:#f1c21b"
 format = "[$symbol($version)]($style) "
+detect_files = ["requirements.txt", "pyproject.toml", ".python-version", "setup.py", "Pipfile"]
+detect_extensions = ["py"]
 
 [rust]
 symbol = " "

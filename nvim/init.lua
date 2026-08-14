@@ -11,11 +11,21 @@ vim.opt.mouse = ""
 vim.opt.termguicolors = true
 vim.opt.clipboard = "unnamedplus"
 
+-- Quality-of-life defaults
+vim.opt.undofile = true
+vim.opt.scrolloff = 8
+vim.opt.ignorecase = true
+vim.opt.smartcase = true
+vim.opt.signcolumn = "yes"
+vim.opt.inccommand = "split"
+vim.opt.splitbelow = true
+vim.opt.splitright = true
+
 -- ── Lazy.nvim bootstrap ──
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
         "clone",
@@ -68,6 +78,18 @@ require("lazy").setup({
 
     -- Surround with quotes/brackets/tags
     { "kylechui/nvim-surround" },
+
+    -- Keymap discovery (press <Space> and wait)
+    { "folke/which-key.nvim" },
+
+    -- Jump to any visible location
+    { "folke/flash.nvim" },
+
+    -- Auto-close brackets
+    { "windwp/nvim-autopairs" },
+
+    -- Comment with gcc / gc
+    { "numToStr/Comment.nvim" },
 })
 
 -- ── Colorscheme (applied after lazy ensures the plugin is available) ──
@@ -109,12 +131,23 @@ vim.api.nvim_create_autocmd("LspAttach", {
         vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, bufopts)
         vim.keymap.set("n", "[d", vim.diagnostic.goto_prev, bufopts)
         vim.keymap.set("n", "]d", vim.diagnostic.goto_next, bufopts)
+        -- Format on save
+        vim.api.nvim_create_autocmd("BufWritePre", {
+            buffer = args.buf,
+            callback = function()
+                vim.lsp.buf.format({ bufnr = args.buf })
+            end,
+        })
     end,
 })
 
 -- Enable LSP servers (Neovim 0.12 API)
 pcall(function()
     require("lspconfig")
+    -- Wire cmp capabilities into every LSP client (snippets, labelDetails, ...)
+    vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    })
     vim.lsp.enable("clangd")
     vim.lsp.enable("gopls")
     vim.lsp.enable("basedpyright")
@@ -151,7 +184,26 @@ pcall(function()
 end)
 
 pcall(function()
-    require("gitsigns").setup()
+    require("nvim-autopairs").setup()
+    -- Don't double-pair when confirming a completion
+    local cmp_autopairs = require("nvim-autopairs.completion.cmp")
+    require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
+end)
+
+pcall(function()
+    require("gitsigns").setup({
+        on_attach = function(bufnr)
+            local gs = package.loaded.gitsigns
+            local map = function(mode, lhs, rhs)
+                vim.keymap.set(mode, lhs, rhs, { buffer = bufnr })
+            end
+            map("n", "]h", function() gs.next_hunk() end)
+            map("n", "[h", function() gs.prev_hunk() end)
+            map("n", "<leader>gb", function() gs.blame_line({ full = true }) end)
+            map("n", "<leader>gd", function() gs.diffthis() end)
+            map("n", "<leader>gp", gs.preview_hunk)
+        end,
+    })
 end)
 
 pcall(function()
@@ -251,10 +303,37 @@ pcall(function()
     require("nvim-surround").setup()
 end)
 
+pcall(function()
+    require("Comment").setup()
+end)
+
+pcall(function()
+    require("which-key").setup()
+end)
+
+pcall(function()
+    require("flash").setup()
+end)
+
 -- ── Telescope keymaps ──
 
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
+
+-- ── Flash: s to jump, S to pick a syntax node ──
+
+pcall(function()
+    vim.keymap.set({ "n", "x", "o" }, "s", require("flash").jump)
+    vim.keymap.set({ "n", "x", "o" }, "S", require("flash").treesitter)
+end)
+
+-- ── Highlight yanked text ──
+
+vim.api.nvim_create_autocmd("TextYankPost", {
+    callback = function()
+        vim.hl.on_yank({ timeout = 200 })
+    end,
+})
 
 -- ── Terminal keymaps ──
 -- Ctrl+\ toggles the floating terminal

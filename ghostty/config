@@ -30,10 +30,16 @@ font-size = 15.5
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
-background-opacity = 0.93
+background-opacity = 0.91
 window-decoration = false
 window-padding-x = 5
 window-padding-y = 5
 confirm-close-surface = false
 
 gtk-tabs-location = bottom
+
+
+# Use a short, dotted GTK application ID so the Wayland app_id / WM_CLASS
+# class shows as "com.ghostty" instead of "com.mitchellh.ghostty".
+# (GTK requires at least one dot; bare "ghostty" is rejected by Ghostty.)
+class = com.ghostty

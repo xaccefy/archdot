@@ -16,9 +16,13 @@ case $choice in
     "Active Window")
         read -r x y < <(hyprctl cursorpos | tr -d ',')
         ws=$(hyprctl activeworkspace -j | jq -r .id)
-        geom=$(hyprctl clients -j | jq -r "[.[] | select(.workspace.id == $ws and .at[0] <= $x and .at[0] + .size[0] >= $x and .at[1] <= $y and .at[1] + .size[1] >= $y)] | last | \"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])\"")
-        
-        if [[ "$geom" != "null" ]]; then
+        # `last` on an empty array yields null, and interpolating null produced the literal
+        # text "null,null nullxnull" -- never the string "null" -- so the old
+        # [[ "$geom" != "null" ]] test was always true and the else branch was unreachable.
+        # Emit nothing when no window matches, and test for empty instead.
+        geom=$(hyprctl clients -j | jq -r "[.[] | select(.workspace.id == $ws and .at[0] <= $x and .at[0] + .size[0] >= $x and .at[1] <= $y and .at[1] + .size[1] >= $y)] | last | if . == null then empty else \"\(.at[0]),\(.at[1]) \(.size[0])x\(.size[1])\" end")
+
+        if [[ -n "$geom" ]]; then
             grimblast copy area "$geom" && notify-send "Screenshot" "Active window copied"
         else
             notify-send "Screenshot" "No window found under cursor"

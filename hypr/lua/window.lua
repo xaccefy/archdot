@@ -4,11 +4,11 @@
 hl.config({
     general = {
         gaps_in = 5,
-        gaps_out = { top = 10, right = 7, bottom = 10, left = 7 },
+        gaps_out = { top = 14, right = 14, bottom = 14, left = 14 },
         border_size = false,
         col = {
-            active_border = "rgba(120, 169, 255, 0.55)",
-            inactive_border = "rgba(4a4a4a99)",
+            active_border = "rgba(220, 220, 220, 0.75)",
+            inactive_border = "rgba(109, 111, 130, 0.8)",
         },
         layout = "dwindle",
     },

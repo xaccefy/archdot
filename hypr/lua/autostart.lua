@@ -16,7 +16,9 @@ hl.on("hyprland.start", function()
     hl.exec_cmd("xrdb ~/.Xresources")
     hl.exec_cmd("pgrep -x dunst >/dev/null || dunst")
     hl.exec_cmd("pgrep -f 'gnome-keyring-daemon.*secrets' >/dev/null || gnome-keyring-daemon --start --components=secrets")
-    hl.exec_cmd("pgrep -x caffeine >/dev/null || caffeine")
+    -- The binary is `caffeine` but its process comm is `caffeine-ng`, so `pgrep -x caffeine`
+    -- never matched and the guard was dead. -f matches the full command line instead.
+    hl.exec_cmd("pgrep -f caffeine >/dev/null || caffeine")
     hl.exec_cmd("hyprctl setcursor Bibata-Original-Classic 25")
     hl.exec_cmd("dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP=Hyprland XDG_SESSION_DESKTOP=Hyprland")
 end)
