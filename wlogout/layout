@@ -1,6 +1,6 @@
 {
     "label" : "lock",
-    "action" : "hyprlock --quiet --grace 0 --immediate-render",
+    "action" : "(sleep 0.2; exec hyprlock --quiet --grace 0 --immediate-render) >/dev/null 2>&1 &",
     "text" : "Lock",
     "keybind" : "l"
 }

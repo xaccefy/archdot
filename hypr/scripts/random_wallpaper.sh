@@ -36,3 +36,7 @@ fi
 ln -sfn "$NEXT" "$LINK"
 echo "$NEXT" > "$CACHE"
 awww img "$NEXT" --transition-type none --transition-duration 0 --resize crop
+
+# Retint the window borders to match. Cached per wallpaper, so this is free
+# after the first pass through the set.
+~/.config/hypr/scripts/wallpaper-accent.sh || true

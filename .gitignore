@@ -36,6 +36,12 @@ notion.db
 *.token
 *.secret
 
+# Editor / tool backups picked up by sync_back.sh
+*.bak
+*.prepropo.bak
+*.bak-*
+*.theme.bak
+
 # Node / build outputs
 node_modules/
 dist/

@@ -15,6 +15,7 @@
     "custom/separator#blank",
     "custom/separator#dot",
     "temperature",
+    "custom/perf",
     "custom/mode",
     "group/right1",
   ],
@@ -61,6 +62,14 @@
       "format": "{}"
   },
 
+  "custom/perf": {
+    "exec": "~/.config/waybar/scripts/perf.sh status",
+    "on-click": "~/.config/waybar/scripts/perf.sh cycle",
+    "return-type": "json",
+    "signal": 11,
+    "interval": 10
+  },
+
   "custom/active_window": {
     "exec": "~/.config/waybar/window.sh",
     "return-type": "json",
@@ -85,7 +94,6 @@
       "5": [],
       "6": [],
       "7": [],
-      "8": [],
     },
 	},
 

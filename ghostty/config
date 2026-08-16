@@ -24,8 +24,8 @@ palette = 13=#be95ff
 palette = 14=#33b1ff
 palette = 15=#f2f4f8
 
-font-family = "JetBrainsMono Nerd Font Mono"
-font-size = 15.5
+font-family = "JetBrainsMono Nerd Font"
+font-size = 15.6
 
 cursor-style = block
 shell-integration-features = no-cursor

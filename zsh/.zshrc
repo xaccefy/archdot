@@ -116,4 +116,3 @@ export PATH="/home/xaccefy/.foundry/bin:/home/xaccefy/go/bin:/home/xaccefy/.carg
 # <<< plamen toolchain PATH <<<
 export PATH="$PATH:$HOME/flutter/bin"
 _ZO_DOCTOR=0
-export FFF_ENABLE_HOME_SCAN=0

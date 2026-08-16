@@ -11,7 +11,7 @@
   border: none;
   border-radius: 0px;
   min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font Propo';
+  font-family: 'JetBrainsMono Nerd Font';
   font-size: 13px;
 }
 
@@ -203,6 +203,22 @@ tooltip label {
 }
 #temperature.critical {
   color: #f38ba8;
+}
+
+#custom-perf {
+  margin-right: 8px;
+  min-width: 14px;
+  font-size: 13px;
+}
+
+/* Balanced inherits the bar foreground on purpose -- the default state should
+   not draw the eye. Only the states that cost power get a colour. */
+#custom-perf.blend {
+  color: #f9e2af;
+}
+
+#custom-perf.turbo {
+  color: #fab387;
 }
 
 #custom-media {

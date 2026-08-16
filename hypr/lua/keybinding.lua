@@ -4,11 +4,19 @@
 local mainMod = "SUPER"
 
 -- Applications
-hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("ghostty"), { desc = "Terminal (ghostty)" })
-hl.bind(mainMod .. " + W",
-    hl.dsp.exec_cmd(
-        "helium-browser --force-device-scale-factor=1.3 --default-zoom-level=1.05 --disable-background-networking --disable-component-update --no-first-run --disable-search-engine-choice-screen --disable-features=ChromeWhatsNewUI,TranslateUI,MediaRouter,OptimizationGuideModelDownloading"),
-    { desc = "Browser" })
+-- Running `ghostty` forks a whole new Zig binary and GTK stack purely to hand
+-- the request to the instance already running, then exits. Talking to that
+-- instance over D-Bus directly skips all of it: measured 177ms -> 43ms to
+-- window-on-screen, three runs each. The fallback covers a cold session, since
+-- com.ghostty is a name the running app owns rather than an activatable one.
+hl.bind(mainMod .. " + RETURN", hl.dsp.exec_cmd("gapplication launch com.ghostty 2>/dev/null || ghostty"),
+    { desc = "Terminal (ghostty)" })
+
+-- Flags moved to ~/.config/helium-browser-flags.conf, which the helium wrapper
+-- reads on every launch. They only ever applied to the process that actually
+-- starts the browser, so keeping them here meant launches from rofi, the
+-- .desktop file, or xdg-open on a link silently got none of them.
+hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("helium-browser --new-window"), { desc = "Browser" })
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"), { desc = "File Explorer (Thunar)" })
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("zed"), { desc = "Zed" })
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("webcord"))
@@ -88,3 +96,9 @@ hl.bind("XF86ScreenSaver", hl.dsp.exec_cmd("hyprlock"), { locked = true, desc = 
 -- Wallpaper management
 hl.bind(mainMod .. " + CTRL + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/random_wallpaper.sh"),
     { desc = "Cycle to next wallpaper (sequential)" })
+
+-- Lock when the lid closes. Suspend is disabled (see hypridle.conf), so the
+-- lid switch only locks. Guarded against stacking hyprlock instances.
+-- logind HandleLidSwitch=ignore (/etc/systemd/logind.conf.d/lid.conf) leaves
+-- the switch to Hyprland.
+hl.bind("switch:on:Lid Switch", hl.dsp.exec_cmd("pidof hyprlock || hyprlock"), { locked = true })
