@@ -22,7 +22,7 @@
   padding-left:  16.5px;
   padding-right: 16.5px;
   background-color: @center;
-  border-radius: 1.1px 1.1px 108.9px 108.9px;
+  border-radius: 108.9px;
   border: 1.1px solid @border;
   box-shadow: 0 0 11px alpha(#000000, 0.22);
 }
@@ -59,7 +59,7 @@ window#waybar.empty #window {
     margin: 3.85px 3.85px;
     margin-top: 0px;
     margin-bottom: 0px;
-    border-radius: 1.1px 1.1px 108.9px 108.9px;
+    border-radius: 108.9px;
     /* Fill now comes from .modules-center (@center). Painting it here too would composite
        0.3 black twice and make the dots' track darker than the arrows again. */
     background-color: transparent;
@@ -147,7 +147,8 @@ window#waybar.empty #window {
 #temperature,
 #cpu,
 #memory,
-#disk {
+#disk,
+#custom-perf {
   font-family: 'JetBrainsMono Nerd Font Propo';
 }
 
@@ -257,7 +258,8 @@ tooltip label {
 #custom-perf {
   margin-right: 8.8px;
   min-width: 15.4px;
-  font-size: 14.3px;
+  font-size: 17.6px;
+  font-weight: 700;
   border-radius: 13.2px;
   padding: 0 6.6px;
   transition: background 150ms ease, color 150ms ease;

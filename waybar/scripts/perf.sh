@@ -48,9 +48,9 @@ status() {
   pct=$(cat "$PCT_PATH" 2>/dev/null || echo 100)
 
   case "$mode" in
-    balanced) icon="󰾅"; tip="Balanced — stock fans, no CPU cap" ;;
-    blend)    icon="󰓅"; tip="Blend — performance fans, CPU capped at ${pct}%" ;;
-    turbo)    icon="󰈸"; tip="Turbo — performance fans, no CPU cap" ;;
+    balanced) icon="󰐥"; tip="Balanced — stock fans, no CPU cap" ;;
+    blend)    icon="󰊚"; tip="Blend — performance fans, CPU capped at ${pct}%" ;;
+    turbo)    icon="󰓅"; tip="Turbo — performance fans, no CPU cap" ;;
   esac
 
   # Surface a silently-skipped cap rather than lying about the current state.
