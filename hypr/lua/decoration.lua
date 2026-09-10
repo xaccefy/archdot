@@ -1,34 +1,24 @@
-----------------
--- General window decoration
-----------------
 hl.config({
     decoration = {
-        rounding = 13,
+        rounding = 12,
         blur = {
-            enabled = false,
+            enabled = true,
             size = 8,
-            passes = 4,
+            passes = 2,
             new_optimizations = true,
-            ignore_opacity = false,
+            ignore_opacity = true,
             xray = false,
         },
         active_opacity = 1.0,
-        inactive_opacity = 0.9,
+        inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
     },
     layerrule = {
     },
 })
 
--- slurp's overlay (namespace "selection") must vanish instantly, not slide out.
--- grimblast tries to set this itself at runtime, but `hyprctl keyword layerrule`
--- is rejected by 0.55+'s non-legacy parser, so grim fires mid-animation and bakes
--- slurp's translucent background into the top of every area screenshot.
 hl.layer_rule({ match = { namespace = "^selection$" }, no_anim = true })
 
-----------------
--- Group (tabbed containers) settings
-----------------
 hl.config({
     group = {
         groupbar = {

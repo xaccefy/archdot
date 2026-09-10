@@ -8,3 +8,7 @@ if [ -d "$HOME/.local/share/gem/ruby/3.4.0/bin" ]; then
 fi
 
 export NODE_PATH="/home/xaccefy/.npm-global/lib/node_modules"
+
+# Added by jcode installer
+export PATH="/home/xaccefy/.local/bin:$PATH"
+export PATH="/home/xaccefy/tools/vol-rs/target/release:/home/xaccefy/tools/vol-rs/target/debug:$PATH"

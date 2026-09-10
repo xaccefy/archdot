@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
-# Notification (dunst) pause indicator + toggle.
+# Notification (mako) do-not-disturb indicator + toggle.
 status() {
-  if [[ "$(dunstctl is-paused)" == "true" ]]; then
+  if makoctl mode 2>/dev/null | grep -q "do-not-disturb"; then
     echo '{"text":"󰂛","tooltip":"Notifications: paused — click to resume"}'
   else
     echo '{"text":"󰂚","tooltip":"Notifications: on — click to pause"}'
@@ -9,7 +9,7 @@ status() {
 }
 
 toggle() {
-  dunstctl set-paused toggle
+  makoctl mode -t do-not-disturb >/dev/null 2>&1
   kill -RTMIN+10 "$(pgrep -x waybar)" 2>/dev/null
 }
 

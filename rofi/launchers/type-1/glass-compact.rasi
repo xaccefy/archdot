@@ -9,16 +9,16 @@ configuration {
 }
 
 * {
-    bg: rgba(18, 18, 18, 0.95);
+    bg: rgba(22, 22, 22, 0.90);
     panel: rgba(255, 255, 255, 0.10);
     panel-hover: rgba(255, 255, 255, 0.18);
     border: rgba(255, 255, 255, 0.16);
     text: #f2f4f8;
     muted: #919aa7;
-    accent: #82aaff;
+    accent: #78a9ff;
     urgent: #ee5396;
 
-    font: "JetBrainsMono Nerd Font Mono 13";
+    font: "JetBrainsMono Nerd Font Mono 12";
     background-color: transparent;
     text-color: @text;
     margin: 0;
@@ -34,7 +34,7 @@ window {
     y-offset: -20px;
     border: 1px;
     border-color: @border;
-    border-radius: 5px;
+    border-radius: 12px;
     background-color: @bg;
 }
 
@@ -51,7 +51,7 @@ inputbar {
     spacing: 8px;
     border: 1px;
     border-color: @border;
-    border-radius: 5px;
+    border-radius: 12px;
     background-color: @panel;
 }
 
@@ -78,7 +78,7 @@ element {
     spacing: 8px;
     border: 1px;
     border-color: transparent;
-    border-radius: 5px;
+    border-radius: 12px;
     background-color: transparent;
 }
 

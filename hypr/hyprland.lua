@@ -1,6 +1,3 @@
--- Pure Lua Hyprland configuration.
--- Hyprland 0.55+ loads this file instead of hyprland.conf when present.
-
 require("lua.monitor")
 require("lua.autostart")
 require("lua.cursor")
