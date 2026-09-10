@@ -38,6 +38,9 @@ confirm-close-surface = false
 
 gtk-tabs-location = bottom
 
+# Ignore OSC 9;4 progress bar sequences (hide the bouncing bar in title)
+progress-style = false
+
 
 # Use a short, dotted GTK application ID so the Wayland app_id / WM_CLASS
 # class shows as "com.ghostty" instead of "com.mitchellh.ghostty".

@@ -1,7 +1,10 @@
 #!/usr/bin/env bash
 # Now-playing title for waybar.
 #
-# Two fixes over the old inline `exec` one-liner in config.jsonc:
+# Event-driven: `playerctl -F` blocks and emits a line on every metadata change
+# (and once at startup), and waybar updates the module per output line. The old
+# version polled every 2s instead, spawning playerctl forever.
+#
 #  1. The title is Pango-escaped. It wasn't before, so any track containing & < or >
 #     produced invalid markup and the module rendered blank.
 #  2. The idle state is the plain string "No media" instead of
@@ -10,11 +13,20 @@
 #     Width now comes from `min-width` on #custom-media in CSS, which doesn't reflow.
 MAX=25
 
-title=$(playerctl metadata title 2>/dev/null)
-
-if [[ -n "$title" ]]; then
+show() {
+    local title=$1
+    if [[ -z "$title" || "$title" == "(No players)" || "$title" == "No players found" ]]; then
+        printf '  No media\n'
+        return
+    fi
     (( ${#title} > MAX )) && title="${title:0:$((MAX - 3))}..."
     printf '  %s\n' "$(jq -Rr '@html' <<< "$title")"
-else
-    printf '  No media\n'
-fi
+}
+
+# Initial state, printed once: -F only emits on changes, and a player like Chrome's
+# MPRIS stub never reports metadata, so without this the module would stay blank.
+show "$(playerctl metadata title 2>/dev/null)"
+
+# stdbuf -oL: playerctl block-buffers when piped, which would sit on the first line.
+stdbuf -oL playerctl -F metadata -f '{{title}}' 2>/dev/null |
+    while IFS= read -r line; do show "$line"; done

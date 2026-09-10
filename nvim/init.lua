@@ -1,5 +1,13 @@
-vim.g.mapleader = " "
+-- ─────────────────────────────────────────────────────────────
+-- Ready-to-use Neovim config (lazy.nvim)
+-- Transparent oxocarbon · Wayland text-only clipboard · cmp +
+-- snippets + Mason. Restart nvim / run :Lazy sync after first launch.
+-- ─────────────────────────────────────────────────────────────
 
+vim.g.mapleader = " "
+vim.g.have_nerd_font = true
+
+-- ── Editor options ──
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.expandtab = true
@@ -21,10 +29,25 @@ vim.opt.inccommand = "split"
 vim.opt.splitbelow = true
 vim.opt.splitright = true
 
+-- ── Clipboard (Wayland, text-only) ──
+-- An image copied in the PI UI lands on the system clipboard as
+-- /tmp/pi-clipboard-*.png. Force text/plain so it is never pasted into a
+-- buffer as a stray path / blank gap. Filtered at the provider, not in nvim.
+vim.g.clipboard = {
+    name = "wayland-text-only",
+    copy = {
+        ["+"] = "/usr/sbin/wl-copy --type text/plain",
+        ["*"] = "/usr/sbin/wl-copy --type text/plain --primary",
+    },
+    paste = {
+        ["+"] = "/usr/sbin/wl-paste --type text/plain --no-newline | grep -v -E '/tmp/pi-clipboard-[0-9a-f-]+\\.png' || true",
+        ["*"] = "/usr/sbin/wl-paste --type text/plain --primary --no-newline | grep -v -E '/tmp/pi-clipboard-[0-9a-f-]+\\.png' || true",
+    },
+    cache_enabled = true,
+}
+
 -- ── Lazy.nvim bootstrap ──
-
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
 if not vim.uv.fs_stat(lazypath) then
     vim.fn.system({
         "git",
@@ -34,25 +57,33 @@ if not vim.uv.fs_stat(lazypath) then
         lazypath,
     })
 end
-
 vim.opt.rtp:prepend(lazypath)
 
 -- ── Plugins ──
-
 require("lazy").setup({
     -- Colorscheme
     { "nyoom-engineering/oxocarbon.nvim" },
+    { "folke/tokyonight.nvim" },
 
     -- Syntax highlighting
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
 
-    -- LSP
+    -- LSP + easy server installs
     { "neovim/nvim-lspconfig" },
+    { "williamboman/mason.nvim" },
+    { "williamboman/mason-lspconfig.nvim" },
 
-    -- Completion
+    -- Completion (+ buffer/path/snippet sources)
     {
         "hrsh7th/nvim-cmp",
-        dependencies = { "hrsh7th/cmp-nvim-lsp" },
+        dependencies = {
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "saadparwaiz1/cmp_luasnip",
+            "L3MON4D3/LuaSnip",
+            "rafamadriz/friendly-snippets",
+        },
     },
 
     -- File finding
@@ -66,6 +97,9 @@ require("lazy").setup({
 
     -- File explorer (modal, not tree-based)
     { "stevearc/oil.nvim" },
+
+    -- IDE-style file tree sidebar (toggle with <C-n>)
+    { "nvim-tree/nvim-tree.lua", version = "*" },
 
     -- Floating terminal
     {
@@ -92,13 +126,22 @@ require("lazy").setup({
     { "numToStr/Comment.nvim" },
 })
 
--- ── Colorscheme (applied after lazy ensures the plugin is available) ──
+-- ── Colorscheme ──
+pcall(vim.cmd.colorscheme, "tokyonight-night")
 
-pcall(vim.cmd.colorscheme, "oxocarbon")
-
--- Transparent background and visible comments
+-- Transparent background + visible comments. Every group that can paint a
+-- background must be cleared, or the colorscheme's dark #161616 bleeds into
+-- the gutter / end-of-buffer / current-line-number area as dark blocks.
 local function set_transparency()
-    local groups = { "Normal", "NormalNC", "SignColumn", "FoldColumn" }
+    local groups = {
+        "Normal",
+        "NormalNC",
+        "SignColumn",
+        "FoldColumn",
+        "EndOfBuffer",
+        "NonText",
+        "CursorLineNr",
+    }
     for _, group in ipairs(groups) do
         vim.api.nvim_set_hl(0, group, { bg = "none" })
     end
@@ -106,9 +149,11 @@ local function set_transparency()
 end
 set_transparency()
 
+-- Hide the ~ end-of-buffer markers (bg already transparent above)
+vim.opt.fillchars:append({ eob = " " })
+
 -- ── Plugin configurations ──
--- All wrapped in pcall so first-time bootstrap (before :Lazy sync) doesn't crash.
--- After running `:Lazy sync`, restart nvim and everything works.
+-- Wrapped in pcall so first-time bootstrap (before :Lazy sync) doesn't crash.
 
 pcall(function()
     require("nvim-treesitter.configs").setup({
@@ -119,6 +164,26 @@ pcall(function()
         auto_install = true,
         highlight = { enable = true },
     })
+end)
+
+-- LSP: Mason for one-key installs, cmp capabilities, enabled servers.
+pcall(function()
+    require("lspconfig")
+
+    require("mason").setup()
+    require("mason-lspconfig").setup({
+        automatic_enable = true, -- any server installed via :Mason auto-starts
+    })
+
+    -- Wire cmp capabilities (incl. snippets) into every LSP client
+    vim.lsp.config("*", {
+        capabilities = require("cmp_nvim_lsp").default_capabilities(),
+    })
+
+    -- Explicitly enabled servers (also auto-enabled once installed via Mason)
+    for _, server in ipairs({ "clangd", "gopls", "basedpyright", "ts_ls", "ruff" }) do
+        vim.lsp.enable(server)
+    end
 end)
 
 -- LSP keymaps (applies whenever any LSP attaches to a buffer)
@@ -141,32 +206,44 @@ vim.api.nvim_create_autocmd("LspAttach", {
     end,
 })
 
--- Enable LSP servers (Neovim 0.12 API)
-pcall(function()
-    require("lspconfig")
-    -- Wire cmp capabilities into every LSP client (snippets, labelDetails, ...)
-    vim.lsp.config("*", {
-        capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    })
-    vim.lsp.enable("clangd")
-    vim.lsp.enable("gopls")
-    vim.lsp.enable("basedpyright")
-    vim.lsp.enable("ts_ls")
-    vim.lsp.enable("ruff")
-end)
-
 pcall(function()
     local cmp = require("cmp")
     cmp.setup({
+        snippet = {
+            expand = function(args)
+                require("luasnip").lsp_expand(args.body)
+            end,
+        },
         mapping = cmp.mapping.preset.insert({
             ["<C-b>"] = cmp.mapping.scroll_docs(-4),
             ["<C-f>"] = cmp.mapping.scroll_docs(4),
             ["<C-Space>"] = cmp.mapping.complete(),
             ["<C-e>"] = cmp.mapping.abort(),
             ["<CR>"] = cmp.mapping.confirm({ select = true }),
+            ["<Tab>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_next_item()
+                elseif require("luasnip").expand_or_locally_jumpable() then
+                    require("luasnip").expand_or_jump()
+                else
+                    fallback()
+                end
+            end, { "i", "s" }),
+            ["<S-Tab>"] = cmp.mapping(function(fallback)
+                if cmp.visible() then
+                    cmp.select_prev_item()
+                elseif require("luasnip").locally_jumpable(-1) then
+                    require("luasnip").jump(-1)
+                else
+                    fallback()
+                end
+            end, { "i", "s" }),
         }),
         sources = {
             { name = "nvim_lsp" },
+            { name = "luasnip" },
+            { name = "buffer" },
+            { name = "path" },
         },
         formatting = {
             format = function(entry, vim_item)
@@ -185,7 +262,6 @@ end)
 
 pcall(function()
     require("nvim-autopairs").setup()
-    -- Don't double-pair when confirming a completion
     local cmp_autopairs = require("nvim-autopairs.completion.cmp")
     require("cmp").event:on("confirm_done", cmp_autopairs.on_confirm_done())
 end)
@@ -208,6 +284,23 @@ end)
 
 pcall(function()
     require("oil").setup()
+end)
+
+pcall(function()
+    require("nvim-tree").setup({
+        disable_netrw = true,
+        hijack_netrw = true,
+        view = { side = "left", width = 22 },
+        update_focused_file = { enable = true },
+        filters = { dotfiles = false },
+    })
+    -- <C-n> may be intercepted by the terminal; <leader>e (space+e) is reliable
+    vim.keymap.set("n", "<C-n>", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file tree" })
+    vim.keymap.set("n", "<leader>e", "<cmd>NvimTreeToggle<CR>", { desc = "Toggle file tree" })
+    -- Open the IDE-style sidebar on startup so it's visible like an editor
+    vim.api.nvim_create_autocmd("VimEnter", {
+        callback = function() pcall(require("nvim-tree.api").tree.open) end,
+    })
 end)
 
 pcall(function()
@@ -316,19 +409,16 @@ pcall(function()
 end)
 
 -- ── Telescope keymaps ──
-
 vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<CR>")
 vim.keymap.set("n", "<leader>fg", "<cmd>Telescope live_grep<CR>")
 
 -- ── Flash: s to jump, S to pick a syntax node ──
-
 pcall(function()
     vim.keymap.set({ "n", "x", "o" }, "s", require("flash").jump)
     vim.keymap.set({ "n", "x", "o" }, "S", require("flash").treesitter)
 end)
 
 -- ── Highlight yanked text ──
-
 vim.api.nvim_create_autocmd("TextYankPost", {
     callback = function()
         vim.hl.on_yank({ timeout = 200 })
@@ -336,8 +426,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 
 -- ── Terminal keymaps ──
--- Ctrl+\ toggles the floating terminal
--- Space tt opens the floating terminal
 vim.keymap.set("n", "<leader>t", "<cmd>ToggleTerm direction=horizontal<CR>")
 vim.keymap.set("t", "<Esc>", [[<C-\><C-n>]])
 

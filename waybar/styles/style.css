@@ -5,26 +5,25 @@
    drawers they open sit on the same black as the workspace dots instead of on a lighter
    slab. Painting it once on .modules-center rather than per-module also removes the ~5px
    seams the module margins used to leave between them. */
-@define-color center #111113;
+@define-color center #0f0f12;
+@define-color surface #1e1e22;
+@define-color border alpha(@foreground, 0.08);
 
 * {
   border: none;
   border-radius: 0px;
   min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font';
+  font-family: 'JetBrainsMono Nerd Font Mono';
   font-size: 13px;
-}
-
-.modules-left {
-  margin-left: 0px;
 }
 
 .modules-center {
   padding-left:  15px;
   padding-right: 15px;
   background-color: @center;
-  border-radius: 1px 1px 99px 99px;
-  margin-left: 0px;
+  border-radius: 99px;
+  border: 1px solid @border;
+  box-shadow: 0 0 10px alpha(#000000, 0.22);
 }
 
 .modules-right {
@@ -59,7 +58,7 @@ window#waybar.empty #window {
     margin: 3.5px 3.5px;
     margin-top: 0px;
     margin-bottom: 0px;
-    border-radius: 1px 1px 99px 99px;
+    border-radius: 99px;
     /* Fill now comes from .modules-center (@center). Painting it here too would composite
        0.3 black twice and make the dots' track darker than the arrows again. */
     background-color: transparent;
@@ -68,36 +67,34 @@ window#waybar.empty #window {
 
 #workspaces button {
   color: @foreground;
-  padding: 0;
-  margin: 10px 3px;
-  min-width: 19px;
-  border-radius: 99px;
+  font-size: 16px;
+  font-weight: 700;
+  padding: 0 6px;
+  margin: 0 1px;
+  min-width: 0;
+  border-radius: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
 }
 
 #workspaces button.empty {
-  color: @foreground;
-  opacity: 0.5;
+  opacity: 0.45;
 }
 
 #workspaces button.active {
-   transition: all 50ms ease-out;
-  border-radius: 99px;
-  color: transparent;
-  background: alpha(@foreground, 0.9);
+  color: @foreground;
+  background: transparent;
+  border: none;
+  box-shadow: inset 0 -2px @foreground;
   opacity: 1;
-  min-width: 19px;
-  padding: 0;
-  margin: 10px 3px;
+  font-weight: bold;
 }
 
-#workspaces button:hover,
-#workspaces button.empty:hover {
-  color: @foreground;
-  border-radius: 99px;
-  background: alpha(@foreground, 0.2);
-  min-width: 19px;
-  padding: 0;
-  margin: 10px 3px;
+#workspaces button:hover {
+  background: transparent;
+  border: none;
+  box-shadow: none;
   opacity: 1;
 }
 
@@ -107,6 +104,9 @@ window#waybar.empty #window {
 #custom-update {
   min-width: 12px;
   margin: 0 7.5px;
+  border-radius: 12px;
+  padding: 0 4px;
+  transition: background 150ms ease, color 150ms ease;
 }
 
 #tray {
@@ -116,15 +116,38 @@ window#waybar.empty #window {
   padding: 0px 5px;
   margin: 3.5px 2px;
   margin-right: 4px;
+  transition: background 150ms ease;
+}
+#tray:hover {
+  background: transparent;
 }
 
 #clock {
   font-size: 14px;
   font-weight: 700;
+  letter-spacing: 0.2px;
+  padding: 0 6px;
+  border-radius: 12px;
+  transition: background 150ms ease;
+}
+#clock:hover {
+  background: transparent;
 }
 
 #pulseaudio {
   margin-right: 5px;
+}
+
+/* Icon glyphs at natural width (Propo); body text stays Mono. */
+#pulseaudio,
+#bluetooth,
+#network,
+#battery,
+#temperature,
+#cpu,
+#memory,
+#disk {
+  font-family: 'JetBrainsMono Nerd Font Propo';
 }
 
 #bluetooth {
@@ -135,14 +158,26 @@ window#waybar.empty #window {
   margin-right: 9px;
 }
 
+#pulseaudio:hover,
+#bluetooth:hover,
+#network:hover,
+#battery:hover,
+#temperature:hover,
+#custom-perf:hover,
+#custom-mode:hover {
+  background: transparent;
+}
 
 tooltip {
   background: @background;
-  border: 1px solid alpha(@foreground, 0.2);
-  border-radius: 4px 4px 11px 11px;
+  border: 1px solid alpha(@foreground, 0.12);
+  border-radius: 8px;
+  padding: 6px 8px;
+  box-shadow: 0 8px 24px alpha(#000000, 0.35);
 }
 tooltip label {
-  color: white;
+  color: @foreground;
+  font-size: 12px;
 }
 
 
@@ -150,65 +185,81 @@ tooltip label {
     padding: 3px 6px;
     margin-left: 10px;
     font-size: 13px;
+    border-radius: 12px;
+    transition: background 150ms ease, opacity 150ms ease;
+}
+#custom-active_window:hover {
+  background: transparent;
 }
 
 #custom-update {
   font-size: 11px;
 }
 
-#custom-idle-indicator,
-#custom-notification-silencing-indicator {
+#custom-idle-indicator {
   margin-right: 2px;
   min-width: 15px;
+  border-radius: 12px;
+  padding: 0 3px;
+  transition: background 150ms ease;
+}
+#custom-idle-indicator:hover {
+  background: transparent;
 }
 
 #custom-idle-indicator {
   margin-left: 16px;
 }
 
-.hidden {
-  opacity: 0;
-}
-
 #custom-screenrecording-indicator {
   min-width: 12px;
   margin-left: 8.75px;
   font-size: 11px;
+  border-radius: 12px;
+  padding: 0 4px;
+  transition: background 150ms ease, color 150ms ease;
 }
 
 #custom-screenrecording-indicator.active {
-  color: red;
+  color: #f38ba8;
+  background: alpha(#f38ba8, 0.12);
+  animation: pulse-rec 1.6s ease-in-out infinite alternate;
+}
+@keyframes pulse-rec {
+  from { background: alpha(#f38ba8, 0.10); }
+  to   { background: alpha(#f38ba8, 0.22); }
 }
 
-#custom-menu{
-  background:alpha(@foreground, 0.1);
-  border-radius: 99px;
-  /* margin:3px; */
-  margin-top: 4px;
-  margin-bottom: 4px;
-  margin-left: -3px;
-  margin-right: 5px;
-  padding-right: 7px;
-  padding-left: 7px;
-
-}
 
 #custom-mode {
   margin-right: 4px;
+  border-radius: 12px;
+  padding: 0 6px;
+  transition: background 150ms ease;
 }
 
 #temperature {
   font-weight: 700;
   margin: 0 8px;
+  border-radius: 12px;
+  padding: 0 6px;
+  transition: background 150ms ease, color 150ms ease;
 }
-#temperature.critical {
-  color: #f38ba8;
+
+#battery.warning,
+#battery.critical {
+  color: @foreground;
+  background: transparent;
+  animation: none;
 }
 
 #custom-perf {
   margin-right: 8px;
   min-width: 14px;
   font-size: 13px;
+  border-radius: 12px;
+  padding: 0 6px;
+  transition: background 150ms ease, color 150ms ease;
 }
 
 /* Balanced inherits the bar foreground on purpose -- the default state should
@@ -225,33 +276,46 @@ tooltip label {
   font-weight: 700;
   padding: 2px 4px;
   min-width: 190px;
+  opacity: 0.92;
+  border-radius: 12px;
+  transition: opacity 150ms ease, background 150ms ease;
+}
+#custom-media:hover {
+  opacity: 0.92;
+  background: transparent;
 }
 
 #cpu, #memory, #disk {
   font-weight: 700;
-    font-size: 15px;      
-    padding: 2px 1px;
+    font-size: 14px;
+    padding: 2px 1.05px;
+    border-radius: 12px;
+    transition: background 150ms ease;
+}
+#cpu:hover, #memory:hover, #disk:hover {
+  background: transparent;
 }
 
-#group-right1,
-#group_right1,
 #right1 {
-    background-color: alpha(@background, 0.6);
+    background-color: alpha(@background, 0.55);
+    border: 1px solid @border;
     font-weight: 800;
     padding: 0px 5px;
     margin: 3.5px 2px;
     margin-right: 4px;
     border-radius: 16px;
+    box-shadow: 0 0 8px alpha(#000000, 0.18);
 }
 
-#group-center3,
-#group_center3,
 #center3,
-#group-center2,
-#group_center2,
 #center2 {
     font-weight: 800;
     border-radius: 12px;
     padding: 0px 5px;
     margin: 3.5px 2px;
+    transition: background 150ms ease;
+}
+#center3:hover,
+#center2:hover {
+  background: transparent;
 }

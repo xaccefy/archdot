@@ -1,49 +1,27 @@
-----------------
--- General window behavior and rules
-----------------
 hl.config({
     general = {
         gaps_in = 5,
         gaps_out = { top = 14, right = 14, bottom = 14, left = 14 },
-        -- Borderless by choice. This used to read `false`, which Hyprland
-        -- coerces to 0 anyway -- the explicit 0 just says so out loud. The
-        -- colours below are kept because scripts/wallpaper-accent.sh still
-        -- writes an active_border; raise this to 2 to make either visible.
-        border_size = 0,
+        border_size = 2,
         col = {
-            active_border = "rgba(220, 220, 220, 0.75)",
-            inactive_border = "rgba(109, 111, 130, 0.8)",
+            active_border = "rgba(ffffffff)",
+            inactive_border = "rgba(6d6f82cc)",
         },
         layout = "dwindle",
     },
 })
 
--- Ported from Omarchy default/hypr/windows.lua:
--- stop apps' fake-maximize jank.
 hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
 
--- Fix some dragging issues with XWayland (Omarchy port).
 hl.window_rule({ match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false }, no_focus = true })
 
 hl.window_rule({ match = { fullscreen = 1 }, idle_inhibit = "fullscreen" })
 
-----------------
--- Media: opt out of the global inactive_opacity
-----------------
--- decoration.lua dims every unfocused window to 0.9. That is fine for text but
--- wrong for video, which should stay at full opacity whether focused or not.
 hl.window_rule({
     match = { class = "^(mpv|vlc|imv|zoom|com.obsproject.Studio|org.kde.kdenlive)$" },
     opacity = "1 1",
 })
 
-----------------
--- Picture-in-picture
-----------------
--- Sized and positioned by formula rather than fixed pixels: the old rule paired
--- `size 480 270` with `move 100%-500 40`, leaving a stray 20px gap, and both
--- numbers assumed a single monitor. monitor_w/monitor_h resolve per output, so
--- this lands correctly on eDP-1 and on HDMI-A-1.
 hl.window_rule({
     match = { title = "^(Picture-in-Picture)$" },
     float = true,
@@ -60,9 +38,6 @@ hl.window_rule({
     pin = true,
 })
 
-----------------
--- Dialogs
-----------------
 hl.window_rule({ match = { title = "^(Open File)(.*)$" }, float = true })
 hl.window_rule({ match = { title = "^(Save File)(.*)$" }, float = true })
 hl.window_rule({ match = { title = "^(Choose File)(.*)$" }, float = true })
@@ -73,9 +48,6 @@ hl.window_rule({ match = { title = "^(Open Folder)(.*)$" }, float = true })
 hl.window_rule({ match = { title = "^(Confirm to replace files)(.*)$" }, float = true })
 hl.window_rule({ match = { title = "^(Authentication Required)(.*)$" }, float = true })
 
-----------------
--- Floating utilities
-----------------
 hl.window_rule({
     match = { class = "^(xdg-desktop-portal-gtk|xdg-desktop-portal)$" },
     float = true,
@@ -102,4 +74,15 @@ hl.window_rule({
     float = true,
     center = 1,
     size = { 980, 700 },
+})
+
+-- Blur only on MonoCode: disable blur everywhere else, make monocode translucent
+hl.window_rule({
+    match = { class = "negative:^(monocode|com.monocode.desktop|MonoCode|Monocode)$" },
+    no_blur = true,
+})
+
+hl.window_rule({
+    match = { class = "^(monocode|com.monocode.desktop|MonoCode|Monocode)$" },
+    opacity = "0.7 0.7",
 })

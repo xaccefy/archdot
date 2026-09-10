@@ -65,6 +65,24 @@ setopt hist_save_no_dups
 setopt hist_ignore_dups
 setopt hist_find_no_dups
 
+# ---- Drop failed commands from history ----
+# zshaddhistory fires BEFORE the command runs, so it cannot know the exit
+# status. Instead: never auto-add; re-add via print -s in precmd only when
+# the command exited 0. Interrupted (Ctrl-C) commands are also dropped.
+autoload -Uz add-zsh-hook
+typeset -g __sc_history_last=""
+function __sc_history_preexec() { __sc_history_last=$1 }
+function __sc_history_precmd() {
+  local __st=$?
+  if (( __st == 0 )) && [[ -n "$__sc_history_last" ]]; then
+    print -s -- "$__sc_history_last"
+  fi
+  __sc_history_last=
+}
+add-zsh-hook preexec __sc_history_preexec
+add-zsh-hook precmd __sc_history_precmd
+function zshaddhistory() { return 1 }
+
 # Completion styling
 zstyle ':completion:*' matcher-list 'm:{a-z}={A-Za-z}'
 zstyle ':completion:*' list-colors "${(s.:.)LS_COLORS}"
@@ -116,3 +134,9 @@ export PATH="/home/xaccefy/.foundry/bin:/home/xaccefy/go/bin:/home/xaccefy/.carg
 # <<< plamen toolchain PATH <<<
 export PATH="$PATH:$HOME/flutter/bin"
 _ZO_DOCTOR=0
+export DISABLE_AUTOUPDATER=true
+
+
+
+# Added by Antigravity CLI installer
+export PATH="/home/xaccefy/.local/bin:$PATH"

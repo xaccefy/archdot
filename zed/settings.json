@@ -1,4 +1,7 @@
 {
+  "git_panel": {
+    "dock": "left"
+  },
   "vim_mode": false,
   "collaboration_panel": {
     "button": false
@@ -45,6 +48,11 @@
   "ui_font_size": 21.0,
   "buffer_font_size": 20.0,
   "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "markdown_preview": {
+    "limit_content_width": false,
+    "max_width": 1200.0
+  },
+  "markdown_preview_font_size": 18.0,
   "minimap": {
     "show": "never"},
   "gutter": {
@@ -58,9 +66,9 @@
     "git_status": true,
     "folder_icons": true,
     "file_icons": true,
-    "entry_spacing": "standard",
-    "default_width": 200.0,
-    "dock": "left"},
+    "entry_spacing": "comfortable",
+    "default_width": 240.0,
+    "dock": "right"},
   "session": {
     "trust_all_worktrees": true},
   "git": {

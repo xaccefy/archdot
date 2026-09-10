@@ -20,7 +20,7 @@ if [ "$1" = "toggle" ]; then
     fi
 
     "$DIR/render.sh"
-    killall -SIGUSR2 waybar
+    killall -SIGUSR2 waybar 2>/dev/null || true
     exit
 fi
 

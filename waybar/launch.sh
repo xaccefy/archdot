@@ -39,6 +39,11 @@ pkill -x waybar 2>/dev/null || true
 sleep 0.2
 while pgrep -x waybar >/dev/null 2>&1; do sleep 0.1; done
 
+# Re-apply the persisted CPU profile before the bar comes up. .perf survives
+# reboots, powerprofilesctl does not -- without this the bar can sit there saying
+# Turbo while the machine is quietly running balanced.
+~/.config/waybar/scripts/perf.sh restore >/dev/null 2>&1 || true
+
 # Launch loop: restart waybar if it exits unexpectedly
 while true; do
     # Filter BEFORE tee, so the noise is kept out of the log file too. The original

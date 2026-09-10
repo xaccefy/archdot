@@ -2,9 +2,9 @@
 # Idle (hypridle) indicator + toggle.
 status() {
   if pgrep -x hypridle >/dev/null; then
-    echo '{"text":"󰅶","tooltip":"Idle: ON — click to disable"}'
+    echo '{"text":"󰒲","tooltip":"Hypridle: running — click to stop"}'
   else
-    echo '{"text":"󰒲","tooltip":"Idle: OFF — click to enable"}'
+    echo '{"text":"󰅶","tooltip":"Hypridle: stopped — click to start"}'
   fi
 }
 
