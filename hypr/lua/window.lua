@@ -1,7 +1,7 @@
 hl.config({
     general = {
         gaps_in = 5,
-        gaps_out = { top = 14, right = 14, bottom = 14, left = 14 },
+        gaps_out = { top = 16, right = 16, bottom = 16, left = 16 },
         border_size = 2,
         col = {
             active_border = "rgba(ffffffff)",
@@ -10,8 +10,6 @@ hl.config({
         layout = "dwindle",
     },
 })
-
-hl.window_rule({ match = { class = ".*" }, suppress_event = "maximize" })
 
 hl.window_rule({ match = { class = "^$", title = "^$", xwayland = true, float = true, fullscreen = false, pin = false }, no_focus = true })
 
@@ -74,15 +72,4 @@ hl.window_rule({
     float = true,
     center = 1,
     size = { 980, 700 },
-})
-
--- Blur only on MonoCode: disable blur everywhere else, make monocode translucent
-hl.window_rule({
-    match = { class = "negative:^(monocode|com.monocode.desktop|MonoCode|Monocode)$" },
-    no_blur = true,
-})
-
-hl.window_rule({
-    match = { class = "^(monocode|com.monocode.desktop|MonoCode|Monocode)$" },
-    opacity = "0.7 0.7",
 })

@@ -2,7 +2,7 @@
 # theme.sh — switch the Hyprland-native accent colour used by hyprlock.
 # (Window borders are left neutral on purpose.)
 # Usage: theme.sh {blue|teal|mauve}
-#   blue  — current: blue #78a9ff (matches GTK-blue)
+#   blue  — desktop accent #78a9ff
 #   teal  — oxocarbon teal #08bdba (matches ghostty/starship/fastfetch/rofi)
 #   mauve — catppuccin mauve #c6a0f6 (original lockscreen purple)
 #
@@ -29,6 +29,8 @@ esac
 
 HL="$HOME/.config/hypr/hyprlock.conf"
 [[ -f "$HL" ]] || { echo "missing: $HL" >&2; exit 1; }
+grep -qF '$accent_color = rgba(' "$HL" || { echo "missing \$accent_color in $HL" >&2; exit 1; }
+grep -qF '$accent_color_alpha = rgba(' "$HL" || { echo "missing \$accent_color_alpha in $HL" >&2; exit 1; }
 
 cp -n "$HL" "$HL.theme.bak"   # one-time backup, never overwrites
 

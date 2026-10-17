@@ -34,7 +34,7 @@ window {
     y-offset: -20px;
     border: 1px;
     border-color: @border;
-    border-radius: 12px;
+    border-radius: 5px;
     background-color: @bg;
 }
 
@@ -51,7 +51,7 @@ inputbar {
     spacing: 8px;
     border: 1px;
     border-color: @border;
-    border-radius: 12px;
+    border-radius: 5px;
     background-color: @panel;
 }
 
@@ -78,7 +78,7 @@ element {
     spacing: 8px;
     border: 1px;
     border-color: transparent;
-    border-radius: 12px;
+    border-radius: 5px;
     background-color: transparent;
 }
 

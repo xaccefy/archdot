@@ -23,6 +23,18 @@ Waybar, bar and dock modes:
 ![Waybar bar](screenshots/03-waybar-bar.png)
 ![Waybar dock](screenshots/04-waybar-dock.png)
 
+Clean desktop with the active wallpaper and Waybar:
+
+![Clean desktop](screenshots/06-clean-desktop.png)
+
+Ghostty with fastfetch:
+
+![Ghostty and fastfetch](screenshots/07-fastfetch-terminal.png)
+
+Three-way Ghostty layout with cava, cmatrix, and fastfetch:
+
+![Tiled Ghostty terminals](screenshots/08-tiled-terminals.png)
+
 ## Install (quick)
 
 ```bash

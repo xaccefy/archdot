@@ -1,4 +1,36 @@
 {
+  "ssh_connections": [
+    {
+      "host": "fx",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/fx"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "192.168.56.10",
+      "username": "test",
+      "args": [],
+      "projects": [
+        {
+          "paths": [
+            "/home/test"
+          ]
+        }
+      ]
+    },
+    {
+      "host": "192.168.56.10",
+      "username": "test",
+      "args": [],
+      "projects": []
+    }
+  ],
+  "window_title_format": "${projectName}${separator}${fileName}",
   "git_panel": {
     "dock": "left"
   },
@@ -15,6 +47,7 @@
     "show": true
   },
   "terminal": {
+    "flexible": false,
     "option_as_meta": false,
     "toolbar": {
       "breadcrumbs": false
@@ -44,15 +77,15 @@
   "theme": {
     "mode": "dark",
     "light": "Night Owl Light No Italics",
-    "dark": "Kanagawa Dragon - No Italics"},
+    "dark": "One Dark Pro Glass"},
   "ui_font_size": 21.0,
   "buffer_font_size": 20.0,
   "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "markdown_preview": {
+    "font_size": 18.0,
     "limit_content_width": false,
     "max_width": 1200.0
   },
-  "markdown_preview_font_size": 18.0,
   "minimap": {
     "show": "never"},
   "gutter": {
@@ -63,12 +96,12 @@
     "folds": false
   },
   "project_panel": {
+    "folder_indicator": "icon",
     "git_status": true,
-    "folder_icons": true,
     "file_icons": true,
     "entry_spacing": "comfortable",
     "default_width": 240.0,
-    "dock": "right"},
+    "dock": "left"},
   "session": {
     "trust_all_worktrees": true},
   "git": {

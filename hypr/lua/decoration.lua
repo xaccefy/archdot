@@ -1,9 +1,9 @@
 hl.config({
     decoration = {
-        rounding = 12,
+        rounding = 5,
         blur = {
-            enabled = true,
-            size = 8,
+            enabled = false,
+            size = 6,
             passes = 2,
             new_optimizations = true,
             ignore_opacity = true,
@@ -13,11 +13,12 @@ hl.config({
         inactive_opacity = 1.0,
         fullscreen_opacity = 1.0,
     },
-    layerrule = {
-    },
 })
 
 hl.layer_rule({ match = { namespace = "^selection$" }, no_anim = true })
+
+-- Blur waybar (layer surface)
+hl.layer_rule({ match = { namespace = "^waybar$" }, blur = true })
 
 hl.config({
     group = {

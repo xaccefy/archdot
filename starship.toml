@@ -1,19 +1,21 @@
-# ponytail: oxocarbon palette + Nerd Font icons, two-line prompt
-# base #161616 | surface #262626 | selection #393939 | text #f4f4f4
-# teal #08bdba | blue #78a9ff | purple #be95ff | green #42be65
-# pink #ee5396 | yellow #f1c21b | orange #ff832b | gray #525252
+# ponytail: neon cyberpunk palette + Nerd Font icons, two-line prompt
+# base #08080c | surface #11111a | text #f5f3ff
+# matrix green #00ff41 | cyan #00e5ff | pink #ff2e88 | violet #a259ff
+# orange #ff8a00 | muted #77738f
 
 format = """
+$hostname\
 $directory\
 $git_branch\
 $git_status\
+$git_metrics\
 $git_state\
 $nodejs\
 $python\
 $rust\
 $golang\
 $lua\
-$fill\
+$status\
 $cmd_duration\
 $line_break\
 $character"""
@@ -21,7 +23,7 @@ $character"""
 add_newline = false
 
 [directory]
-style = "fg:#08bdba bold"
+style = "fg:#00ff41"
 format = "[$path]($style) "
 truncation_length = 3
 truncation_symbol = "…/"
@@ -30,59 +32,72 @@ home_symbol = "~"
 
 [git_branch]
 symbol = " "
-style = "fg:#78a9ff"
+style = "fg:#00e5ff"
 format = "[$symbol$branch]($style) "
 
 [git_status]
-style = "fg:#ff832b"
-format = "[$all_status$ahead_behind]($style) "
+style = "fg:#ff2e88"
+format = "[$all_status]($style) "
+
+[git_metrics]
+added_style = "fg:#00ff41"
+deleted_style = "fg:#ff2e88"
+format = "[$added$deleted$untracked]($style) "
+
+[hostname]
+ssh_only = true
+style = "fg:#77738f bold"
+format = "[$ssh_symbol]($style) "
+ssh_symbol = ""
 
 [git_state]
-style = "fg:#be95ff"
+style = "fg:#a259ff"
 format = "[$state( $progress_current/$progress_total)]($style) "
-
-[fill]
-symbol = " "
 
 [nodejs]
 symbol = " "
-style = "fg:#42be65"
+style = "fg:#a259ff"
 format = "[$symbol($version)]($style) "
 detect_files = ["package.json", ".nvmrc"]
 detect_folders = ["node_modules"]
 
 [python]
 symbol = " "
-style = "fg:#f1c21b"
+style = "fg:#ff8a00"
 format = "[$symbol($version)]($style) "
 detect_files = ["requirements.txt", "pyproject.toml", ".python-version", "setup.py", "Pipfile"]
 detect_extensions = ["py"]
 
 [rust]
 symbol = " "
-style = "fg:#ee5396"
+style = "fg:#ff2e88"
 format = "[$symbol($version)]($style) "
 
 [golang]
 symbol = " "
-style = "fg:#08bdba"
+style = "fg:#00e5ff"
 format = "[$symbol($version)]($style) "
 
 [lua]
 symbol = " "
-style = "fg:#78a9ff"
+style = "fg:#a259ff"
 format = "[$symbol($version)]($style) "
 
+[status]
+disabled = false
+style = "bold fg:#ff2e88"
+format = "via [$status]($style) "
+
 [cmd_duration]
-style = "fg:#ff832b"
+style = "fg:#ff8a00"
 format = "[$duration]($style) "
-min_time = 2_000
+min_time = 1_000
 show_milliseconds = false
 
 [character]
-success_symbol = "[›](bold #08bdba)"
-error_symbol = "[›](bold #ee5396)"
-vimcmd_symbol = "[‹](bold #78a9ff)"
+success_symbol = "[λ](bold #00e5ff)"
+error_symbol = "[λ](bold #ff2e88)"
+vimcmd_symbol = "[λ](#00ff41)"
 
 [package]
 disabled = true

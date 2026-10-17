@@ -1,39 +1,39 @@
-# Oxocarbon Dark (standard — matches desktop)
-background = #161616
-foreground = #f2f4f8
+# Neon Cyberpunk — Matrix green
+background = #08080c
+foreground = #f5f3ff
 cursor-color = #ffffff
-cursor-text = #000000
-selection-background = #2a2a2a
-selection-foreground = #f2f4f8
+cursor-text = #08080c
+selection-background = #292638
+selection-foreground = #f5f3ff
 
-# 16 colors — Oxocarbon Dark
-palette = 0=#161616
-palette = 1=#ee5396
-palette = 2=#42be65
-palette = 3=#f1c21b
-palette = 4=#82aaff
-palette = 5=#be95ff
-palette = 6=#33b1ff
-palette = 7=#dde1e6
-palette = 8=#525252
-palette = 9=#ee5396
-palette = 10=#42be65
-palette = 11=#f1c21b
-palette = 12=#78a9ff
-palette = 13=#be95ff
-palette = 14=#33b1ff
-palette = 15=#f2f4f8
+# 16 colors — Neon Cyberpunk
+palette = 0=#08080c
+palette = 1=#ff2e88
+palette = 2=#00ff41
+palette = 3=#ff8a00
+palette = 4=#00e5ff
+palette = 5=#a259ff
+palette = 6=#00e5ff
+palette = 7=#f5f3ff
+palette = 8=#77738f
+palette = 9=#ff2e88
+palette = 10=#00ff41
+palette = 11=#ff8a00
+palette = 12=#00e5ff
+palette = 13=#a259ff
+palette = 14=#00e5ff
+palette = 15=#f5f3ff
 
 font-family = "JetBrainsMono Nerd Font"
-font-size = 15.6
+font-size = 15.5
 
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
 background-opacity = 0.91
 window-decoration = false
-window-padding-x = 5
-window-padding-y = 5
+window-padding-x = 10
+window-padding-y = 4
 confirm-close-surface = false
 
 gtk-tabs-location = bottom

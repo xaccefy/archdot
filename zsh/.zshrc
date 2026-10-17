@@ -27,7 +27,8 @@ export NVM_SYMLINK_CURRENT="true"
 zinit wait lucid light-mode for lukechilds/zsh-nvm
 
 # ponytail: move snippets to wait
-zinit wait"0" lucid for \
+# gg/gga (git-gui launchers from OMZP::git) dropped per request 2026-10-16
+zinit wait"0" lucid atload"unalias gg gga 2>/dev/null" for \
     OMZL::git.zsh \
     OMZP::git \
     OMZP::sudo \
@@ -127,8 +128,6 @@ rbenv() {
 [ -s "/home/xaccefy/.bun/_bun" ] && source "/home/xaccefy/.bun/_bun"
 export BROWSER=helium-browser
 
-# Novita API key (used by omp novita provider; macaron-v1-venti lives here)
-export NOVITA_API_KEY="${NOVITA_API_KEY:-}"
 # >>> plamen toolchain PATH >>>
 export PATH="/home/xaccefy/.foundry/bin:/home/xaccefy/go/bin:/home/xaccefy/.cargo/bin:/home/xaccefy/.local/bin:/home/xaccefy/.local/share/solana/install/active_release/bin:/home/xaccefy/.avm/bin:/home/xaccefy/.npm-global/bin:/home/xaccefy/.aptoscli/bin:$PATH"
 # <<< plamen toolchain PATH <<<
@@ -138,5 +137,8 @@ export DISABLE_AUTOUPDATER=true
 
 
 
-# Added by Antigravity CLI installer
-export PATH="/home/xaccefy/.local/bin:$PATH"
+
+# Zed: skip the NVIDIA Vulkan ICD on this hybrid laptop. Loading it blocks Zed's
+# main thread for ~1.4s per launch for a GPU Zed never selects. See
+# ~/.local/bin/zed-intel-gpu for details and how to switch back to the dGPU.
+zed() { command /home/xaccefy/.local/bin/zed-intel-gpu "$@"; }
