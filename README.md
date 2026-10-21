@@ -1,27 +1,8 @@
 # Dotfiles
 
-![Preview](assets/preview.png)
-
 Personal Hyprland setup for Arch Linux.
 
 ## Screenshots
-
-Ghostty + fastfetch on the dwindle layout:
-
-![Desktop](screenshots/01-desktop.png)
-
-Split with cava:
-
-![Cava](screenshots/02-cava.png)
-
-Three-way tile — cmatrix, fastfetch, cava:
-
-![Tiling](screenshots/05-tiling.png)
-
-Waybar, bar and dock modes:
-
-![Waybar bar](screenshots/03-waybar-bar.png)
-![Waybar dock](screenshots/04-waybar-dock.png)
 
 Clean desktop with the active wallpaper and Waybar:
 
