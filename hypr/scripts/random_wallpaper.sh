@@ -17,20 +17,34 @@ done
 [[ ${#IMAGES[@]} -eq 0 ]] && exit 1
 FILES=("${IMAGES[@]}")
 
+# Resolve the current wallpaper to a real path. ~/.config/hypr is a symlink
+# into the dotfiles repo, so the path recorded in the cache is not the same
+# string as its fully resolved form. Both sides of the comparison are
+# resolved here; comparing a resolved path against the unresolved entries in
+# FILES never matches, which made the cycle fall back to the first file on
+# every press.
 CURRENT=$(readlink -f "$LINK" 2>/dev/null)
 
+CURRENT_INDEX=-1
+for i in "${!FILES[@]}"; do
+    if [[ "$(readlink -f -- "${FILES[$i]}")" == "$CURRENT" ]]; then
+        CURRENT_INDEX=$i
+        break
+    fi
+done
+
 if [[ "$1" == "restore" ]]; then
-    NEXT="$CURRENT"
-    [[ -z "$NEXT" ]] && NEXT="${FILES[0]}"
+    if (( CURRENT_INDEX >= 0 )); then
+        NEXT="${FILES[$CURRENT_INDEX]}"
+    else
+        NEXT="${FILES[0]}"
+    fi
 else
-    NEXT=""
-    for i in "${!FILES[@]}"; do
-        if [[ "${FILES[$i]}" == "$CURRENT" ]]; then
-            NEXT="${FILES[$(( (i + 1) % ${#FILES[@]} ))]}"
-            break
-        fi
-    done
-    [[ -z "$NEXT" ]] && NEXT="${FILES[0]}"
+    if (( CURRENT_INDEX >= 0 )); then
+        NEXT="${FILES[$(( (CURRENT_INDEX + 1) % ${#FILES[@]} ))]}"
+    else
+        NEXT="${FILES[0]}"
+    fi
 fi
 
 ln -sfn "$NEXT" "$LINK"

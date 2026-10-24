@@ -36,17 +36,28 @@
     // arg, and a second {..} is read as an arg-id and fails the parse.
     "tooltip-format": "<big>{:%A, %B %d — %H:%M}</big>",
   },
-  // Bluetooth icon set. "format" is the idle/on state, "format-connected" is
-  // shown once a device is paired, "format-disabled" when the radio is off.
-  // "format-no-controller" hides the icon entirely on machines with no
-  // adapter, so the bar does not show a dead glyph on desktop hardware.
+  // Bluetooth icon set. "format-on" is the radio up with nothing paired,
+  // "format-connected" once a device is paired, "format-off" when the radio
+  // is down, and "format-no-controller" hides the icon entirely on machines
+  // with no adapter.
+  //
+  // There is no bluetooth GUI on this machine (no blueman-manager, no
+  // gnome-control-center, blueman-applet is not running), so the primary
+  // click toggles the radio directly instead of opening a terminal. The
+  // terminal is still one right-click away for the interactive menu, and
+  // the scroll wheel turns the radio on and off.
   "bluetooth": {
     "format": "<span size='12075'>󰂯</span>",
+    "format-on": "<span size='12075'>󰂯</span>",
+    "format-off": "<span size='12075'>󰂲</span>",
     "format-disabled": "<span size='12075'>󰂲</span>",
     "format-connected": "<span size='12075'></span>",
     "format-no-controller": "",
     "tooltip-format": "Bluetooth: {num_connections} connected",
-    "on-click": "ghostty -e bluetoothctl",
+    "on-click": "$HOME/.config/hypr/scripts/bluetooth-toggle.sh",
+    "on-scroll-up": "bluetoothctl power on",
+    "on-scroll-down": "bluetoothctl power off",
+    "on-click-right": "ghostty -e bluetoothctl",
   },
   "custom/runcat": {
     "exec": "python3 $HOME/.local/lib/waybar/runcat-text/main.py",
