@@ -76,7 +76,7 @@ configuration {
 
 	/*---------- Misc setting ----------*/
 	terminal: "rofi-sensible-terminal";
-	font: "JetBrains Mono 12";
+	font: "JetBrainsMono Nerd Font 12";
 	sort: false;
 	threads: 0;
 	click-to-exit: true;

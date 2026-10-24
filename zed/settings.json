@@ -80,7 +80,7 @@
     "dark": "One Dark Pro Glass"},
   "ui_font_size": 21.0,
   "buffer_font_size": 20.0,
-  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
+  "buffer_font_family": "JetBrainsMono Nerd Font",
   "markdown_preview": {
     "font_size": 18.0,
     "limit_content_width": false,

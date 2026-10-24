@@ -21,7 +21,7 @@ configuration {
 
 /*****----- Global Properties -----*****/
 * {
-    font:                        "JetBrainsMono Nerd Font Mono 10";
+    font:                        "JetBrainsMono Nerd Font 10";
 }
 
 /*****----- Main Window -----*****/
@@ -148,7 +148,7 @@ mode-switcher{
     text-color:                  white;
 }
 button {
-    font:                        "JetBrainsMono Nerd Font Mono Bold 10";
+    font:                        "JetBrainsMono Nerd Font Bold 10";
     padding:                     6px;
     border:                      0px solid;
     border-radius:               100%;

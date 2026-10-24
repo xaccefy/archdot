@@ -18,7 +18,7 @@ configuration {
     accent: #78a9ff;
     urgent: #ee5396;
 
-    font: "JetBrainsMono Nerd Font Mono 12";
+    font: "JetBrainsMono Nerd Font 12";
     background-color: transparent;
     text-color: @text;
     margin: 0;
