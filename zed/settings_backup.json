@@ -48,7 +48,7 @@
     "dark": "Neovim default accented dark"},
   "ui_font_size": 21.0,
   "buffer_font_size": 20.0,
-  "buffer_font_family": "JetBrainsMono Nerd Font",
+  "buffer_font_family": "JetBrainsMono Nerd Font Mono",
   "markdown_preview": {
     "limit_content_width": false,
     "max_width": 1200.0

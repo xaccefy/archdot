@@ -24,7 +24,7 @@ palette = 13=#a259ff
 palette = 14=#00e5ff
 palette = 15=#f5f3ff
 
-font-family = "JetBrainsMono Nerd Font"
+font-family = "JetBrainsMono Nerd Font Mono"
 font-size = 15.5
 
 cursor-style = block
