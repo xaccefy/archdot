@@ -30,9 +30,11 @@
     // }
   },
   "clock": {
-    "format": "{:%b %d}",
+    "format": "{:%b %d %H:%M}",
     "format-alt": "{:%Y-%m-%d %H:%M}",
-    "tooltip-format": "<big>{:%A, %B %d}</big>\n<big>{:%H:%M}</big>",
+    // One brace group only: waybar's clock module parses a single format
+    // arg, and a second {..} is read as an arg-id and fails the parse.
+    "tooltip-format": "<big>{:%A, %B %d — %H:%M}</big>",
   },
   // Bluetooth icon set. "format" is the idle/on state, "format-connected" is
   // shown once a device is paired, "format-disabled" when the radio is off.

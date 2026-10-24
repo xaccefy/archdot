@@ -10,7 +10,7 @@
   "modules-left": ["custom/user", "hyprland/workspaces", "hyprland/window"],
   "modules-center": ["clock"],
 
-  "modules-right": ["custom/runcat", "memory", "pulseaudio", "tray", "battery"],
+  "modules-right": ["custom/runcat", "memory", "pulseaudio", "bluetooth", "tray", "battery"],
 
   // Modules configuration
   "hyprland/workspaces": {
@@ -31,7 +31,23 @@
     // }
   },
   "clock": {
-    "format-alt": "{:%Y-%m-%d}",
+    "format": "{:%b %d %H:%M}",
+    "format-alt": "{:%Y-%m-%d %H:%M}",
+    // One brace group only: waybar's clock module parses a single format
+    // arg, and a second {..} is read as an arg-id and fails the parse.
+    "tooltip-format": "<big>{:%A, %B %d — %H:%M}</big>",
+  },
+  // Bluetooth icon set. "format" is the idle/on state, "format-connected" is
+  // shown once a device is paired, "format-disabled" when the radio is off.
+  // "format-no-controller" hides the icon entirely on machines with no
+  // adapter, so the bar does not show a dead glyph on desktop hardware.
+  "bluetooth": {
+    "format": "<span size='12075'>󰂯</span>",
+    "format-disabled": "<span size='12075'>󰂲</span>",
+    "format-connected": "<span size='12075'></span>",
+    "format-no-controller": "",
+    "tooltip-format": "Bluetooth: {num_connections} connected",
+    "on-click": "ghostty -e bluetoothctl",
   },
   "custom/runcat": {
     "exec": "python3 $HOME/.local/lib/waybar/runcat-text/main.py",
