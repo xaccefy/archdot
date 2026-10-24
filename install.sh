@@ -331,7 +331,9 @@ deploy_dotfiles() {
   link_path "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
   link_path "$DOTFILES_DIR/gtkrc" "$HOME/.config/gtkrc"
   link_path "$DOTFILES_DIR/gtkrc-2.0" "$HOME/.config/gtkrc-2.0"
-  link_path "$DOTFILES_DIR/gtkrc-2.0" "$HOME/.gtkrc-2.0"
+  # ~/.gtkrc-2.0 is deliberately NOT linked: nwg-look owns that path and
+  # rewrites it ("export-gtkrc-20" in ~/.config/nwg-look/config). Linking it
+  # to the repo would just have nwg-look overwrite a tracked file.
 
   deploy_gtk3_config
   deploy_qt_config

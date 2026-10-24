@@ -101,7 +101,7 @@
     "file_icons": true,
     "entry_spacing": "comfortable",
     "default_width": 240.0,
-    "dock": "left"},
+    "dock": "right"},
   "session": {
     "trust_all_worktrees": true},
   "git": {
@@ -118,8 +118,8 @@
   "agent": {
     "default_model": {
       "effort": "medium",
-      "provider": "openai-subscribed",
-      "model": "gpt-5.5",
+      "provider": "vercel_ai_gateway",
+      "model": "anthropic/claude-fable-5",
       "enable_thinking": true},
     "dock": "right",
     "favorite_models": [],
@@ -156,4 +156,24 @@
   "theme_overrides": {
     "Carbonfox - blurred": {
       "editor.line_number": "#888888",
-      "editor.active_line_number": "#ffffff"}}}
+      "editor.active_line_number": "#ffffff"
+    }
+  },
+  "language_models": {
+    "vercel_ai_gateway": {
+      "api_url": "https://ai-gateway.vercel.sh/coding-agent/v1",
+      "available_models": [
+        {
+          "name": "anthropic/claude-fable-5",
+          "display_name": "Claude Fable 5",
+          "max_tokens": 1000000,
+          "max_output_tokens": 128000,
+          "capabilities": {
+            "tools": true,
+            "images": true
+          }
+        }
+      ]
+    }
+  }
+}

@@ -1,10 +1,12 @@
 local mainMod = "SUPER"
 
 hl.bind(mainMod .. " + RETURN",
-    hl.dsp.exec_cmd("wezterm start"), { desc = "Terminal (WezTerm)" })
+    hl.dsp.exec_cmd("foot"), { desc = "Terminal (Foot)" })
 
 hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/helium.sh --new-window"),
     { desc = "Browser (Helium)" })
+hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/helium.sh --incognito"),
+    { desc = "Browser (Helium, Incognito)" })
 hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"), { desc = "File Explorer (Thunar)" })
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("zed"), { desc = "Zed" })
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("webcord"), { desc = "WebCord" })

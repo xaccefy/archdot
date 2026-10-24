@@ -142,3 +142,14 @@ export DISABLE_AUTOUPDATER=true
 # main thread for ~1.4s per launch for a GPU Zed never selects. See
 # ~/.local/bin/zed-intel-gpu for details and how to switch back to the dGPU.
 zed() { command /home/xaccefy/.local/bin/zed-intel-gpu "$@"; }
+
+# Local-only secrets and machine-specific settings. This file lives outside
+# the dotfiles repo on purpose: it holds API keys that must never be pushed
+# to a public remote. `vercel ai-gateway setup` writes the gateway block.
+[ -f "$HOME/.config/zsh/.zshrc.local" ] && source "$HOME/.config/zsh/.zshrc.local"
+
+# MiniMax Code CLI
+export PATH="/home/xaccefy/.minimax-code/bin:$PATH"
+
+# claudebar command
+claudebar() { ~/.claude/statusline.sh "$@"; }
