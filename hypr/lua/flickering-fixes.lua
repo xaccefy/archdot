@@ -1,6 +1,7 @@
 hl.config({
     opengl = {
-        nvidia_anti_flicker = false,
+        -- Reduces flicker if the hybrid NVIDIA GPU is enabled; ignored on Intel.
+        nvidia_anti_flicker = true,
     },
 })
 

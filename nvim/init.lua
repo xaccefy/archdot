@@ -63,7 +63,6 @@ vim.opt.rtp:prepend(lazypath)
 require("lazy").setup({
     -- Colorscheme
     { "nyoom-engineering/oxocarbon.nvim" },
-    { "folke/tokyonight.nvim" },
 
     -- Syntax highlighting
     { "nvim-treesitter/nvim-treesitter", build = ":TSUpdate" },
@@ -127,7 +126,10 @@ require("lazy").setup({
 })
 
 -- ── Colorscheme ──
-pcall(vim.cmd.colorscheme, "tokyonight-night")
+-- oxocarbon matches the terminal theme (#161616 base) and already sets
+-- bg = none on most groups natively. No setup() call exists in this version:
+-- colors/oxocarbon.lua just requires the module, which applies the highlights.
+pcall(vim.cmd.colorscheme, "oxocarbon")
 
 -- Transparent background + visible comments. Every group that can paint a
 -- background must be cleared, or the colorscheme's dark #161616 bleeds into
@@ -148,6 +150,12 @@ local function set_transparency()
     vim.api.nvim_set_hl(0, "Comment", { fg = "#7ecf6f", italic = true })
 end
 set_transparency()
+-- Reapply on every colorscheme change: with lazy.nvim, plugins finish loading
+-- after this point and can repaint backgrounds over the cleared groups.
+vim.api.nvim_create_autocmd("ColorScheme", {
+    group = vim.api.nvim_create_augroup("transparency", { clear = true }),
+    callback = set_transparency,
+})
 
 -- Hide the ~ end-of-buffer markers (bg already transparent above)
 vim.opt.fillchars:append({ eob = " " })

@@ -1,323 +1,134 @@
-@define-color background #18181b;
-@define-color foreground #e4e4e7;
-/* alpha(#000000, 0.3) composited over @background -- the fill #workspaces used to paint on
-   its own. It is now the fill of the whole center pill, so the two expander arrows and the
-   drawers they open sit on the same black as the workspace dots instead of on a lighter
-   slab. Painting it once on .modules-center rather than per-module also removes the ~5px
-   seams the module margins used to leave between them. */
-@define-color center #0f0f12;
-@define-color surface #1e1e22;
-@define-color border alpha(@foreground, 0.08);
+@define-color bg        rgba(8, 8, 12, 0.8);
+@define-color fg        #ffffff;
+@define-color red       #c34043;
+@define-color warning_bg #5a452e;
+@define-color brblk   #363646;
+@define-color dim     #808080;
+@define-color white   #ffffff;
+@define-color surface #2a2a37;
 
 * {
-  border: none;
-  border-radius: 0px;
-  min-height: 0;
-  font-family: 'JetBrainsMono Nerd Font Mono';
-  font-size: 13px;
-}
-
-.modules-center {
-  padding-left:  15px;
-  padding-right: 15px;
-  background-color: @center;
-  border-radius: 99px;
-  border: 1px solid @border;
-  box-shadow: 0 0 10px alpha(#000000, 0.22);
-}
-
-.modules-right {
-  margin-right: 8px;
+    font-family: "JetBrainsMono Nerd Font", monospace;
+    font-size: 19px;
+    font-weight: bold;
+    outline: none;
 }
 
 window#waybar {
-  background-color: transparent;
-  transition-property: background-color;
-  transition-duration: .5s;
-  border-radius: 32px;
-}
-
-window#waybar.empty #window {
-  background: transparent;
-  background-color: transparent;
-  border: none;
-  border-radius: 0;
-  color: transparent;
-  padding: 0;
-  margin: 0;
-}
-#waybar.empty .modules-center {
-  opacity: 0;
-}
-
-#workspaces {
-    padding: 0px 5px;
-    padding-bottom: 1px;
-    padding-left: 24px;
-    padding-right: 24px;
-    margin: 3.5px 3.5px;
-    margin-top: 0px;
-    margin-bottom: 0px;
-    border-radius: 99px;
-    /* Fill now comes from .modules-center (@center). Painting it here too would composite
-       0.3 black twice and make the dots' track darker than the arrows again. */
-    background-color: transparent;
-    opacity: 0.95;
-}
-
-#workspaces button {
-  color: @foreground;
-  font-size: 16px;
-  font-weight: 700;
-  padding: 0 6px;
-  margin: 0 1px;
-  min-width: 0;
-  border-radius: 0;
-  background: transparent;
-  border: none;
-  box-shadow: none;
-}
-
-#workspaces button.empty {
-  opacity: 0.45;
-}
-
-#workspaces button.active {
-  color: @foreground;
-  background: transparent;
-  border: none;
-  box-shadow: inset 0 -2px @foreground;
-  opacity: 1;
-  font-weight: bold;
-}
-
-#workspaces button:hover {
-  background: transparent;
-  border: none;
-  box-shadow: none;
-  opacity: 1;
-}
-
-#battery,
-#pulseaudio,
-#custom-screenrecording-indicator,
-#custom-update {
-  min-width: 12px;
-  margin: 0 7.5px;
-  border-radius: 12px;
-  padding: 0 4px;
-  transition: background 150ms ease, color 150ms ease;
-}
-
-#tray {
-  font-weight: 800;
-  background:alpha(@foreground, 0.0);
-  border-radius: 16px;
-  padding: 0px 5px;
-  margin: 3.5px 2px;
-  margin-right: 4px;
-  transition: background 150ms ease;
-}
-#tray:hover {
-  background: transparent;
-}
-
-#clock {
-  font-size: 14px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  padding: 0 6px;
-  border-radius: 12px;
-  transition: background 150ms ease;
-}
-#clock:hover {
-  background: transparent;
-}
-
-#pulseaudio {
-  margin-right: 5px;
-}
-
-/* Icon glyphs at natural width (Propo); body text stays Mono. */
-#pulseaudio,
-#bluetooth,
-#network,
-#battery,
-#temperature,
-#cpu,
-#memory,
-#disk,
-#custom-perf {
-  font-family: 'JetBrainsMono Nerd Font Propo';
-}
-
-#bluetooth {
-  margin-right: 12px;
-}
-
-#network {
-  margin-right: 9px;
-}
-
-#pulseaudio:hover,
-#bluetooth:hover,
-#network:hover,
-#battery:hover,
-#temperature:hover,
-#custom-perf:hover,
-#custom-mode:hover {
-  background: transparent;
+    background-color: @bg;
+    color: @fg;
 }
 
 tooltip {
-  background: @background;
-  border: 1px solid alpha(@foreground, 0.12);
-  border-radius: 8px;
-  padding: 6px 8px;
-  box-shadow: 0 8px 24px alpha(#000000, 0.35);
-}
-tooltip label {
-  color: @foreground;
-  font-size: 12px;
+    color: @white;
+    background-color: @surface;
+    border: 1px solid @brblk;
 }
 
-
-#custom-active_window {
-    padding: 3px 6px;
-    margin-left: 10px;
-    font-size: 13px;
-    border-radius: 12px;
-    transition: background 150ms ease, opacity 150ms ease;
+#workspaces button {
+    padding: 0 6px;
+    margin: 0 2px;
+    color: @white;
+    background: transparent;
+    border-bottom: 2px solid transparent;
+    border-radius: 5px;
 }
-#custom-active_window:hover {
-  background: transparent;
+#workspaces button.active {
+    color: @white;
+    border-bottom: 2px solid @white;
+    border-radius: 0px;
 }
-
-#custom-update {
-  font-size: 11px;
+#workspaces button.empty {
+    color: @dim;
+    opacity: 0.55;
 }
-
-#custom-idle-indicator {
-  margin-right: 2px;
-  min-width: 15px;
-  border-radius: 12px;
-  padding: 0 3px;
-  transition: background 150ms ease;
-}
-#custom-idle-indicator:hover {
-  background: transparent;
+#workspaces button.empty.active {
+    color: @white;
+    border-bottom: 2px solid @white;
+    opacity: 1;
 }
 
-#custom-idle-indicator {
-  margin-left: 16px;
+#workspaces button.urgent {
+    background-color: transparent;
+    color: @white;
+    border-bottom: 2px solid @red;
+    border-radius: 0px;
 }
 
-#custom-screenrecording-indicator {
-  min-width: 12px;
-  margin-left: 8.75px;
-  font-size: 11px;
-  border-radius: 12px;
-  padding: 0 4px;
-  transition: background 150ms ease, color 150ms ease;
+#workspaces button:hover {
+    background: inherit;
+    box-shadow: inset 0 -2px @dim;
 }
 
-#custom-screenrecording-indicator.active {
-  color: #f38ba8;
-  background: alpha(#f38ba8, 0.12);
-  animation: pulse-rec 1.6s ease-in-out infinite alternate;
-}
-@keyframes pulse-rec {
-  from { background: alpha(#f38ba8, 0.10); }
-  to   { background: alpha(#f38ba8, 0.22); }
-}
-
-
-#custom-mode {
-  margin-right: 4px;
-  border-radius: 12px;
-  padding: 0 6px;
-  transition: background 150ms ease;
+#clock,
+#pulseaudio,
+#battery,
+#cpu,
+#memory,
+#bluetooth,
+#tray {
+    padding: 0 8px;
+    color: @fg;
 }
 
-#temperature {
-  font-weight: 700;
-  margin: 0 8px;
-  border-radius: 12px;
-  padding: 0 6px;
-  transition: background 150ms ease, color 150ms ease;
+#battery.warning {
+    background-color: @warning_bg;
 }
 
-#battery.warning,
 #battery.critical {
-  color: @foreground;
-  background: transparent;
-  animation: none;
+    background-color: @red;
 }
 
-#custom-perf {
-  margin-right: 8px;
-  min-width: 14px;
-  font-size: 16px;
-  font-weight: 700;
-  border-radius: 12px;
-  padding: 0 6px;
-  transition: background 150ms ease, color 150ms ease;
+#custom-user {
+    padding: 0 4px 0 8px;
+    margin-right: 16px;
+    color: @white;
+    font-weight: bold;
 }
 
-/* Balanced inherits the bar foreground on purpose -- the default state should
-   not draw the eye. Only the states that cost power get a colour. */
-#custom-perf.blend {
-  color: #f9e2af;
+#custom-runcat {
+    font-family: 'runcat';
+    font-size: 35px;
+    margin-right: 8px;
 }
 
-#custom-perf.turbo {
-  color: #fab387;
+/* Active window app icon (hyprland/window), right of the workspace list.
+   The module is a box named "window" holding the app icon; the label is
+   hidden because the format is empty, so only the icon shows. */
+#window {
+    padding: 0 6px;
+    margin-left: 10px;
 }
 
-#custom-media {
-  font-weight: 700;
-  padding: 2px 4px;
-  min-width: 190px;
-  opacity: 0.92;
-  border-radius: 12px;
-  transition: opacity 150ms ease, background 150ms ease;
-}
-#custom-media:hover {
-  opacity: 0.92;
-  background: transparent;
+/* monochrome: no per-module colors, only the active workspace gets an underline */
+
+#cpu,
+#memory,
+#pulseaudio,
+#bluetooth,
+#tray,
+#battery {
+    margin: 0 2px;
 }
 
-#cpu, #memory, #disk {
-  font-weight: 700;
-    font-size: 14px;
-    padding: 2px 1.05px;
-    border-radius: 12px;
-    transition: background 150ms ease;
-}
-#cpu:hover, #memory:hover, #disk:hover {
-  background: transparent;
+/* Bluetooth is clickable (opens bluetoothctl), so it gets the same hover cue
+   the workspace buttons use. */
+#bluetooth:hover {
+    box-shadow: inset 0 -2px @dim;
 }
 
-#right1 {
-    background-color: alpha(@background, 0.55);
-    border: 1px solid @border;
-    font-weight: 800;
-    padding: 0px 5px;
-    margin: 3.5px 2px;
-    margin-right: 4px;
-    border-radius: 16px;
-    box-shadow: 0 0 8px alpha(#000000, 0.18);
+#tray {
+    background-color: transparent;
 }
 
-#center3,
-#center2 {
-    font-weight: 800;
-    border-radius: 12px;
-    padding: 0px 5px;
-    margin: 3.5px 2px;
-    transition: background 150ms ease;
+#tray menu {
+    background-color: @surface;
+    color: @white;
+    border: 1px solid @brblk;
+    border-radius: 5px;
+    padding: 4px;
 }
-#center3:hover,
-#center2:hover {
-  background: transparent;
+
+#tray menuitem {
+    padding: 4px 8px;
 }

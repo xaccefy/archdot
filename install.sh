@@ -231,9 +231,9 @@ install_packages() {
 
   local pacman_pkgs=(
     git base-devel jq pacman-contrib
-    zsh fzf zoxide fastfetch starship neovim reflector maven unzip unrar 7zip
+    zsh fzf zoxide fastfetch starship neovim tmux reflector maven unzip unrar 7zip
     go rustup npm rbenv python python-pipx python2 ruff
-    hyprland hypridle hyprlock
+    hyprland hyprlock
     waybar rofi wl-clipboard cliphist dunst
     polkit-gnome gnome-keyring xdg-desktop-portal-hyprland xdg-desktop-portal xdg-desktop-portal-gtk
     qt5-wayland qt6-wayland qt5ct qt6ct kvantum kvantum-qt5
@@ -258,7 +258,6 @@ install_packages() {
   local aur_pkgs=(
     zen-browser-bin
     webcord
-    caffeine-ng
     wlogout
     awww
     graphite-gtk-theme
@@ -309,7 +308,8 @@ install_packages() {
 
 deploy_dotfiles() {
   local config_dirs=(
-    hypr hyprfloat waybar rofi dunst wlogout swappy scripts ghostty fastfetch gtk-4.0 zed xsettingsd
+    hypr waybar rofi dunst wlogout swappy scripts ghostty fastfetch gtk-4.0 zed xsettingsd nvim
+    fontconfig
   )
 
   run mkdir -p "$HOME/.config"
@@ -321,6 +321,7 @@ deploy_dotfiles() {
   done
 
   link_path "$DOTFILES_DIR/starship.toml" "$HOME/.config/starship.toml"
+  link_path "$DOTFILES_DIR/tmux.conf" "$HOME/.tmux.conf"
   link_path "$DOTFILES_DIR/zsh/.zshrc" "$HOME/.zshrc"
   link_path "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
   link_path "$DOTFILES_DIR/gtkrc" "$HOME/.config/gtkrc"
@@ -328,6 +329,7 @@ deploy_dotfiles() {
   link_path "$DOTFILES_DIR/gtkrc-2.0" "$HOME/.gtkrc-2.0"
 
   deploy_gtk3_config
+  deploy_qt_config
 
   check_link "$DOTFILES_DIR/hypr" "$HOME/.config/hypr"
   check_link "$DOTFILES_DIR/waybar" "$HOME/.config/waybar"
@@ -370,6 +372,41 @@ deploy_gtk3_config() {
   fi
 
   log "Configured $dst"
+}
+
+# qt5ct/qt6ct record the color scheme path as an absolute path, which is
+# baked to whoever's home directory was current when the file was written.
+# The theme lives in the repo and is symlinked; the .conf is copied instead,
+# so the path can be rewritten to the live $HOME without dirtying the repo.
+deploy_qt_config() {
+  local qt
+  for qt in qt5ct qt6ct; do
+    local src="$DOTFILES_DIR/$qt"
+    local dst="$HOME/.config/$qt"
+
+    [[ -d "$src" ]] || { warn "Missing $qt source: $src"; continue; }
+
+    if (( DRY_RUN )); then
+      log "[dry-run] Would link $qt/colors and write $qt.conf under $HOME"
+      continue
+    fi
+
+    run mkdir -p "$dst"
+
+    if [[ -d "$src/colors" ]]; then
+      backup_target_if_needed "$dst/colors" "$src/colors"
+      run ln -sfn -- "$(realpath --relative-to="$dst" -- "$src/colors")" "$dst/colors"
+    fi
+
+    [[ -f "$src/$qt.conf" ]] || { warn "No $qt.conf in $src"; continue; }
+
+    local tmp="$dst/$qt.conf.tmp"
+    sed -e "s#/home/[A-Za-z0-9._-]*/.config/$qt/#$HOME/.config/$qt/#g" \
+        "$src/$qt.conf" > "$tmp"
+    run mv -f "$tmp" "$dst/$qt.conf"
+
+    log "Configured $dst"
+  done
 }
 
 deploy_default_wallpaper() {

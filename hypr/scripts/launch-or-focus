@@ -1,21 +1,25 @@
 #!/bin/bash
 # Launch an app or focus an existing window matching a pattern.
-# Usage: launch-or-focus <window-pattern> [launch-command]
-# Ported from Omarchy's bin/omarchy-launch-or-focus (uwsm-app wrapper removed).
+# Usage: launch-or-focus <window-pattern> [command ...]
+# The command and its arguments are passed as separate argv entries.
 
 if (($# == 0)); then
-  echo "Usage: launch-or-focus [window-pattern] [launch-command]"
+  echo "Usage: launch-or-focus <window-pattern> [command ...]" >&2
   exit 1
 fi
 
 WINDOW_PATTERN="$1"
-LAUNCH_COMMAND="${2:-$WINDOW_PATTERN}"
+shift
+
+if (($# == 0)); then
+  set -- "$WINDOW_PATTERN"
+fi
+
 WINDOW_ADDRESS=$(hyprctl clients -j | jq -r --arg p "$WINDOW_PATTERN" '.[]|select((.class|test("\\b" + $p + "\\b";"i")) or (.title|test("\\b" + $p + "\\b";"i")))|.address' | head -n1)
 
 if [[ -n $WINDOW_ADDRESS ]]; then
-  # Hyprland 0.55+ parses `hyprctl dispatch` args as Lua; the legacy
-  # `focuswindow address:...` form errors out. This is the supported syntax.
+  # Hyprland 0.55+ parses hyprctl dispatch arguments as Lua.
   hyprctl dispatch "hl.dsp.focus({ window = \"address:$WINDOW_ADDRESS\" })"
 else
-  eval exec setsid $LAUNCH_COMMAND
+  exec setsid -- "$@"
 fi

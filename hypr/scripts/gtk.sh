@@ -10,6 +10,7 @@ icon_theme="$(grep 'gtk-icon-theme-name' "$config" | sed 's/.*\s*=\s*//')"
 cursor_theme="$(grep 'gtk-cursor-theme-name' "$config" | sed 's/.*\s*=\s*//')"
 cursor_size="$(grep 'gtk-cursor-theme-size' "$config" | sed 's/.*\s*=\s*//')"
 font_name="$(grep 'gtk-font-name' "$config" | sed 's/.*\s*=\s*//')"
+hypr_cursor_theme="${HYPRCURSOR_THEME:-Bibata-Original-Classic-Hypr}"
 
 gsettings set "$gnome_schema" gtk-theme "$gtk_theme"
 gsettings set "$gnome_schema" icon-theme "$icon_theme"
@@ -20,4 +21,5 @@ gsettings set "$gnome_schema" font-hinting "full"
 gsettings set "$gnome_schema" font-rgba-order "rgb"
 gsettings set "$gnome_schema" color-scheme "prefer-dark"
 
-hyprctl setcursor "$cursor_theme" "$cursor_size"
+# GTK/XWayland use the XCursor name; Hyprland uses the compiled Hyprcursor theme.
+hyprctl setcursor "$hypr_cursor_theme" "$cursor_size"

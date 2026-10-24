@@ -51,3 +51,7 @@ build/
 
 # Upstream source clones
 waybar/waybar_repo/
+
+# Runtime state written into the (symlinked) config dirs
+waybar/.perf
+waybar/.mode

@@ -16,7 +16,7 @@ awk -v s="$FACTOR" 'BEGIN{exit !(s>=0.5 && s<=3.0)}' \
     || { echo "factor must be between 0.5 and 3.0" >&2; exit 1; }
 
 echo "$FACTOR" > "$DIR/.scale"
-"$DIR/render.sh"
+"$DIR/scripts/render.sh"
 
 # SIGUSR2 makes waybar re-read both config.jsonc and style.css in place.
 killall -SIGUSR2 waybar 2>/dev/null || true
