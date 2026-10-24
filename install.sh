@@ -119,6 +119,11 @@ resolve_path() {
 backup_target_if_needed() {
   local target="$1"
   local desired="$2"
+  # Optional third arg overrides the name used inside the backup dir. Needed
+  # when two different sources share a basename (qt5ct/colors and
+  # qt6ct/colors both land in the same timestamped backup dir, and the second
+  # mv would fail with "Directory not empty").
+  local name="${3:-$(basename -- "$target")}"
 
   [[ -e "$target" || -L "$target" ]] || return 0
 
@@ -130,8 +135,8 @@ backup_target_if_needed() {
   fi
 
   run mkdir -p "$BACKUP_DIR"
-  log "Backing up $target -> $BACKUP_DIR/"
-  run mv -- "$target" "$BACKUP_DIR/"
+  log "Backing up $target -> $BACKUP_DIR/$name"
+  run mv -- "$target" "$BACKUP_DIR/$name"
 }
 
 link_path() {
@@ -394,7 +399,7 @@ deploy_qt_config() {
     run mkdir -p "$dst"
 
     if [[ -d "$src/colors" ]]; then
-      backup_target_if_needed "$dst/colors" "$src/colors"
+      backup_target_if_needed "$dst/colors" "$src/colors" "$qt-colors"
       run ln -sfn -- "$(realpath --relative-to="$dst" -- "$src/colors")" "$dst/colors"
     fi
 
