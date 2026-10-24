@@ -65,7 +65,6 @@ tooltip {
 #battery,
 #cpu,
 #memory,
-#bluetooth,
 #tray {
     padding: 0 8px;
     color: @fg;
@@ -105,16 +104,9 @@ tooltip {
 #cpu,
 #memory,
 #pulseaudio,
-#bluetooth,
 #tray,
 #battery {
     margin: 0 2px;
-}
-
-/* Bluetooth is clickable (opens bluetoothctl), so it gets the same hover cue
-   the workspace buttons use. */
-#bluetooth:hover {
-    box-shadow: inset 0 -2px @dim;
 }
 
 #tray {
