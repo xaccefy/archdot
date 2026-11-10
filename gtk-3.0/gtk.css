@@ -63,17 +63,24 @@
 @define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color #525252;
 
-/* Graphite-blue hardcodes menus to a 2px #5294e2 frame with a #5294e2
-   hover; reseat both on this palette so tray popups match the bar. */
+/* Graphite-blue frames menus in 2px #5294e2 and hovers/checks items in the
+   same accent; drop the frame and keep hover + indicators neutral so tray
+   popups match the bar. */
 menu,
 .menu,
 .context-menu {
-    border-color: @borders;
+    border: none;
 }
 
 menu menuitem:hover,
 .menu menuitem:hover,
 .context-menu menuitem:hover {
-    background-color: @theme_selected_bg_color;
-    color: @theme_selected_fg_color;
+    background-color: #444450;
+}
+
+menu menuitem check:checked,
+menu menuitem check:indeterminate,
+menu menuitem radio:checked,
+menu menuitem radio:indeterminate {
+    color: inherit;
 }
