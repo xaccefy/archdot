@@ -2,7 +2,7 @@ hl.env("MOZ_ENABLE_WAYLAND", "1")
 hl.env("XDG_CURRENT_DESKTOP", "Hyprland")
 hl.env("XDG_SESSION_DESKTOP", "Hyprland")
 hl.env("GDK_BACKEND", "wayland,x11")
-hl.env("GTK_THEME", "Graphite-blue-Dark-compact")
+hl.env("GTK_THEME", "Graphite-Dark-compact")
 hl.env("GTK_APPLICATION_PREFER_DARK_THEME", "1")
 hl.env("GTK_CSD", "0")
 hl.env("QT_QPA_PLATFORM", "wayland;xcb")
@@ -17,5 +17,6 @@ hl.env("OZONE_PLATFORM", "auto")
 hl.env("MOZ_DBUS_REMOTE", "1")
 hl.env("XCURSOR_THEME", "Bibata-Modern-Ice")
 hl.env("XCURSOR_SIZE", "25")
-hl.env("HYPRCURSOR_THEME", "Bibata-Original-Classic-Hypr")
-hl.env("HYPRCURSOR_SIZE", "25")
+-- No HYPRCURSOR_*: no Bibata-Modern-Ice hyprcursor build is installed, so the
+-- vars made hyprland use a different cursor than every xcursor/GTK surface.
+-- Unset = one theme (Bibata-Modern-Ice) everywhere via the xcursor path.

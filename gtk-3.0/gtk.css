@@ -73,6 +73,7 @@ menu,
 .menu,
 .context-menu {
     border: none;
+    border-radius: 8px;
 }
 
 menu menuitem:hover,

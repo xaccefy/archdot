@@ -127,7 +127,7 @@ tooltip {
     background-color: @surface;
     color: @white;
     border: 1px solid @brblk;
-    border-radius: 5px;
+    border-radius: 8px;
     padding: 4px;
 }
 
