@@ -1,0 +1,58 @@
+# Alacritty config — mirrors ~/.config/ghostty/config
+# Neon Cyberpunk — Matrix green
+
+[colors.primary]
+background = "#08080c"
+foreground = "#f5f3ff"
+
+[colors.cursor]
+cursor = "#ffffff"
+text = "#08080c"
+
+[colors.selection]
+background = "#292638"
+text = "#f5f3ff"
+
+# 16 colors — Neon Cyberpunk
+[colors.normal]
+black = "#08080c"
+red = "#ff2e88"
+green = "#00ff41"
+yellow = "#ff8a00"
+blue = "#00e5ff"
+magenta = "#a259ff"
+cyan = "#00e5ff"
+white = "#f5f3ff"
+
+[colors.bright]
+black = "#77738f"
+red = "#ff2e88"
+green = "#00ff41"
+yellow = "#ff8a00"
+blue = "#00e5ff"
+magenta = "#a259ff"
+cyan = "#00e5ff"
+white = "#f5f3ff"
+
+[font]
+size = 16
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+
+# Ghostty draws bold with a real bold font face. This is also the Alacritty
+# default, set explicitly so a default change can't reintroduce the mismatch.
+[font.bold]
+style = "Bold"
+
+[cursor.style]
+shape = "Block"
+blinking = "Never"
+
+[window]
+opacity = 0.88
+decorations = "None"
+
+[window.padding]
+x = 10
+y = 10

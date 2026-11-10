@@ -4,6 +4,12 @@
   "position": "top",
   "height": 37,
   "spacing": 4,
+  // Floating margins live here (layer-shell), not in CSS margins -- CSS margin
+  // just paints black strips on the still-full-width surface. Rendered/scaled
+  // by render.sh, same as the px values in the stylesheet.
+  "margin-top": 7,
+  "margin-left": 16,
+  "margin-right": 16,
 
   // Choose the order of the modules
   "modules-left": ["custom/user", "hyprland/workspaces", "hyprland/window"],
@@ -80,7 +86,7 @@
   },
   "custom/user": {
     "format": "fx",
-    "tooltip": "Application launcher",
+    "tooltip-format": "Application launcher",
     "on-click": "rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/glass-compact.rasi",
   },
 }

@@ -35,6 +35,7 @@ notion.db
 *.age
 *.token
 *.secret
+*.local
 
 # Editor / tool backups picked up by sync_back.sh
 *.bak
@@ -55,3 +56,11 @@ waybar/waybar_repo/
 # Runtime state written into the (symlinked) config dirs
 waybar/.perf
 waybar/.mode
+waybar/.scale
+
+# render.sh output -- sources are configs/ and styles/, these are regenerated
+waybar/config.jsonc
+waybar/style.css
+
+# fish universal variables -- written at runtime
+fish/fish_variables

@@ -18,6 +18,14 @@ NOISE='LIBDBUSMENU-GLIB-WARNING|Status Notifier Item.*already registered'
 
 mkdir -p "$LOG_DIR"
 
+# Single-instance lock. Waybar is autostarted from two places (Hyprland's
+# autostart.lua and waybar.service), and the loser previously spun forever in
+# the pgrep wait below, then respawned waybar after an intentional kill.
+# Now the loser exits here instead; the lock releases when this script dies,
+# so a later launch can still take over.
+exec 9>"$LOG_DIR/.launch.lock"
+flock -n 9 || exit 0
+
 # Rotate logs if current log exceeds max size
 rotate_logs() {
     if [[ -f "$LOG_FILE" && $(stat -c%s "$LOG_FILE" 2>/dev/null || echo 0) -gt $MAX_LOG_SIZE ]]; then
@@ -41,13 +49,18 @@ while pgrep -x waybar >/dev/null 2>&1; do sleep 0.1; done
 
 # Launch loop: restart waybar if it exits unexpectedly
 while true; do
-    # Filter BEFORE tee, so the noise is kept out of the log file too. The original
-    # had tee first, which appended the unfiltered stream and only filtered the copy
-    # going to the terminal -- i.e. it filtered nothing that anyone ever read.
+    # stdout carries waybar's spdlog output (all real logging) PLUS a
+    # puts(status) leftover in waybar 0.15.0's battery module that prints
+    # "Charging"/"Full"/blank lines at every power_supply uevent (~25k lines
+    # in three weeks; fixed upstream after 0.15.0). Keeping only [timestamped]
+    # lines drops the spam while preserving the log.
+    # stderr goes through the NOISE filter -> tee -> log + terminal.
+    # 9>&- keeps waybar from inheriting the launch lock fd.
     exit_code=0
     waybar -c "$CONFIG" -s "$STYLE" \
-        >> "$LOG_FILE" \
+        > >(grep -aE --line-buffered '^\[' >> "$LOG_FILE") \
         2> >(grep -vE --line-buffered "$NOISE" | tee -a "$LOG_FILE" >&2) \
+        9>&- \
         || exit_code=$?
 
     # 0   = clean quit

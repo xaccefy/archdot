@@ -42,8 +42,8 @@ hl.bind("CTRL + Print", hl.dsp.exec_cmd("grimblast copy output"), { desc = "Scre
 hl.bind(mainMod .. " + X", hl.dsp.exec_cmd("sleep 0.1 && wlogout -b 2 -c 70 -r 50 -L 690 -R 690 -T 300 -B 300 -n"),
     { desc = "Start wlogout" })
 hl.bind(mainMod .. " + SPACE",
-    hl.dsp.exec_cmd("rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/glass-compact.rasi"),
-    { desc = "Open application launcher" })
+    hl.dsp.exec_cmd("~/.config/hypr/scripts/launcher.sh"),
+    { desc = "Open unified launcher (apps, commands, tools)" })
 hl.bind(mainMod .. " + CTRL + H", hl.dsp.exec_cmd("~/.config/hypr/scripts/keybindings.sh"), { desc = "Show keybindings" })
 hl.bind(mainMod .. " + SHIFT + B", hl.dsp.exec_cmd("~/.config/waybar/scripts/launch.sh"), { desc = "Reload waybar" })
 hl.bind(mainMod .. " + SHIFT + R", hl.dsp.exec_cmd("hyprctl reload"), { desc = "Reload hyprland config" })

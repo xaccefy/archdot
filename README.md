@@ -20,8 +20,8 @@ Three-way Ghostty layout with cava, cmatrix, and fastfetch:
 
 ```bash
 # clone anywhere
-git clone https://github.com/x4cc3/dotfiles-for-my-arch-linux-.git
-cd dotfiles-for-my-arch-linux-
+git clone https://github.com/xaccefy/archdot.git
+cd archdot
 chmod +x install.sh
 ./install.sh
 ```
@@ -42,8 +42,8 @@ Run as a normal user (with `sudo`), never as root.
 
 ## What gets installed
 
-- Hyprland + core tools (`hypr`, `hyprfloat`, `waybar`, `rofi`, `dunst`, `wlogout`, `swappy`)
-- Terminal/shell setup (`ghostty`, `zsh`, `starship`, prompt env)
+- Hyprland + core tools (`hypr`, `waybar`, `rofi`, `mako`, `wlogout`, `swappy`)
+- Terminal/shell setup (`foot`, `ghostty`, `alacritty`, `wezterm`, `zsh`, `fish`, `starship`, prompt env)
 - Appearance (`gtk-3.0`, `gtk-4.0`, `fastfetch`, `wallpapers`)
 - Utility scripts
 - Optional AUR tools (`yay` helper, `zen-browser-bin`, `webcord`, `caffeine-ng`, `wlogout`, `awww`)
@@ -72,7 +72,7 @@ If `~/.config/hypr` is not a symlink to the repo path, rerun `./install.sh`.
 ## Manual restore (optional)
 
 ```bash
-cd dotfiles-for-my-arch-linux-
+cd archdot
 ./install.sh --skip-packages
 ```
 

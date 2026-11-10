@@ -1,0 +1,22 @@
+font=JetBrainsMono Nerd Font Mono 12
+background-color=#08080CEB
+text-color=#F5F3FFFF
+border-color=#00E5FFFF
+border-size=2
+border-radius=5
+padding=14
+margin=8
+outer-margin=14
+width=380
+max-visible=1
+group-by=app-name
+default-timeout=2500
+ignore-timeout=1
+anchor=top-right
+layer=overlay
+history=1
+max-history=20
+
+[urgency=high]
+border-color=#FF2E88FF
+default-timeout=2500

@@ -1,5 +1,7 @@
 configuration {
-    modi: "drun";
+    modi: "combi";
+    combi-modes: "drun,run,ssh,filebrowser";
+    combi-display-format: "{mode}  {text}";
     show-icons: true;
     matching: "normal";
     drun-match-fields: "name,generic,exec,categories,keywords";

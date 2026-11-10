@@ -96,7 +96,12 @@ zstyle ':fzf-tab:complete:__zoxide_z:*' fzf-preview 'ls --color $realpath'
 
 # ponytail: cached integrations (rm -rf ~/.zsh_cache to regenerate)
 mkdir -p ~/.zsh_cache
-[[ ! -f ~/.zsh_cache/fzf.zsh ]] && fzf --zsh > ~/.zsh_cache/fzf.zsh
+if [[ ! -f ~/.zsh_cache/fzf.zsh ]]; then
+  fzf --zsh > ~/.zsh_cache/fzf.zsh
+  # fzf snapshots the 'zle' option and evals it back; zle can't be set outside
+  # a live ZLE so it errors in `zsh -i -c` ("can't change option: zle")
+  sed -i 's/eval \$__fzf_key_bindings_options/eval "${${__fzf_key_bindings_options\/\/ zle on}\/\/ zle off}"/; s/eval \$__fzf_completion_options/eval "${${__fzf_completion_options\/\/ zle on}\/\/ zle off}"/' ~/.zsh_cache/fzf.zsh
+fi
 source ~/.zsh_cache/fzf.zsh
 
 [[ ! -f ~/.zsh_cache/zoxide.zsh ]] && zoxide init --cmd cd zsh > ~/.zsh_cache/zoxide.zsh
@@ -128,10 +133,7 @@ rbenv() {
 [ -s "/home/xaccefy/.bun/_bun" ] && source "/home/xaccefy/.bun/_bun"
 export BROWSER=helium-browser
 
-# >>> plamen toolchain PATH >>>
-export PATH="/home/xaccefy/.foundry/bin:/home/xaccefy/go/bin:/home/xaccefy/.cargo/bin:/home/xaccefy/.local/bin:/home/xaccefy/.local/share/solana/install/active_release/bin:/home/xaccefy/.avm/bin:/home/xaccefy/.npm-global/bin:/home/xaccefy/.aptoscli/bin:$PATH"
-# <<< plamen toolchain PATH <<<
-export PATH="$PATH:$HOME/flutter/bin"
+# Toolchain PATH lives in .zshenv (typeset -U dedupes; covers non-interactive shells too)
 _ZO_DOCTOR=0
 export DISABLE_AUTOUPDATER=true
 
@@ -148,8 +150,8 @@ zed() { command /home/xaccefy/.local/bin/zed-intel-gpu "$@"; }
 # to a public remote. `vercel ai-gateway setup` writes the gateway block.
 [ -f "$HOME/.config/zsh/.zshrc.local" ] && source "$HOME/.config/zsh/.zshrc.local"
 
-# MiniMax Code CLI
-export PATH="/home/xaccefy/.minimax-code/bin:$PATH"
-
 # claudebar command
 claudebar() { ~/.claude/statusline.sh "$@"; }
+
+# Devin CLI: start every session in Bypass (yolo) permission mode.
+export DEVIN_PERMISSION_MODE=bypass

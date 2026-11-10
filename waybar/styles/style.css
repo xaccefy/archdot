@@ -1,4 +1,10 @@
-@define-color bg        rgba(8, 8, 12, 0.8);
+/* 0.999 alpha on purpose: a fully opaque bar background makes GTK take the
+   opaque-region fast path, which fills the whole rect WITHOUT the
+   border-radius corner clip -- single frames render square during the frequent
+   redraws (runcat animates at up to 90fps). Sub-1.0 alpha forces the clipped
+   path every frame. Visually 0.1% is nothing; reports confirm this stops the
+   flicker (waybar #3882, maintainer-confirmed). */
+@define-color bg        rgba(8, 8, 12, 0.999);
 @define-color fg        #ffffff;
 @define-color red       #c34043;
 @define-color warning_bg #5a452e;
@@ -17,6 +23,9 @@
 window#waybar {
     background-color: @bg;
     color: @fg;
+    border: 1px solid @brblk;
+    /* match hyprland windows: decoration.rounding = 8 */
+    border-radius: 8px;
 }
 
 tooltip {
@@ -79,7 +88,8 @@ tooltip {
 }
 
 #custom-user {
-    padding: 0 4px 0 8px;
+    /* extra left padding pushes the label toward the workspaces */
+    padding: 0 4px 0 16px;
     margin-right: 16px;
     color: @white;
     font-weight: bold;

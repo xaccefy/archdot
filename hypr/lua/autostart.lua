@@ -2,10 +2,12 @@ hl.on("hyprland.start", function()
     -- Hyprland imports the session environment itself; xdg.sh handles the
     -- targeted D-Bus update needed by portals.
     hl.exec_cmd("~/.config/hypr/scripts/xdg.sh")
-    hl.exec_cmd("~/.config/waybar/scripts/launch.sh")
+    -- waybar is started by waybar.service (systemd --user, graphical-session.target).
+    -- Launching it here too raced: the loser spun in launch.sh's pgrep wait and
+    -- would respawn waybar after an intentional kill.
     hl.exec_cmd("pidof polkit-gnome-authentication-agent-1 >/dev/null || /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1")
     hl.exec_cmd("~/.config/hypr/scripts/gtk.sh")
-    hl.exec_cmd("wl-paste --watch ~/.config/scripts/clipboard-watch.sh &")
+    hl.exec_cmd("pgrep -f 'wl-paste --[w]atch' >/dev/null || wl-paste --watch ~/.config/scripts/clipboard-watch.sh &")
     hl.exec_cmd("pgrep -x awww-daemon >/dev/null || awww-daemon")
     hl.exec_cmd("~/.config/hypr/scripts/restore_wallpaper.sh")
     hl.exec_cmd("pgrep -x nm-applet >/dev/null || nm-applet")

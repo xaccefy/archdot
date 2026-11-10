@@ -7,7 +7,7 @@
 # Doing it at render time keeps the sources as a clean 1.0 baseline -- scaling is never
 # applied on top of itself, so it stays lossless and repeatable.
 #
-# Usage: render.sh          (re-render using current .scale)
+# Usage: render.sh          (re-render using current .scale and .mode)
 set -euo pipefail
 
 DIR="$HOME/.config/waybar"
@@ -16,6 +16,34 @@ SCALE=$(cat "$DIR/.scale" 2>/dev/null || echo 1.0)
 # Reject anything that isn't a plain positive number, then clamp to a sane range.
 [[ "$SCALE" =~ ^[0-9]+(\.[0-9]+)?$ ]] || SCALE=1.0
 awk -v s="$SCALE" 'BEGIN{exit !(s>=0.5 && s<=3.0)}' || SCALE=1.0
+
+# Layout mode: float (gapped, rounded) or bar (classic full-width). Like the
+# scale, it is baked at render time so the sources stay a clean baseline.
+MODE=$(cat "$DIR/.mode" 2>/dev/null || echo float)
+[[ "$MODE" == bar || "$MODE" == float ]] || MODE=float
+
+# Mode transforms. They run BEFORE the scaler, so mode always wins over scale.
+mode_config() {
+    if [[ "$MODE" == bar ]]; then
+        # Bar mode: flatten the floating margins so the surface spans edge-to-edge.
+        sed -E 's/("(margin-[a-z]+)"\s*:\s*)[0-9.]+/\1 0/g'
+    else
+        cat
+    fi
+}
+
+mode_css() {
+    if [[ "$MODE" == bar ]]; then
+        # Bar mode: square corners, no outline -- scoped to the bar block only,
+        # tooltip and tray menus keep their borders in both modes.
+        sed -E '/window#waybar \{/,/^\}/ {
+            s/border-radius:[[:space:]]*[0-9.]+px/border-radius: 0px/
+            s/border:[[:space:]]*1px[[:space:]]+solid[[:space:]]+[^;]+;/border: none;/
+        }'
+    else
+        cat
+    fi
+}
 
 SRC_CONFIG="$DIR/configs/config.jsonc"
 SRC_STYLE="$DIR/styles/style.css"
@@ -45,8 +73,8 @@ CONFIG_TMP="$DIR/config.jsonc.$$"
 STYLE_TMP="$DIR/style.css.$$"
 trap 'rm -f "$CONFIG_TMP" "$STYLE_TMP"' EXIT
 
-{ printf '// %s Edit configs/config.jsonc instead.\n' "$WARN"; scale_jsonc "$SCALE" < "$SRC_CONFIG"; } > "$CONFIG_TMP"
-{ printf '/* %s Edit styles/style.css instead. */\n' "$WARN"; scale_css "$SCALE" < "$SRC_STYLE"; } > "$STYLE_TMP"
+{ printf '// %s Edit configs/config.jsonc instead.\n' "$WARN"; mode_config < "$SRC_CONFIG" | scale_jsonc "$SCALE"; } > "$CONFIG_TMP"
+{ printf '/* %s Edit styles/style.css instead. */\n' "$WARN"; mode_css < "$SRC_STYLE" | scale_css "$SCALE"; } > "$STYLE_TMP"
 
 mv -f "$CONFIG_TMP" "$DIR/config.jsonc"
 mv -f "$STYLE_TMP" "$DIR/style.css"
