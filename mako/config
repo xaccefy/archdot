@@ -1,7 +1,7 @@
 font=JetBrainsMono Nerd Font Mono 12
 background-color=#08080CEB
 text-color=#F5F3FFFF
-border-color=#00E5FFFF
+border-color=#444450FF
 border-size=2
 border-radius=5
 padding=14
@@ -18,5 +18,5 @@ history=1
 max-history=20
 
 [urgency=high]
-border-color=#FF2E88FF
+border-color=#EE5396FF
 default-timeout=2500
