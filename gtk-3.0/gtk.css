@@ -62,3 +62,18 @@
 @define-color thumbnail_fg_color #f2f4f8;
 @define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color #525252;
+
+/* Graphite-blue hardcodes menus to a 2px #5294e2 frame with a #5294e2
+   hover; reseat both on this palette so tray popups match the bar. */
+menu,
+.menu,
+.context-menu {
+    border-color: @borders;
+}
+
+menu menuitem:hover,
+.menu menuitem:hover,
+.context-menu menuitem:hover {
+    background-color: @theme_selected_bg_color;
+    color: @theme_selected_fg_color;
+}
