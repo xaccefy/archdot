@@ -63,9 +63,12 @@
 @define-color shade_color rgba(0, 0, 0, 0.36);
 @define-color scrollbar_outline_color #525252;
 
-/* Graphite-blue frames menus in 2px #5294e2 and hovers/checks items in the
-   same accent; drop the frame and keep hover + indicators neutral so tray
-   popups match the bar. */
+/* Graphite-blue frames every CSD window and popup in a 2px #5294e2
+   decoration border, and hovers/checks menu items in the same accent.
+   Drop the frames and keep hover + indicators neutral so popups match
+   the bar. */
+decoration,
+decoration:backdrop,
 menu,
 .menu,
 .context-menu {
