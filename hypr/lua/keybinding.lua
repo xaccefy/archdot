@@ -7,7 +7,9 @@ hl.bind(mainMod .. " + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/helium.sh --n
     { desc = "Browser (Helium)" })
 hl.bind(mainMod .. " + SHIFT + W", hl.dsp.exec_cmd("~/.config/hypr/scripts/helium.sh --incognito"),
     { desc = "Browser (Helium, Incognito)" })
-hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("thunar"), { desc = "File Explorer (Thunar)" })
+-- ~/.config/scripts/thunar is a wrapper: GDK_SCALE=2 so the file manager isn't
+-- half-size at 2560x1440 scale=1 (GTK3 only does integer scaling).
+hl.bind(mainMod .. " + E", hl.dsp.exec_cmd("~/.config/scripts/thunar"), { desc = "File Explorer (Thunar)" })
 hl.bind(mainMod .. " + C", hl.dsp.exec_cmd("zed"), { desc = "Zed" })
 hl.bind(mainMod .. " + D", hl.dsp.exec_cmd("webcord"), { desc = "WebCord" })
 

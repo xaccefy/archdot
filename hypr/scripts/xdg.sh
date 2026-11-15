@@ -5,11 +5,11 @@
 
 # Keep these defaults in sync with lua/environment.lua when the script is run
 # outside a Hyprland-started process (for example, from a terminal).
-export GTK_THEME="Graphite-blue-Dark-compact"
+export GTK_THEME="Graphite-Dark-compact"
 export XCURSOR_THEME="Bibata-Modern-Ice"
 export XCURSOR_SIZE="25"
-export HYPRCURSOR_THEME="Bibata-Original-Classic-Hypr" # no Modern-Ice Hyprcursor variant installed
-export HYPRCURSOR_SIZE="25"
+# No HYPRCURSOR_* here either (same policy as lua/environment.lua): unset keeps
+# one cursor -- Bibata-Modern-Ice via the xcursor path -- on every surface.
 export ELECTRON_OZONE_PLATFORM_HINT="auto"
 export OZONE_PLATFORM="auto"
 
@@ -17,7 +17,7 @@ SESSION_VARS=(
   WAYLAND_DISPLAY XDG_CURRENT_DESKTOP XDG_SESSION_TYPE XDG_RUNTIME_DIR DISPLAY
   GTK_THEME GDK_BACKEND QT_QPA_PLATFORM QT_QPA_PLATFORMTHEME QT_STYLE_OVERRIDE
   ELECTRON_OZONE_PLATFORM_HINT OZONE_PLATFORM
-  XCURSOR_THEME XCURSOR_SIZE HYPRCURSOR_THEME HYPRCURSOR_SIZE
+  XCURSOR_THEME XCURSOR_SIZE
 )
 
 systemctl --user import-environment "${SESSION_VARS[@]}"

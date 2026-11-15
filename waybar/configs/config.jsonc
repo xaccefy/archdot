@@ -2,14 +2,16 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 37,
+  "height": 40,
+  // Compact float: the layer-shell surface stretches edge-to-edge and the
+  // left/right margins squeeze the visible bar toward the center while the
+  // modules keep their three-section layout. Rendered by render.sh.
   "spacing": 4,
   // Floating margins live here (layer-shell), not in CSS margins -- CSS margin
-  // just paints black strips on the still-full-width surface. Rendered/scaled
-  // by render.sh, same as the px values in the stylesheet.
+  // just paints black strips on the still-full-width surface.
   "margin-top": 7,
-  "margin-left": 16,
-  "margin-right": 16,
+  "margin-left": 320,
+  "margin-right": 320,
 
   // Choose the order of the modules
   "modules-left": ["custom/user", "hyprland/workspaces", "hyprland/window"],
@@ -31,8 +33,11 @@
       "*": 9,
     },
   },
+  // The tray used to be wrapped in literal [ ] via two custom modules -- now
+  // the stylesheet gives it a raised surface-colored pill instead.
+  // (waybar's tray module can't wrap its icons in text; a bg chip can.)
   "tray": {
-    "icon-size": 22,
+    "icon-size": 23,
     "spacing": 6,
     // "icons": {
     //   "blueman": "bluetooth",
@@ -40,7 +45,7 @@
     // }
   },
   "clock": {
-    "format": "{:%b %d %H:%M}",
+    "format": "{:%H:%M}",
     "format-alt": "{:%Y-%m-%d %H:%M}",
     // One brace group only: waybar's clock module parses a single format
     // arg, and a second {..} is read as an arg-id and fails the parse.
@@ -57,14 +62,15 @@
   // hover text in this mode -- set a format to get one back.
   "hyprland/window": {
     "icon": true,
-    "icon-size": 25,
+    "icon-size": 26,
     "format": "",
   },
   "memory": {
-    "format": "ram: {percentage}%",
+    "format": "󰍛 {percentage}%",
   },
   "pulseaudio": {
-    "format": "󰕾 {volume}%",
+    "format": "{icon} {volume}%",
+    "format-icons": { "default": ["󰕿", "󰖀", "󰕾"] },
     "format-muted": "󰖁",
     "scroll-step": 5,
     "max-volume": 100,
@@ -74,18 +80,17 @@
   },
   "battery": {
     "states": {
-      "good": 95,
       "warning": 20,
       "critical": 10,
     },
-    "format": "battery: {capacity}%",
-    "format-charging": "plugged: {capacity}%",
-    "format-plugged": "plugged: {capacity}%",
-    "format-alt": "battery: {time}",
+    "format": "{icon} {capacity}%",
+    "format-charging": "󰂄 {capacity}%",
+    "format-icons": ["󰁺", "󰁼", "󰁾", "󰂀", "󰁹"],
+    "format-alt": "{icon} {time}",
     "format-time": "{H}:{M}",
   },
   "custom/user": {
-    "format": "fx",
+    "format": "λ",
     "tooltip-format": "Application launcher",
     "on-click": "rofi -show drun -replace -i -theme ~/.config/rofi/launchers/type-1/glass-compact.rasi",
   },

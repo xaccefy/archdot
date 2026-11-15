@@ -150,8 +150,5 @@ zed() { command /home/xaccefy/.local/bin/zed-intel-gpu "$@"; }
 # to a public remote. `vercel ai-gateway setup` writes the gateway block.
 [ -f "$HOME/.config/zsh/.zshrc.local" ] && source "$HOME/.config/zsh/.zshrc.local"
 
-# claudebar command
-claudebar() { ~/.claude/statusline.sh "$@"; }
-
 # Devin CLI: start every session in Bypass (yolo) permission mode.
 export DEVIN_PERMISSION_MODE=bypass

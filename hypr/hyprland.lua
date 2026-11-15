@@ -1,6 +1,5 @@
 require("lua.monitor")
 require("lua.autostart")
-require("lua.cursor")
 require("lua.environment")
 require("lua.keyboard")
 require("lua.window")

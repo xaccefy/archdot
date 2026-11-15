@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# CPU performance mode indicator + cycler.
+# CPU performance mode cycler.
 #
 # Three states, because platform_profile on its own is too coarse -- measured on
 # this machine, the only things power-profiles-daemon changes are EPP
@@ -19,7 +19,6 @@ set -uo pipefail
 STATE="$HOME/.config/waybar/.perf"
 PCT_PATH="/sys/devices/system/cpu/intel_pstate/max_perf_pct"
 BLEND_PCT=85
-SIGNAL=11
 
 [[ -f $STATE ]] || echo balanced >"$STATE"
 mode=$(<"$STATE")
@@ -43,26 +42,6 @@ apply() {
   esac
 }
 
-status() {
-  local pct icon tip capped
-  pct=$(cat "$PCT_PATH" 2>/dev/null || echo 100)
-
-  case "$mode" in
-    balanced) icon="󰡳"; tip="Balanced — stock fans, no CPU cap" ;;
-    blend)    icon="󰊚"; tip="Blend — performance fans, CPU capped at ${pct}%" ;;
-    turbo)    icon="󰓅"; tip="Turbo — performance fans, no CPU cap" ;;
-  esac
-
-  # Surface a silently-skipped cap rather than lying about the current state.
-  capped=""
-  if [[ $mode == "blend" && $pct -eq 100 ]]; then
-    capped=" (cap not applied: sudoers rule missing)"
-  fi
-
-  printf '{"text":"%s","class":"%s","tooltip":"%s%s — click to cycle"}\n' \
-    "$icon" "$mode" "$tip" "$capped"
-}
-
 cycle() {
   local next
   case "$mode" in
@@ -73,12 +52,10 @@ cycle() {
 
   echo "$next" >"$STATE"
   apply "$next"
-  kill -RTMIN+$SIGNAL "$(pgrep -x waybar)" 2>/dev/null || true
 }
 
-case "${1:-status}" in
-  status)  status ;;
+case "${1:-}" in
   cycle)   cycle ;;
   restore) apply "$mode" ;;
-  *)       status ;;
+  *)       echo "usage: perf.sh [cycle|restore]" >&2; exit 1 ;;
 esac

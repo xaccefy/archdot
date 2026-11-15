@@ -1,7 +1,7 @@
 hl.config({
     input = {
         kb_layout = "us,mn",
-        -- Caps Lock switches layouts so Alt remains available for shortcuts.
+        -- Alt+Shift toggles us <-> mn (Mongolian) layouts.
         kb_options = "grp:alt_shift_toggle",
         numlock_by_default = true,
         repeat_rate = 40,

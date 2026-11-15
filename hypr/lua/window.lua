@@ -2,7 +2,10 @@ hl.config({
     general = {
         gaps_in = 5,
         gaps_out = { top = 16, right = 16, bottom = 16, left = 16 },
-        border_size = false,
+        -- 2px border: white on the focused window, dim grey on the rest.
+        -- (1px looked ragged on the rounding -- one physical pixel leaves no
+        -- room for antialiasing the corner curve at scale=1.)
+        border_size = 2,
         col = {
             active_border = "rgba(ffffffff)",
             inactive_border = "rgba(6d6f82cc)",

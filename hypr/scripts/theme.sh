@@ -11,7 +11,7 @@
 # deliberately monochrome (@background/@foreground only) -- so both seds matched nothing,
 # yet the script restarted waybar and reported success anyway. The waybar half is gone.
 # To re-introduce a themed accent in the bar, add `@define-color accent <hex>;` to
-# styles/bar.css AND styles/dock.css, reference it from a rule, then restore a sed here.
+# waybar's styles/style.css, reference it from a rule, then restore a sed here.
 set -euo pipefail
 
 THEME="${1:-}"

@@ -17,19 +17,13 @@ hl.config({
 
 hl.layer_rule({ match = { namespace = "^selection$" }, no_anim = true })
 
--- Blur waybar (layer surface)
-hl.layer_rule({ match = { namespace = "^waybar$" }, blur = true })
+-- (waybar blur rule removed: decoration.blur is disabled globally, so the rule
+--  never did anything -- and the bar is solid anyway.)
 
 hl.config({
     group = {
         groupbar = {
             enabled = false,
-        },
-        col = {
-            border_active = "rgba(120, 169, 255, 0.75)",
-            border_inactive = "rgba(69, 71, 90, 0.8)",
-            border_locked_active = "rgba(120, 169, 255, 0.75)",
-            border_locked_inactive = "rgba(69, 71, 90, 0.8)",
         },
         insert_after_current = true,
     },

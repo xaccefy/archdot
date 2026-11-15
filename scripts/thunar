@@ -1,0 +1,7 @@
+#!/bin/sh
+# Thunar is GTK3, which on Wayland only supports integer window scaling.
+# The panel is 2560x1440 at ~190 DPI but Hyprland runs it at scale 1, so
+# the file manager renders at half the intended size. GDK_SCALE=2 doubles
+# the whole UI (fonts, icons, row heights) and stays crisp because GTK3
+# renders into a 2x buffer.
+exec env GDK_SCALE=2 /usr/sbin/thunar "$@"

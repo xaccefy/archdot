@@ -245,7 +245,7 @@ install_packages() {
     gnome-settings-daemon dconf glib2 xorg-xrdb
     pipewire pipewire-alsa pipewire-pulse wireplumber pavucontrol playerctl
     networkmanager network-manager-applet blueman bluez bluez-utils
-    ghostty foot alacritty wezterm fish zed firefox thunar spotify-launcher
+    ghostty foot alacritty wezterm fish zed thunar spotify-launcher
     ttf-jetbrains-mono-nerd ttf-fira-code otf-font-awesome noto-fonts noto-fonts-emoji papirus-icon-theme
     swappy grim slurp imagemagick qalculate-gtk xclip brightnessctl libnotify
   )
@@ -306,7 +306,7 @@ install_packages() {
 deploy_dotfiles() {
   local config_dirs=(
     hypr waybar rofi wlogout swappy scripts ghostty foot mako alacritty wezterm
-    fastfetch gtk-4.0 zed xsettingsd nvim fontconfig
+    fastfetch gtk-4.0 zed nvim fontconfig
   )
 
   run mkdir -p "$HOME/.config"
@@ -328,6 +328,9 @@ deploy_dotfiles() {
   link_path "$DOTFILES_DIR/zsh/.zshenv" "$HOME/.zshenv"
   link_path "$DOTFILES_DIR/gtkrc" "$HOME/.config/gtkrc"
   link_path "$DOTFILES_DIR/gtkrc-2.0" "$HOME/.config/gtkrc-2.0"
+  # Thunar wrapper: GDK_SCALE=2 so the GTK3 file manager is readable on the
+  # hi-dpi panel. On PATH as `thunar`, ahead of /usr/sbin/thunar.
+  link_path "$DOTFILES_DIR/scripts/thunar" "$HOME/.local/bin/thunar"
   # ~/.gtkrc-2.0 is deliberately NOT linked: nwg-look owns that path and
   # rewrites it ("export-gtkrc-20" in ~/.config/nwg-look/config). Linking it
   # to the repo would just have nwg-look overwrite a tracked file.

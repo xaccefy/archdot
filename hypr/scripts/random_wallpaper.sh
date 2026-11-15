@@ -50,6 +50,3 @@ fi
 ln -sfn "$NEXT" "$LINK"
 echo "$NEXT" > "$CACHE"
 awww img "$NEXT" --transition-type none --transition-duration 0 --resize crop
-
-# Border accent disabled (fixed white border). Re-enable by uncommenting:
-# ~/.config/hypr/scripts/wallpaper-accent.sh || true

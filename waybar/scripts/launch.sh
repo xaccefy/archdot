@@ -24,7 +24,10 @@ mkdir -p "$LOG_DIR"
 # Now the loser exits here instead; the lock releases when this script dies,
 # so a later launch can still take over.
 exec 9>"$LOG_DIR/.launch.lock"
-flock -n 9 || exit 0
+# Lock held = a manager already runs waybar. In that case this invocation is
+# a "reload" request (SUPER+SHIFT+B): signal waybar to reload config+CSS and
+# exit, instead of silently doing nothing.
+flock -n 9 || { pkill -SIGUSR2 -x waybar; exit 0; }
 
 # Rotate logs if current log exceeds max size
 rotate_logs() {
@@ -55,11 +58,15 @@ while true; do
     # in three weeks; fixed upstream after 0.15.0). Keeping only [timestamped]
     # lines drops the spam while preserving the log.
     # stderr goes through the NOISE filter -> tee -> log + terminal.
-    # 9>&- keeps waybar from inheriting the launch lock fd.
+    # 9>&- keeps waybar from inheriting the launch lock fd. The coprocs get
+    # their own exec 9>&-: process substitutions fork BEFORE waybar's redir
+    # applies, so they too hold the lock open -- if the supervisor died while
+    # waybar lived, the stale lock would force every later launch.sh down the
+    # reload branch and the restart loop could never come back.
     exit_code=0
     waybar -c "$CONFIG" -s "$STYLE" \
-        > >(grep -aE --line-buffered '^\[' >> "$LOG_FILE") \
-        2> >(grep -vE --line-buffered "$NOISE" | tee -a "$LOG_FILE" >&2) \
+        > >(exec 9>&-; grep -aE --line-buffered '^\[' >> "$LOG_FILE") \
+        2> >(exec 9>&-; grep -vE --line-buffered "$NOISE" | tee -a "$LOG_FILE" >&2) \
         9>&- \
         || exit_code=$?
 
