@@ -4,17 +4,9 @@ Personal Hyprland setup for Arch Linux.
 
 ## Screenshots
 
-Clean desktop with the active wallpaper and Waybar:
+dwm-flavored Hyprland: master layout, flat Waybar, neon foot terminals:
 
-![Clean desktop](screenshots/06-clean-desktop.png)
-
-Ghostty with fastfetch:
-
-![Ghostty and fastfetch](screenshots/07-fastfetch-terminal.png)
-
-Three-way Ghostty layout with cava, cmatrix, and fastfetch:
-
-![Tiled Ghostty terminals](screenshots/08-tiled-terminals.png)
+![Desktop](screenshots/desktop.png)
 
 ## Install (quick)
 
