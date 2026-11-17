@@ -2,16 +2,16 @@
 # Neon Cyberpunk — Matrix green
 
 [colors.primary]
-background = "#08080c"
-foreground = "#f5f3ff"
+background = "#1c1c1c"
+foreground = "#ffffff"
 
 [colors.cursor]
 cursor = "#ffffff"
-text = "#08080c"
+text = "#1c1c1c"
 
 [colors.selection]
 background = "#292638"
-text = "#f5f3ff"
+text = "#ffffff"
 
 # 16 colors — Neon Cyberpunk
 [colors.normal]
@@ -50,7 +50,7 @@ shape = "Block"
 blinking = "Never"
 
 [window]
-opacity = 0.88
+opacity = 0.93
 decorations = "None"
 
 [window.padding]

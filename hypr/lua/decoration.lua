@@ -1,6 +1,6 @@
 hl.config({
     decoration = {
-        rounding = 8,
+        rounding = 0, -- dwm has square corners
         blur = {
             enabled = false,
             size = 6,

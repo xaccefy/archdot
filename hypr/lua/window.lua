@@ -1,16 +1,22 @@
 hl.config({
     general = {
-        gaps_in = 5,
-        gaps_out = { top = 16, right = 16, bottom = 16, left = 16 },
-        -- 2px border: white on the focused window, dim grey on the rest.
-        -- (1px looked ragged on the rounding -- one physical pixel leaves no
-        -- room for antialiasing the corner curve at scale=1.)
+        -- dwm look (RazoBeckett rice): no gaps, square corners, cyan border
+        -- on the focused window.
+        gaps_in = 0,
+        gaps_out = 0,
         border_size = 2,
         col = {
-            active_border = "rgba(ffffffff)",
-            inactive_border = "rgba(6d6f82cc)",
+            active_border = "rgba(005577ff)",   -- dwm col_cyan (selected)
+            inactive_border = "rgba(444444ff)", -- dwm col_gray2 (normal)
         },
-        layout = "dwindle",
+        -- dwm snap = 32: floating windows snap to monitor edges and sibling
+        -- windows within 32px while dragging.
+        snap = {
+            enabled = true,
+            window_gap = 32,
+            monitor_gap = 32,
+        },
+        layout = "master",
     },
 })
 

@@ -1,10 +1,10 @@
 # Neon Cyberpunk — Matrix green
-background = #08080c
-foreground = #f5f3ff
+background = #1c1c1c
+foreground = #ffffff
 cursor-color = #ffffff
-cursor-text = #08080c
+cursor-text = #1c1c1c
 selection-background = #292638
-selection-foreground = #f5f3ff
+selection-foreground = #ffffff
 
 # 16 colors — Neon Cyberpunk
 palette = 0=#08080c
@@ -30,7 +30,7 @@ font-size = 15.5
 cursor-style = block
 shell-integration-features = no-cursor
 resize-overlay = never
-background-opacity = 0.91
+background-opacity = 0.95
 window-decoration = false
 window-padding-x = 10
 window-padding-y = 4

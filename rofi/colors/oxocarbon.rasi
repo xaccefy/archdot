@@ -1,13 +1,13 @@
 /**
- * Oxocarbon Color Scheme
- * IBM Carbon Design inspired
+ * dwm Color Scheme (RazoBeckett rice)
+ * SchemeNorm = #bbbbbb on #222222, SchemeSel = #eeeeee on #005577
  **/
 
 * {
-    background:     #121212E6;
-    background-alt: #1a1a1AE0;
-    foreground:     #f2f4f8FF;
-    selected:       #f2f4f8E6;
+    background:     #222222E6;
+    background-alt: #262626E0;
+    foreground:     #bbbbbbFF;
+    selected:       #005577E6;   /* selected row = cyan block, like a dwm tag */
     active:         #42be65E6;
-    urgent:         #ee5396E6;
+    urgent:         #cc6666E6;
 }

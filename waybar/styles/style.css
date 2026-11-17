@@ -4,139 +4,126 @@
    redraws (runcat animates at up to 90fps). Sub-1.0 alpha forces the clipped
    path every frame. Visually 0.1% is nothing; reports confirm this stops the
    flicker (waybar #3882, maintainer-confirmed). */
-/* Oxocarbon (IBM Carbon dark). 0.999 alpha keeps the clipped-path fix. */
-@define-color bg        rgba(0, 0, 0, 0.999);     /* pure black; sub-1.0 alpha keeps the corner-clip fix */
-@define-color fg        #f2f4f8;                  /* base05 */
-@define-color red       #ee5396;                  /* base0a, the theme's "red" */
-@define-color warning_bg #f1c21b;                 /* carbon yellow */
-@define-color brblk   #393939;                    /* base02 */
-@define-color dim     #6f6f6f;                    /* carbon gray60 */
-@define-color accent  #be95ff;                    /* base0e purple */
-@define-color white   #f2f4f8;                    /* base05 (kept name) */
-@define-color surface #262626;                    /* base01 */
-@define-color crust   #161616;                    /* text on pastel fills */
+/* dwm (RazoBeckett rice) palette: SchemeNorm = #bbbbbb on #222222,
+   SchemeSel = #eeeeee on #005577. The selected tag is a SOLID cyan block --
+   that fill is the dwm look. Nothing else on the bar carries color. */
+@define-color bg      rgba(34, 34, 34, 0.999); /* col_gray1; sub-1.0 alpha keeps the corner-clip fix */
+@define-color fg      #bbbbbb;                 /* col_gray3 -- SchemeNorm fg */
+@define-color sel_bg  #005577;                 /* col_cyan  -- SchemeSel bg/border */
+@define-color sel_fg  #eeeeee;                 /* col_gray4 -- SchemeSel fg */
+@define-color brd     #444444;                 /* col_gray2 */
+@define-color dim     #6a6a6a;                 /* vacant tags: between gray2 and gray3 */
+
+@define-color white   #eeeeee;
+@define-color surface #222222;
+@define-color crust   #222222;                 /* text on light fills */
 
 * {
     font-family: "JetBrainsMono Nerd Font Mono", monospace;
-    font-size: 20px;
-    font-weight: bold;
+    font-size: 19px;
+    font-weight: normal; /* dwm draws bar text unbolded */
     outline: none;
 }
 
 window#waybar {
     background-color: @bg;
     color: @fg;
-    border: 1px solid rgba(242, 244, 248, 0.08);
-    /* match hyprland windows: decoration.rounding = 8 */
-    border-radius: 8px;
+    border: none;
+    border-radius: 0px; /* dwm: square edges, always */
 }
 
 tooltip {
-    color: @white;
-    background-color: @surface;
-    border: 1px solid @brblk;
-    border-radius: 8px;
+    color: @sel_fg;
+    background-color: @bg;
+    border: 1px solid @brd;
+    border-radius: 0px;
 }
 
+/* dwm tags: occupied = plain grey text, selected = solid cyan block,
+   urgent = inverted block. Empty tags are hidden by config
+   (hide_vacant_tags -- no persistent-workspaces). */
 #workspaces button {
-    padding: 0 6px;
-    margin: 0 2px;
-    color: @white;
+    padding: 0 8px;
+    margin: 0;
+    color: @fg;
     background: transparent;
-    border-bottom: 2px solid transparent;
-    border-radius: 5px;
-    transition: color 150ms ease, border-color 150ms ease;
+    border: none;
+    border-radius: 0;
 }
 #workspaces button.active,
 #workspaces button.empty.active {
-    color: @white;
-    border-bottom: 2px solid @accent;
-    border-radius: 0px;
+    color: @sel_fg;
+    background-color: @sel_bg;
+    border-radius: 0;
     opacity: 1;
+}
+#workspaces button.urgent {
+    color: @bg;
+    background-color: @fg;
+    border-radius: 0;
 }
 #workspaces button.empty {
     color: @dim;
-    opacity: 0.55;
 }
-
-/* Urgent workspace flashes red until focused (standard waybar blink). */
-@keyframes blink {
-    to {
-        background-color: @red;
-        color: @white;
-    }
-}
-
-#workspaces button.urgent {
-    background-color: transparent;
-    color: @white;
-    border-bottom: 2px solid @red;
-    border-radius: 0px;
-    animation-name: blink;
-    animation-duration: 1s;
-    animation-timing-function: linear;
-    animation-iteration-count: infinite;
-    animation-direction: alternate;
-}
-
 #workspaces button:hover {
-    background: inherit;
+    background: @brd;
+    color: @sel_fg;
 }
 
+/* status modules: flat padding, per-module accents from the theme.sh
+   trio (blue #78a9ff / teal #08bdba / mauve #c6a0f6) + battery green. */
 #clock,
 #pulseaudio,
 #battery,
 #memory,
 #tray {
-    padding: 0 8px;
+    padding: 0 7px;
     color: @fg;
 }
+#memory     { color: #08bdba; } /* teal  */
+#pulseaudio { color: #78a9ff; } /* blue -- same as the hyprlock accent */
+#battery    { color: #42be65;   /* green */
+              transition: color 200ms ease, background-color 200ms ease; }
+#clock      { color: #c6a0f6; } /* mauve */
 
-/* per-module accents: everything else stays plain text */
-#battery       { color: #42be65;    /* base0b green */
-                 /* permanent vertical inset: warning/critical fills paint as
-                    rounded chips (same margin/radius as the tray pill), never
-                    as edge-to-edge rectangles against the bar's rounding. */
-                 margin: 6px 2px;
-                 transition: background-color 200ms ease, color 200ms ease; }
-#custom-runcat { color: @white; }
-
-#battery.warning {
-    background-color: @warning_bg;
-    color: @crust;
-    border-radius: 8px;
+#battery.warning { color: #f1c21b; } /* carbon yellow */
+#battery.critical {
+    color: @bg;
+    background-color: @fg;
 }
 
-#battery.critical {
-    background-color: @red;
-    color: @crust;
-    border-radius: 8px;
+/* literal [ ] around the tray */
+#custom-trayl { padding: 0 0 0 4px; color: @fg; }
+#custom-trayr { padding: 0 4px 0 0; color: @fg; }
+#tray         { margin: 0; padding: 0 2px; }
+
+/* block separators: dim -- visible but quieter than the module text */
+#custom-sep1, #custom-sep2, #custom-sep3, #custom-sep4, #custom-sep5 {
+    color: @dim;
+    padding: 0 4px;
 }
 
 #custom-user {
-    /* extra left padding pushes the label toward the workspaces */
-    padding: 0 4px 0 16px;
-    margin-right: 16px;
-    color: @white;
+    padding: 0 4px 0 12px;
+    margin-right: 8px;
+    color: #78a9ff;
     font-weight: bold;
-    font-size: 26px;
+    font-size: 20px;
 }
 
 #custom-runcat {
+    color: @sel_fg;
     font-family: 'runcat';
-    font-size: 36px;
-    margin-right: 8px;
+    font-size: 38px;
+    margin-right: 4px;
 }
 
-/* Active window app icon (hyprland/window), right of the workspace list.
-   The module is a box named "window" holding the app icon; the label is
-   hidden because the format is empty, so only the icon shows. */
+/* dwm titlestyle=1 + winicon: focused window's icon and title sit dead
+   center. Kept SchemeNorm grey -- dwm's title area isn't colored. */
 #window {
-    padding: 0 6px;
-    margin-left: 10px;
+    padding: 0 8px;
+    color: @fg;
 }
-
-/* monochrome: no per-module colors, only the active workspace gets an underline */
 
 #memory,
 #pulseaudio,
@@ -144,22 +131,19 @@ tooltip {
     margin: 0 2px;
 }
 
-/* Raised chip: separates the tray from the flat bar without the old literal
-   [ ] text wrapper. Vertical margin insets it from the bar's full height. */
-#tray {
-    background-color: @surface;
-    border-radius: 8px;
-    margin: 6px 2px;
-}
-
 #tray menu {
-    background-color: @surface;
-    color: @white;
-    border: 1px solid @brblk;
-    border-radius: 8px;
+    background-color: @bg;
+    color: @fg;
+    border: 1px solid @brd;
+    border-radius: 0;
     padding: 4px;
 }
 
 #tray menuitem {
     padding: 4px 8px;
+}
+
+#tray menuitem:hover {
+    background-color: @sel_bg;
+    color: @sel_fg;
 }

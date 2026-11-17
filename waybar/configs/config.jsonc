@@ -2,7 +2,7 @@
 {
   "layer": "top",
   "position": "top",
-  "height": 40,
+  "height": 39,
   // Compact float: the layer-shell surface stretches edge-to-edge and the
   // left/right margins squeeze the visible bar toward the center while the
   // modules keep their three-section layout. Rendered by render.sh.
@@ -13,31 +13,47 @@
   "margin-left": 320,
   "margin-right": 320,
 
-  // Choose the order of the modules
-  "modules-left": ["custom/user", "hyprland/workspaces", "hyprland/window"],
-  "modules-center": ["clock"],
+  // Choose the order of the modules.
+  // dwm bar: tags on the left, focused-window title dead center
+  // (titlestyle=1), status blocks on the right -- so the clock joins the
+  // status side and the window module takes the center.
+  "modules-left": ["custom/user", "hyprland/workspaces"],
+  "modules-center": ["hyprland/window"],
 
   // Bluetooth lives in the tray: blueman-applet registers a StatusNotifierItem
   // that waybar's tray module renders, so there is one bluetooth icon with
   // blueman's full device menu on click. A separate "bluetooth" module here
   // would draw a second, redundant glyph.
-  "modules-right": ["custom/runcat", "memory", "pulseaudio", "tray", "battery"],
+  "modules-right": ["custom/runcat", "custom/sep1", "memory", "custom/sep2", "pulseaudio", "custom/sep3", "custom/trayl", "tray", "custom/trayr", "custom/sep4", "battery", "custom/sep5", "clock"],
 
   // Modules configuration
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
     "warp-on-scroll": false,
-    "format": "{name}",
-    "persistent-workspaces": {
-      "*": 9,
+    // dwm draws a small square on every tag that holds a window: filled on
+    // the selected tag, hollow on the rest. format-icons maps per-state.
+    "format": "{icon}{name}",
+    "format-icons": {
+      "active": "■ ",
+      "default": "□ ",
+      "urgent": "▲ ",
     },
+    // No persistent-workspaces: empty tags stay hidden, like dwm's
+    // hide_vacant_tags patch -- only occupied + focused tags show.
   },
-  // The tray used to be wrapped in literal [ ] via two custom modules -- now
-  // the stylesheet gives it a raised surface-colored pill instead.
-  // (waybar's tray module can't wrap its icons in text; a bg chip can.)
+  // Systray wrapped in literal brackets via two label modules -- waybar's
+  // tray module can't wrap its icons in text, so [ and ] flank it.
+  "custom/trayl": { "format": "[", "tooltip": false },
+  "custom/trayr": { "format": "]", "tooltip": false },
+  // dwmblocks-style separators between status blocks.
+  "custom/sep1": { "format": "|", "tooltip": false },
+  "custom/sep2": { "format": "|", "tooltip": false },
+  "custom/sep3": { "format": "|", "tooltip": false },
+  "custom/sep4": { "format": "|", "tooltip": false },
+  "custom/sep5": { "format": "|", "tooltip": false },
   "tray": {
-    "icon-size": 23,
+    "icon-size": 19,
     "spacing": 6,
     // "icons": {
     //   "blueman": "bluetooth",
@@ -55,18 +71,17 @@
     "exec": "python3 $HOME/.local/lib/waybar/runcat-text/main.py",
     "return-type": "json",
   },
-  // Icon of the focused window's app, right of the workspace list.
-  // Built-in module, so it updates on Hyprland's event socket instead of polling.
-  // An empty format hides the label and leaves only the app icon.
-  // Note: waybar puts the tooltip on that (now hidden) label, so there is no
-  // hover text in this mode -- set a format to get one back.
+  // Focused window's title + app icon, centered -- dwm titlestyle=1 + the
+  // winicon patch. Built-in module, so it updates on Hyprland's event socket
+  // instead of polling.
   "hyprland/window": {
     "icon": true,
-    "icon-size": 26,
-    "format": "",
+    "icon-size": 18,
+    "format": "{title}",
+    "max-length": 60,
   },
   "memory": {
-    "format": "󰍛 {percentage}%",
+    "format": "ram: {percentage}%",
   },
   "pulseaudio": {
     "format": "{icon} {volume}%",

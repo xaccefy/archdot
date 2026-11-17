@@ -1,13 +1,21 @@
 #!/usr/bin/env bash
 # Layout mode: float (gapped, rounded) or bar (classic full-width).
-# Usage: mode.sh [float|bar]  -- no argument toggles. Re-renders and reloads
-# waybar on change.
+# Usage: mode.sh [float|bar|status]  -- no argument toggles, status prints the
+# waybar-module JSON for custom/mode. Re-renders and reloads waybar on change.
 set -euo pipefail
 
 DIR="$HOME/.config/waybar"
 
 cur=$(cat "$DIR/.mode" 2>/dev/null || echo float)
 [[ $cur == bar || $cur == float ]] || cur=float
+
+# Module view: a compact (M) marker; the tooltip carries the actual mode. A
+# SIGUSR2 reload re-runs exec, so this picks up the new mode without polling.
+if [[ ${1:-} == status ]]; then
+    printf '{"text":"(M)","class":"%s","tooltip":"layout: %s -- click to switch"}\n' \
+        "$cur" "$cur"
+    exit 0
+fi
 
 next=${1:-}
 if [[ $next != float && $next != bar ]]; then

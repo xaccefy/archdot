@@ -20,7 +20,9 @@ hl.bind(mainMod .. " + SHIFT + F", hl.dsp.window.fullscreen({ mode = "fullscreen
     { desc = "Set active window to fullscreen" })
 hl.bind(mainMod .. " + T", hl.dsp.window.float({ action = "toggle" }),
     { desc = "Toggle active windows into floating mode" })
-hl.bind(mainMod .. " + S", hl.dsp.layout("togglesplit"), { desc = "Toggle splitting" })
+-- togglesplit is dwindle-only; under master the same gesture cycles the
+-- split direction (left -> right -> top -> bottom -> center).
+hl.bind(mainMod .. " + S", hl.dsp.layout("orientationnext"), { desc = "Cycle split orientation" })
 hl.bind(mainMod .. " + mouse:272", hl.dsp.window.drag(), { mouse = true, desc = "Move window with the mouse" })
 hl.bind(mainMod .. " + mouse:273", hl.dsp.window.resize(), { mouse = true, desc = "Resize window with the mouse" })
 
@@ -37,6 +39,17 @@ hl.bind(mainMod .. " + SHIFT + H", hl.dsp.window.move({ direction = "left" }), {
 hl.bind(mainMod .. " + SHIFT + J", hl.dsp.window.move({ direction = "down" }), { desc = "Move window down" })
 hl.bind(mainMod .. " + SHIFT + K", hl.dsp.window.move({ direction = "up" }), { desc = "Move window up" })
 hl.bind(mainMod .. " + SHIFT + L", hl.dsp.window.move({ direction = "right" }), { desc = "Move window right" })
+
+-- dwm master-stack workflow (master layout layoutmsgs)
+hl.bind(mainMod .. " + SHIFT + RETURN", hl.dsp.layout("swapwithmaster"),
+    { desc = "Zoom: swap focused window with master" })
+hl.bind(mainMod .. " + M", hl.dsp.layout("focusmaster"), { desc = "Focus master window" })
+hl.bind(mainMod .. " + CTRL + J", hl.dsp.layout("swapnext"), { desc = "Swap with next window in stack" })
+hl.bind(mainMod .. " + CTRL + K", hl.dsp.layout("swapprev"), { desc = "Swap with prev window in stack" })
+hl.bind(mainMod .. " + comma", hl.dsp.layout("addmaster"), { desc = "Add a master column window" })
+hl.bind(mainMod .. " + period", hl.dsp.layout("removemaster"), { desc = "Remove a master column window" })
+-- dwm togglebar (Alt+B): SIGUSR1 toggles waybar visibility without killing it.
+hl.bind(mainMod .. " + B", hl.dsp.exec_cmd("killall -SIGUSR1 waybar"), { desc = "Toggle waybar" })
 
 hl.bind(mainMod .. " + P", hl.dsp.exec_cmd("~/.config/hypr/scripts/screenshot.sh"), { desc = "Screenshot menu" })
 hl.bind("Print", hl.dsp.exec_cmd("grimblast copy area"), { desc = "Screenshot area to clipboard" })
